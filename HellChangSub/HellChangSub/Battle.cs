@@ -14,10 +14,10 @@ namespace HellChangSub
         // 보상 아이템들 선언하기
 
         // 이벤트 델리게이트
-        public delegate void GameEvent(Player character);
-        public delegate void GameEvent(Monster enemy); 
-        public event GameEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
-        public event GameEvent OnEnemyDeath;  // 몬스터가 죽었을 때 발생하는 이벤트
+        public delegate void playerEvent(Player character);
+        public delegate void EnemyEvent(Monster enemy); 
+        public event playerEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
+        public event EnemyEvent OnEnemyDeath;  // 몬스터가 죽었을 때 발생하는 이벤트
 
         public Battle(Player player, Monster monster /*여기에 아이템*/)
         {
