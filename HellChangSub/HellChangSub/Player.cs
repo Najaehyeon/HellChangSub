@@ -10,6 +10,7 @@ namespace HellChangSub
     {
         public string Name { get; set; }
         public int JobCode { get; set; }        //직업 1번 전사, 2번 도적, 3번 마법사
+        public string JobName { get; set; }
         public int Level { get; set; }
         public int Exp { get; set; }
         public int CurrentHealth { get; set; }
@@ -39,6 +40,7 @@ namespace HellChangSub
             switch (JobCode)
             {
                 case 1:         // 전사 - 방어력 체력이 높음
+                    JobName = "전사";
                     Atk = 10.0f;
                     Def = 5;
                     CurrentHealth = 100;
@@ -51,6 +53,7 @@ namespace HellChangSub
                     break;
 
                 case 2:         // 도적 - 중간 공격력, 치명타율 회피율 높음, 방어 체력 낮음
+                    JobName = "도적";
                     Atk = 12.0f;
                     Def = 3;
                     CurrentHealth = 80;
@@ -62,7 +65,8 @@ namespace HellChangSub
                     Evasion = 20;
                     break;
 
-                case 3:         // 마법사 - 높은 공격력과 마나, 방어력과 체력이 낮고 회피 불가, 스킬 구현 후에는 기본 공격력을 낮추고 마법사 스킬들의 피해 계수를 높게 잡기 
+                case 3:         // 마법사 - 높은 공격력과 마나, 방어력과 체력이 낮고 회피 불가, 스킬 구현 후에는 기본 공격력을 낮추고 마법사 스킬들의 피해 계수를 높게 잡기
+                    JobName = "마법사";
                     Atk = 15.0f;
                     Def = 0;
                     CurrentHealth = 70;

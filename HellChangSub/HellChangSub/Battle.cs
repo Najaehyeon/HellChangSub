@@ -10,7 +10,7 @@ namespace HellChangSub
     class Battle
     {
         private Player player; // 플레이어
-        private Monster monster; // 몬스터
+        private Monster monster; // 몬스터, 여러마리 소환될 수 있기 때문에 변경해줘야됨
         // 보상 아이템들 선언하기
 
         // 이벤트 델리게이트
@@ -31,10 +31,23 @@ namespace HellChangSub
         // 스테이지 시작 메서드
         public void Start()
         {
-            /*Console.WriteLine($"Battle! 플레이어 정보: 체력({player.CurrentHealth}/{player.MaximumHealth}), 공격력({player.Atk})");
-            Console.WriteLine($"몬스터 정보: 이름({monster.Name}), 체력({monster.CurrentHealth}/{monster.MaximumHealth}), 공격력({monster.Atk})");
-            Console.WriteLine("----------------------------------------------------");*/
-            
+            /*Console.WriteLine($"Battle!");
+            Console.WriteLine("");
+            while(createmonster[i] == true)     //몬스터 생성방식 확실히 정해지면 그에 맞춰 이거 변경
+            {
+                Console.WriteLine($"{i}. Lv.{monster.Level} {monster.Name} HP {monster.CurrentHealth}");
+                i++
+            }
+            Console.WriteLine("");
+            Console.WriteLine("[내정보]");
+            Console.WriteLine($"Lv.{player.Level}   {player.Name} ({player.JobName})");
+            Console.WriteLine("");
+            Console.WriteLine("0. 취소");
+            Console.WriteLine("");
+            Console.WriteLine("대상을 선택해주세요");
+            int target = Convert.ToInt32(Console.ReadLine(""));
+            */
+
             while (!player.IsDead && !monster.IsDead) // 플레이어 혹은 몬스터가 죽을 때까지 반복, 만나는 몬스터 수 랜덤으로 바꾸고 나면 몬스터가 "전부" 죽어야 반복문 탈출하도록 바꿔야됨
             {
                 // 플레이어의 턴
