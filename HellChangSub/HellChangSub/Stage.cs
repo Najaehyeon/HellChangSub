@@ -19,7 +19,7 @@ namespace HellChangSub
             int mosterQuantity = rand.Next(0,5 + stageLvl*2);
             for (int i = 0; i < mosterQuantity; i++)
             {
-                Monster monster = MonsterFactory.CreatMonster(stageLvl);
+                Monster monster = MonsterFactory.CreateMonster(stageLvl);
                 monsters.Add(monster);
             }
             ShowStage(stageLvl);

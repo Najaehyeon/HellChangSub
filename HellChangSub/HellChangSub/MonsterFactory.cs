@@ -9,7 +9,7 @@ namespace HellChangSub
     class MonsterFactory
     {
         private static Random rand = new Random();
-        public static Monster CreatMonster(int stageLvl)
+        public static Monster CreateMonster(int stageLvl)
         {
             int randomDice = rand.Next(0, 101);
             int randomMonster;
