@@ -33,20 +33,15 @@ namespace HellChangSub
             {
                 case 0:
                     return new Slime(stageLvl);
-                    
                 case 1:
-
-                    break;
+                    return new Skeleton(stageLvl);
                 case 2:
-
-                    break;
+                    return new Orge(stageLvl);
                 case 3:
-
-                    break;
-
+                    return new Dragon(stageLvl);
                 default:
-                    break;
-
+                    return new Slime(stageLvl);
             }
         }
+    }
 }

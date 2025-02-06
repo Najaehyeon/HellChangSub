@@ -21,53 +21,13 @@ namespace HellChangSub
 
 
 
-        public Monster(int stageLvl) 
-        {
-            int randomDice = rand.Next(0, 101);
-            int randomMonster;
-            if (randomDice < stageLvl*5)
-            {
-                randomMonster = 3;
-            }
-            else if(randomDice < stageLvl*10)
-            {
-                randomMonster = 2;
-            }
-            else if(randomDice < stageLvl*20)
-            {
-                randomMonster = 1; 
-            }
-            else 
-            {
-                randomMonster = 0;
-            }
-            switch (randomMonster)
-            {
-                case 0:
-                    Slime slime = new Slime(stageLvl);
-                    break;
-                case 1:
-                   
-                    break;
-                case 2:
-                    
-                    break;
-                case 3:
-                   
-                    break;
-
-                default:
-                    break;
-
-            }
-        }
 
     }
 
     class Slime : Monster
     {
         Random rand = new Random();
-        public Slime(int stageLvl) : base(stageLvl)
+        public Slime(int stageLvl)
         {
             int randomDice = rand.Next(0, 101);
             int randomMonster;
@@ -79,7 +39,7 @@ namespace HellChangSub
             {
                 randomMonster = 2;
             }
-            else if (randomDice < stageLvl * 20)
+            else if (randomDice < stageLvl * 30)
             {
                 randomMonster = 1;
             }
@@ -90,31 +50,31 @@ namespace HellChangSub
             switch (randomMonster)
             {
                 case 0:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "슬라임";
+                    Description = "끈적끈적한 몬스터";
+                    MaximumHealth = 50+stageLvl*10;
+                    CurrentHealth = 50 + stageLvl * 10;
+                    Atk = 5 + stageLvl;
+                    Def = 2 + stageLvl;
+                    Crit = 10;
                     break;
                 case 1:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "검은 슬라임";
+                    Description = "더강한 슬라임";
+                    MaximumHealth = 80 + stageLvl * 10;
+                    CurrentHealth = 80 + stageLvl * 10;
+                    Atk = 8 + stageLvl;
+                    Def = 3 + stageLvl;
+                    Crit = 10;
                     break;
                 case 2:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "황금 슬라임";
+                    Description = "보물로 이뤄진 슬라임";
+                    MaximumHealth = 100 + stageLvl * 10;
+                    CurrentHealth = 100 + stageLvl * 10;
+                    Atk = 10 + stageLvl;
+                    Def = 5 + stageLvl;
+                    Crit = 10;
                     break;
                 default:
                     break;
@@ -125,7 +85,7 @@ namespace HellChangSub
     class Skeleton : Monster
     {
         Random rand = new Random();
-        public Skeleton(int stageLvl) : base(stageLvl)
+        public Skeleton(int stageLvl) 
         {
             int randomDice = rand.Next(0, 101);
             int randomMonster;
@@ -148,31 +108,31 @@ namespace HellChangSub
             switch (randomMonster)
             {
                 case 0:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "스켈레톤";
+                    Description = "전사의 유골";
+                    MaximumHealth = 120 + stageLvl * 10;
+                    CurrentHealth = 120 + stageLvl * 10;
+                    Atk = 10 + stageLvl;
+                    Def = 6 + stageLvl;
+                    Crit = 10;
                     break;
                 case 1:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "검은 스켈레톤";
+                    Description = "암흑 마법 스켈레톤";
+                    MaximumHealth = 150 + stageLvl * 20;
+                    CurrentHealth = 150 + stageLvl * 20;
+                    Atk = 12 + stageLvl;
+                    Def = 8 + stageLvl;
+                    Crit = 10;
                     break;
                 case 2:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "황금 스켈레톤";
+                    Description = "황금 갑옷을 입은 엘리트";
+                    MaximumHealth = 180 + stageLvl * 30;
+                    CurrentHealth = 180 + stageLvl * 30;
+                    Atk = 15 + stageLvl;
+                    Def = 10 + stageLvl;
+                    Crit = 10;
                     break;
                 default:
                     break;
@@ -180,10 +140,10 @@ namespace HellChangSub
         }
     }
 
-    class O : Monster
+    class Orge : Monster
     {
         Random rand = new Random();
-        public Slime(int stageLvl) : base(stageLvl)
+        public Orge(int stageLvl)
         {
             int randomDice = rand.Next(0, 101);
             int randomMonster;
@@ -206,31 +166,89 @@ namespace HellChangSub
             switch (randomMonster)
             {
                 case 0:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "오우거";
+                    Description = "근육질 괴물";
+                    MaximumHealth = 200 + stageLvl * 10;
+                    CurrentHealth = 200 + stageLvl * 10;
+                    Atk = 20 + stageLvl;
+                    Def = 10 + stageLvl;
+                    Crit = 10;
                     break;
                 case 1:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "검은 오우거";
+                    Description = "어둠의 힘을 받은 오우거";
+                    MaximumHealth = 250 + stageLvl * 20;
+                    CurrentHealth = 250 + stageLvl * 20;
+                    Atk = 25 + stageLvl;
+                    Def = 12 + stageLvl;
+                    Crit = 10;
                     break;
                 case 2:
-                    Name = "";
-                    Description = "";
-                    MaximumHealth = 0;
-                    CurrentHealth = 0;
-                    Atk = 0;
-                    Def = 0;
-                    Crit = 0;
+                    Name = "황금 오우거";
+                    Description = "전설 속 오우거";
+                    MaximumHealth = 300 + stageLvl * 30;
+                    CurrentHealth = 300 + stageLvl * 30;
+                    Atk = 30 + stageLvl;
+                    Def = 15 + stageLvl;
+                    Crit = 10;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    class Dragon : Monster
+    {
+        Random rand = new Random();
+        public Dragon(int stageLvl)
+        {
+            int randomDice = rand.Next(0, 101);
+            int randomMonster;
+            if (randomDice < stageLvl * 5)
+            {
+                randomMonster = 3;
+            }
+            else if (randomDice < stageLvl * 10)
+            {
+                randomMonster = 2;
+            }
+            else if (randomDice < stageLvl * 20)
+            {
+                randomMonster = 1;
+            }
+            else
+            {
+                randomMonster = 0;
+            }
+            switch (randomMonster)
+            {
+                case 0:
+                    Name = "드래곤";
+                    Description = "강력한 힘을 가진 드래곤";
+                    MaximumHealth = 500 + stageLvl * 10;
+                    CurrentHealth = 500 + stageLvl * 10;
+                    Atk = 50 + stageLvl;
+                    Def = 30 + stageLvl;
+                    Crit = 10;
+                    break;
+                case 1:
+                    Name = "암흑 드래곤";
+                    Description = "어둠의 힘을 지닌 고대 드래곤";
+                    MaximumHealth = 600 + stageLvl * 20;
+                    CurrentHealth = 600 + stageLvl * 20;
+                    Atk = 60 + stageLvl;
+                    Def = 35 + stageLvl;
+                    Crit = 10;
+                    break;
+                case 2:
+                    Name = "황금 드래곤";
+                    Description = "전설 속의 빛과 마법을 지닌 드래곤";
+                    MaximumHealth = 700 + stageLvl * 30;
+                    CurrentHealth = 700 + stageLvl * 30;
+                    Atk = 70 + stageLvl;
+                    Def = 40 + stageLvl;
+                    Crit = 10;
                     break;
                 default:
                     break;
