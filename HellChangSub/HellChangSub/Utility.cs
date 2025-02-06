@@ -12,6 +12,7 @@ namespace HellChangSub
         {
             while (true)
             {
+                Console.Write(">> ");
                 string input = Console.ReadLine();
                 if (int.TryParse(input, out int choice) && choice >=min && choice <=max)
                 {
@@ -24,6 +25,4 @@ namespace HellChangSub
             }
         }
     }
-
-
 }
