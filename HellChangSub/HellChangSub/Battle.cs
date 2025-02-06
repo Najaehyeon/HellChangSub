@@ -35,16 +35,14 @@ namespace HellChangSub
             Console.WriteLine($"몬스터 정보: 이름({monster.Name}), 체력({monster.CurrentHealth}/{monster.MaximumHealth}), 공격력({monster.Atk})");
             Console.WriteLine("----------------------------------------------------");*/
             
-            while (!player.IsDead && !monster.IsDead) // 플레이어 혹은 몬스터가 죽을 때까지 반복, 몬스터가 "전부" 죽어야 반복문 탈출하도록 바꿔야됨
+            while (!player.IsDead && !monster.IsDead) // 플레이어 혹은 몬스터가 죽을 때까지 반복, 만나는 몬스터 수 랜덤으로 바꾸고 나면 몬스터가 "전부" 죽어야 반복문 탈출하도록 바꿔야됨
             {
                 // 플레이어의 턴
                 Console.WriteLine($"{player.Name}의 공격!");
-                if (monster.IsOccur(monster.Evasion) == 1)
+                if (monster.IsOccur(monster.Evasion) == true)
                     Console.WriteLine($"{monster.Name}는 공격을 피했다!");
-                else if(player.IsOccur(player.Crit) == 1)
-                    monster.TakeDamage(player.Atk * player.CritDamage, 1);
                 else
-                    monster.TakeDamage(player.Atk, 0);
+                    monster.TakeDamage(player.Atk, player.CritDamage, player.IsOccur(player.Crit));
                 Console.WriteLine();
                 Thread.Sleep(100);  
 
@@ -52,12 +50,10 @@ namespace HellChangSub
 
                 // 몬스터의 턴
                 Console.WriteLine($"{monster.Name}의 공격!");
-                if (player.IsOccur(player.Evasion) == 1)
+                if (player.IsOccur(player.Evasion) == true)
                     Console.WriteLine($"{player.Name}는 공격을 피했다!");
-                else if (monster.IsOccur(monster.Crit) == 1)
-                    player.TakeDamage(monster.Atk * monster.CritDamage, 1);
                 else
-                    player.TakeDamage(monster.Atk, 0);
+                    player.TakeDamage(monster.Atk, monster.CritDamage, monster.IsOccur(monster.Crit));
                 Console.WriteLine();
                 Thread.Sleep(100);  
             }
