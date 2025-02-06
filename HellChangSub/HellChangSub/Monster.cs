@@ -8,5 +8,6 @@ namespace HellChangSub
 {
     class Monster
     {
+
     }
 }
