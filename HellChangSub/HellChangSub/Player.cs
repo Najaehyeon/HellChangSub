@@ -62,7 +62,7 @@ namespace HellChangSub
                     Evasion = 20;
                     break;
 
-                case 3:         // 마법사 - 높은 공격력과 마나, 방어력과 체력이 낮고 회피 불가
+                case 3:         // 마법사 - 높은 공격력과 마나, 방어력과 체력이 낮고 회피 불가, 스킬 구현 후에는 기본 공격력을 낮추고 마법사 스킬들의 피해 계수를 높게 잡기 
                     Atk = 15.0f;
                     Def = 0;
                     CurrentHealth = 70;
@@ -77,17 +77,48 @@ namespace HellChangSub
         }
         public void LevelUp()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
-            if (Exp >= Level * 100)
+            if (Level == 1 && Exp >= 10)
             {
-                Exp -= Level * 100;
+                Exp -= 10;
                 Level++;
                 CurrentHealth = MaximumHealth;
+                CurrentMana = MaximumMana;
+                Atk += 0.5f;
+                Def += 1;
+                Console.WriteLine("레벨업을 하였습니다.");
+            }
+            else if (Level == 2 && Exp >= 35) 
+            {
+                Exp -= 35;
+                Level++;
+                CurrentHealth = MaximumHealth;
+                CurrentMana = MaximumMana;
+                Atk += 0.5f;
+                Def += 1;
+                Console.WriteLine("레벨업을 하였습니다.");
+            }
+            else if (Level == 3 && Exp >= 65)
+            {
+                Exp -= 65;
+                Level++;
+                CurrentHealth = MaximumHealth;
+                CurrentMana = MaximumMana;
+                Atk += 0.5f;
+                Def += 1;
+                Console.WriteLine("레벨업을 하였습니다.");
+            }
+            else if (Level == 4 && Exp >= 100)
+            {
+                Exp = 0;
+                Level++;
+                CurrentHealth = MaximumHealth;
+                CurrentMana = MaximumMana;
                 Atk += 0.5f;
                 Def += 1;
                 Console.WriteLine("레벨업을 하였습니다.");
             }
         }
-        public void TakeDamage(float Atk, float CritDmg, bool crit)      //기본적인 데미지 공식 but 스킬데미지 및 치명타, 회피를 구현하려면????
+        public void TakeDamage(float Atk, float CritDmg, bool crit)      //기본적인 데미지 공식 but 스킬 구현할 때 스킬데미지는 회피 불가도 같이 구현해줘야함
         {
             float damage;
             if (crit == true)
