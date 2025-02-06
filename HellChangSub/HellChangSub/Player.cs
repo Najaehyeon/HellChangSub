@@ -16,8 +16,8 @@ namespace HellChangSub
         public int MaximumHealth { get; set; }
         public int CurrentMana { get; set; }
         public int MaximumMana { get; set; }
-        public int Atk { get; set; }
-        public int EquipAtk { get; set; }
+        public float Atk { get; set; }
+        public float EquipAtk { get; set; }
         public int Def { get; set; }
         public int EquipDef { get; set; }
         public int Gold { get; set; }
@@ -39,7 +39,7 @@ namespace HellChangSub
             switch (JobCode)
             {
                 case 1:         // 전사 - 방어력 체력이 높음
-                    Atk = 10;
+                    Atk = 10.0f;
                     Def = 5;
                     CurrentHealth = 100;
                     MaximumHealth = 100;
@@ -47,10 +47,11 @@ namespace HellChangSub
                     MaximumMana = 30;
                     CritChance = 10;
                     CritDamage = 1.6f;
+                    Evasion = 10;
                     break;
 
                 case 2:         // 도적 - 중간 공격력, 치명타율 회피율 높음, 방어 체력 낮음
-                    Atk = 12;
+                    Atk = 12.0f;
                     Def = 3;
                     CurrentHealth = 80;
                     MaximumHealth = 80;
@@ -58,10 +59,11 @@ namespace HellChangSub
                     MaximumMana = 30;
                     CritChance = 30;
                     CritDamage = 2.0f;
+                    Evasion = 20;
                     break;
 
-                case 3:         // 마법사 - 높은 공격력과 마나, 방어력과 체력이 낮음
-                    Atk = 15;
+                case 3:         // 마법사 - 높은 공격력과 마나, 방어력과 체력이 낮고 회피 불가
+                    Atk = 15.0f;
                     Def = 0;
                     CurrentHealth = 70;
                     MaximumHealth = 70;
@@ -69,11 +71,25 @@ namespace HellChangSub
                     MaximumMana = 60;
                     CritChance = 10;
                     CritDamage = 1.6f;
+                    Evasion = 0;
                     break;
             }
         }
-        public void TakeDamage(int damage)      //기본적인 데미지 공식 but 스킬데미지 및 치명타, 회피를 구현하려면????
+        public void LevelUp()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
+            if (Exp >= Level * 100)
+            {
+                Exp -= Level * 100;
+                Level++;
+                CurrentHealth = MaximumHealth;
+                Atk += 0.5f;
+                Def += 1;
+                Console.WriteLine("레벨업을 하였습니다.");
+            }
+        }
+        public void TakeDamage(int damage, bool evade)      //기본적인 데미지 공식 but 스킬데미지 및 치명타, 회피를 구현하려면????
+        {
+            if (evade == true)
             CurrentHealth -= damage - Def - EquipDef;
             if (IsDead)
                 Console.WriteLine($"{Name}이(가) 죽었습니다.");
@@ -81,6 +97,15 @@ namespace HellChangSub
                 Console.WriteLine($"{Name}이(가) {damage - Def - EquipDef}의 데미지를 받았습니다. 남은 체력: {CurrentHealth}");
         }
         //랜덤을 통해 치명타와 회피를 구현해야 함
+        public bool IsOccur(int prob)
+        {
+            int isOccur = new Random().Next(0, 100);
+            if (isOccur < prob) return true;
+            else return false;
+        }
         //스킬을 기반으로 한 데미지일 경우 회피 계산식이 작동하지 않게 해야함 - isskill 부울값으로 할까?
+        //스킬 습득 여부는 어떻게할까? - islearn 부울값을 배정해서 레벨업시 직업과 레벨 충족하면 해당 부울값을 true로 하고 true인 스킬은 전투화면에서 보여지고 사용도 가능하도록
+
+
     }
 }
