@@ -6,7 +6,7 @@
         {
             GameManger gb = new GameManger();
 
-            gb.ShowMainScreen();
+            GameManger.ShowMainScreen();
         }
     }
 
@@ -17,7 +17,7 @@
         
         }
 
-        public void ShowMainScreen()
+        public static void ShowMainScreen()
         {
             Console.WriteLine("");
             Console.WriteLine("");

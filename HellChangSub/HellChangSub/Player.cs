@@ -87,9 +87,8 @@ namespace HellChangSub
                 Console.WriteLine("레벨업을 하였습니다.");
             }
         }
-        public void TakeDamage(int damage, bool evade)      //기본적인 데미지 공식 but 스킬데미지 및 치명타, 회피를 구현하려면????
+        public void TakeDamage(int damage)      //기본적인 데미지 공식 but 스킬데미지 및 치명타, 회피를 구현하려면????
         {
-            if (evade == true)
             CurrentHealth -= damage - Def - EquipDef;
             if (IsDead)
                 Console.WriteLine($"{Name}이(가) 죽었습니다.");
@@ -97,7 +96,7 @@ namespace HellChangSub
                 Console.WriteLine($"{Name}이(가) {damage - Def - EquipDef}의 데미지를 받았습니다. 남은 체력: {CurrentHealth}");
         }
         //랜덤을 통해 치명타와 회피를 구현해야 함
-        public bool IsOccur(int prob)
+        public bool IsOccur(float prob)
         {
             int isOccur = new Random().Next(0, 100);
             if (isOccur < prob) return true;
