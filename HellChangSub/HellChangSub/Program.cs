@@ -4,7 +4,28 @@
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+            GameManger gb = new GameManger();
+
+            gb.ShowMainScreen();
+        }
+    }
+
+    class GameManger
+    {
+        public GameManger() 
+        { 
+        
+        }
+
+        public void ShowMainScreen()
+        {
+            Console.WriteLine("");
+            Console.WriteLine("");
+            Console.WriteLine("01");
+            int choice = Utility.Select(0, 1);
+            Console.WriteLine(choice);
+            
+            
         }
     }
 }
