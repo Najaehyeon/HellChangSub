@@ -6,7 +6,7 @@
         {
             GameManger gb = new GameManger();
 
-            GameManger.ShowMainScreen();
+            gb.ShowMainScreen();
         }
     }
 
@@ -17,7 +17,7 @@
         
         }
 
-        public static void ShowMainScreen()
+        public void ShowMainScreen()
         {
             Console.WriteLine("스파르타 던전에 오신 여러분 환영합니다.\n원하시는 이름을 입력해주세요.");
             Console.Write(">> ");
