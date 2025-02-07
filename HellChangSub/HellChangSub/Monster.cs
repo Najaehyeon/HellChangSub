@@ -19,7 +19,8 @@ namespace HellChangSub
         public int Crit { get; set; }
         Random rand = new Random();
         public bool IsDead => CurrentHealth <= 0;
-
+        public int rewardExp { get; set; } = 0;
+        public int rewardGold { get; set; } = 0;
 
 
     }
