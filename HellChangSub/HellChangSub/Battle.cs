@@ -9,91 +9,136 @@ namespace HellChangSub
 {
     class Battle
     {
-        private Player player; // 플레이어
-        private Monster monster; // 몬스터, 여러마리 소환될 수 있기 때문에 변경해줘야됨
-        // 보상 아이템들 선언하기
+        private Player player;
+        private List<Monster> monsters;
+        private int initialPlayerHealth;
+        private int initialPlayerExp;
 
-        // 이벤트 델리게이트
-        public delegate void playerEvent(Player character);
-        public delegate void EnemyEvent(Monster enemy); 
-        public event playerEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
-        public event EnemyEvent OnEnemyDeath;  // 몬스터가 죽었을 때 발생하는 이벤트
-
-        public Battle(Player player, Monster monster /*여기에 보상 아이템*/)
+        public Battle(Player player, List<Monster> monsters)
         {
             this.player = player;
-            this.monster = monster;
-            //여기에 this 아이템
-            OnCharacterDeath += GameOver;   // 캐릭터가 죽었을 때 GameOver 메서드 호출
-            OnEnemyDeath += StageClear;     // 몬스터가 죽었을 때 StageClear 메서드 호출
+            this.monsters = monsters;
+            this.initialPlayerHealth = player.CurrentHealth;
+            this.initialPlayerExp = player.Exp;
         }
 
-        // 스테이지 시작 메서드
-        public static void StartBattle()
+        public void StartBattle()
         {
-            Console.WriteLine($"Battle!");
-            Console.WriteLine("");
-            Console.WriteLine("");
-            Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
-            Console.WriteLine("");
-            Console.WriteLine("0. 취소");
-            Console.WriteLine("");
-            Console.WriteLine("대상을 선택해주세요");
-            int target = Convert.ToInt32( Console.ReadLine() );
-            switch (target)
+            while (true)
             {
-                case 0:
+                PlayerTurn();   //몬스터와 플레이어의 정보를 계속해서 띄워줘야 하니 PlayerTurn, MonsterTurn으로 따로 정리
+                if (monsters.All(m => m.IsDead))   //모든 monster의 IsDead값이 true인지 확인하는 과정
+                {
+                    Victory();
+                    break;
+                }
 
-                case 1:
-
-                case 2:
-
-                case 3:
-
-                default:
-                    Console.WriteLine("올바른 대상을 선택해주세요.");
-            }
-            
-
-            while (!player.IsDead && Monsters.count > 0) // 플레이어 사망 혹은 몬스터가 전부 죽을때까지 반복
-            {
-                // 플레이어의 턴
-                Console.WriteLine($"{player.Name}의 공격!");
-                if (IsOccur(monster.Evasion))
-                    Console.WriteLine($"{monster.Name}는 공격을 피했다!");
-                else
-                    monster.TakeDamage(player.Atk, player.CritDamage, IsOccur(player.Crit));
-                Console.WriteLine();
-                Thread.Sleep(100);
-
-                if (monster.IsDead) break;  // 몬스터가 죽었다면 턴 종료
-
-                // 몬스터의 턴
-                Console.WriteLine($"{monster.Name}의 공격!");
-                if (IsOccur(player.Evasion))
-                    Console.WriteLine($"{player.Name}는 공격을 피했다!");
-                else
-                    player.TakeDamage(monster.Atk, monster.CritDamage, IsOccur(monster.Crit));
-                Console.WriteLine();
-                Thread.Sleep(100);  
-            }
-
-            // 플레이어나 몬스터가 죽었을 때 이벤트 호출
-            if (player.IsDead)
-            {
-                OnCharacterDeath?.Invoke(player);
-            }
-            else if (monster.IsDead)
-            {
-                OnEnemyDeath?.Invoke(monster);
+                
+                
+                MonsterTurn();
+                if (player.IsDead)
+                {
+                    GameOver();
+                    break;
+                }
             }
         }
-        //랜덤을 통해 치명타와 회피를 구현해야 함
-        public static bool IsOccur(float prob)
+        /*public void StartBattle()     //위에꺼 다 다듬으면 지울거임
         {
-            int isOccur = new Random().Next(0, 100);
-            return isOccur < prob;
+            Console.WriteLine("===== 전투 시작 =====");
+            while (!player.IsDead && monsters.Any(m => !m.IsDead))
+            {
+                Console.WriteLine("\n[내 정보]");
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName}) - HP: {player.CurrentHealth}/{player.MaximumHealth}");
+
+                Console.WriteLine("\n[몬스터 목록]");
+                for (int i = 0; i < monsters.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {monsters[i].Name} (HP: {monsters[i].CurrentHealth}/{monsters[i].MaximumHealth})");
+                }
+
+                Console.WriteLine("\n공격할 몬스터 번호를 선택하세요 (0: 도망)");
+                int choice = Utility.Select(0, monsters.Count);
+
+                if (choice == 0)
+                {
+                    Console.WriteLine("플레이어가 전투에서 도망쳤습니다!");
+                    return;
+                }
+
+                Monster target = monsters[choice - 1];
+
+                if (IsOccur(target.Evasion))
+                {
+                    Console.WriteLine($"{target.Name}이(가) 공격을 회피했습니다!");
+                }
+                else
+                {
+                    target.TakeDamage(player.Atk, player.CritDamage, IsOccur(player.Crit));
+                    if (target.IsDead)
+                    {
+                        Console.WriteLine($"{target.Name}이(가) 쓰러졌습니다!");
+                        monsters.Remove(target);
+                    }
+                }
+
+                if (!monsters.Any(m => !m.IsDead)) break;
+
+                // 몬스터 공격
+                foreach (var monster in monsters)
+                {
+                    if (monster.IsDead) continue;
+
+                    Console.WriteLine($"{monster.Name}의 공격!");
+                    if (IsOccur(player.Evasion))
+                    {
+                        Console.WriteLine($"{player.Name}이(가) 공격을 회피했습니다!");
+                    }
+                    else
+                    {
+                        player.TakeDamage(monster.Atk, monster.Crit, IsOccur(monster.Crit));
+                        if (player.IsDead)
+                        {
+                            Console.WriteLine("플레이어가 사망했습니다!");
+                            OnCharacterDeath?.Invoke(player);
+                            return;
+                        }
+                    }
+                }
+            }
+
+            Console.WriteLine("===== 전투 종료 =====");
+        }*/
+
+        private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // return 같은걸 써줄 필요가 전혀 없었음
+
+        private void GameOver()
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!! - Result\n");
+            Console.WriteLine("You Lose\n");
+            Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            Console.WriteLine($"HP {initialPlayerHealth} -> 0\n");
+            Console.WriteLine("0. 다음");
+            Console.ReadLine();
+        }
+
+        private void Victory()
+        {
+            int monstersDefeated = monsters.Count;
+            int expGained = monsters.Where(m => m.IsDead).Sum(m => m.Level);    //where를 사용해야 Sum으로 monster의 Level값 총합을 가져와 Exp를 계산 가능
+            player.Exp += expGained;
+            player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
+
+            Console.Clear();
+            Console.WriteLine("Battle!! - Result\n");
+            Console.WriteLine("Victory\n");
+            Console.WriteLine($"던전에서 몬스터 {monstersDefeated}마리를 잡았습니다.\n");
+            Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            Console.WriteLine($"HP {initialPlayerHealth} -> {player.CurrentHealth}");
+            Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
+            Console.WriteLine("0. 다음");
+            Console.ReadLine();
         }
     }
 
