@@ -11,12 +11,13 @@ namespace HellChangSub
         Random rand = new Random();
         List<Monster> monsters;
         private Player player;
+   
 
         public Stage(Player player, int stageLvl)
         {
             this.player = player;
             monsters = new List<Monster>();
-            int mosterQuantity = rand.Next(1,5 + stageLvl);
+            int mosterQuantity = rand.Next(1, 5 + stageLvl);
             for (int i = 0; i < mosterQuantity; i++)
             {
                 Monster monster = MonsterFactory.CreateMonster(stageLvl);
@@ -41,7 +42,7 @@ namespace HellChangSub
             switch (choice)
             {
                 case 0:
-                    GameManger.ShowMainScreen();
+                    GameManager.Instance.ShowMainScreen();
                     break;
                 case 1:
                     Battle.StartBattle();

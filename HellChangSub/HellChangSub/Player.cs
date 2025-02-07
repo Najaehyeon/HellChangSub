@@ -145,5 +145,23 @@ namespace HellChangSub
         //스킬 습득 여부는 어떻게할까? - islearn 부울값을 배정해서 레벨업시 직업과 레벨 충족하면 해당 부울값을 true로 하고 true인 스킬은 전투화면에서 보여지고 사용도 가능하도록
 
 
+        public void ShowStatus()
+        {
+            Console.Clear();
+            Console.WriteLine($"{"Name",-12} {Name}");
+            Console.WriteLine($"{"Level",-12} {Level}");
+            Console.WriteLine($"{"Exp",-12} {Exp}");
+            Console.WriteLine($"{"Gold",-12} {Gold}");
+            Console.WriteLine($"{"HP",-12} {CurrentHealth}/{MaximumHealth}");
+            Console.WriteLine($"{"MP",-12} {CurrentMana}/{MaximumMana}");
+            Console.WriteLine($"{"Atk",-12} {Atk} {(EquipAtk == 0 ? "" : $"(+ {EquipAtk})")}");
+            Console.WriteLine($"{"Def",-12} {Def} {(EquipDef == 0 ? "" : $"(+ {EquipDef})")}");
+            Console.WriteLine($"{"Crit",-12} {Crit}");
+            Console.WriteLine($"{"CritDmg",-12} {CritDamage}");
+            Console.WriteLine($"{"Evasion",-12} {Evasion}");
+            Console.WriteLine("\n0. 나가기");
+            int choice = Utility.Select(0, 0);
+            GameManger.ShowMainScreen();
+        }
     }
 }
