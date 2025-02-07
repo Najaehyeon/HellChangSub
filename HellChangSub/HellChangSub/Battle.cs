@@ -55,7 +55,7 @@ namespace HellChangSub
             int choice = int.Parse(Console.ReadLine());
 
             if (choice == 0) return;
-            if (choice > 0 && choice <= monsters.Count && !monsters[choice - 1].IsDead)
+            if (Utility.Select(1, monsters.Count) && !monsters[choice - 1].IsDead)
             {
                 Monster target = monsters[choice - 1];
                 int mobBeforeDmg = target.CurrentHealth;
@@ -85,7 +85,7 @@ namespace HellChangSub
                         break;
                 }
                 Console.WriteLine("0. 다음");
-                Console.ReadLine();
+                Utility.Select(0, 0);
             }
         }
 
@@ -118,7 +118,7 @@ namespace HellChangSub
             }
 
             Console.WriteLine("0. 다음");
-            Console.ReadLine();
+            Utility.Select(0, 0);
         }
 
         public void TakeDamage(string Name, ref int CurrentHealth, float Atk, float EquipAtk, float CritDmg, int Def, int EquipDef, bool crit)
@@ -151,6 +151,8 @@ namespace HellChangSub
             Console.WriteLine($"HP {initialPlayerHealth} -> 0\n");
             Console.WriteLine("0. 다음");
             Console.ReadLine();
+            if(Utility.Select(0, 0) == 0)
+                GameManager.Instance.ShowMainScreen();
         }
 
         private void Victory()
@@ -170,6 +172,8 @@ namespace HellChangSub
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             Console.WriteLine("0. 다음");
             Console.ReadLine();
+            if (Utility.Select(0, 0) == 0)
+                GameManager.Instance.ShowMainScreen();
         }
     }
 
