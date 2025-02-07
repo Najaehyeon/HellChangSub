@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace HellChangSub
 {
-    public class ItemScene
+    public class ItemManager
     {
         Player player;
 
-        public ItemScene(Player player)
+        public ItemManager(Player player)
         {
             this.player = player;
         }
@@ -286,6 +286,30 @@ namespace HellChangSub
                 }
             }
         }
-        
+
+        public void UsePotion(Player player, int input)
+        {
+            UseItem item = useItems[input-1];
+            switch(item.ItemType)
+            {
+                case ItemType.HpPotion:
+                    player.CurrentHealth += item.Value;
+                    player.CurrentHealth = player.CurrentHealth >= player.MaximumHealth ? player.MaximumHealth : player.CurrentHealth;
+                    break;
+                case ItemType.AtkPotion:
+                    player.EquipAtk += item.Value;
+                    break;
+                case ItemType.DefPotion:
+                    player.EquipDef += item.Value;
+                    break;
+            }
+        }
+
+        public void EndPotion(Player player)
+        {
+
+        }
+
+
     }
 }
