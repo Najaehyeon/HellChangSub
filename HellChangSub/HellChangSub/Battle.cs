@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace HellChangSub
@@ -22,6 +23,7 @@ namespace HellChangSub
             this.monsters = monsters;
             this.initialPlayerHealth = player.CurrentHealth;
             this.initialPlayerExp = player.Exp;
+            
         }
 
         public void StartBattle()
@@ -76,7 +78,7 @@ namespace HellChangSub
                         break;
                     case false:
                         int Mobbeforedmg = monsters[choice - 1].CurrentHealth;
-                        monsters[choice - 1].TakeDamage(player.Atk, player.CritDamage, IsOccur(player.Crit));
+                        TakeDamage(monsters[choice - 1].Name, player.CurrentHealth, player.Atk, player.EquipAtk, player.CritDamage, player.Def, player.EquipDef, IsOccur(player.Crit));
                         Console.WriteLine($"\nLv.{monsters[choice - 1].Level} {monsters[choice - 1].Name} 을(를) 맞췄습니다. [데미지 : {damage}]\n");   //여기부터 아래로 3줄 TakeDamage에 구현할것 - 치명타 공격! 까지
                         Console.WriteLine($"Lv.{monsters[choice - 1].Level} {monsters[choice - 1].Name}");
                         Console.WriteLine($"HP {Mobbeforedmg} -> {(monsters[choice - 1].IsDead ? "Dead" : monsters[choice - 1].CurrentHealth.ToString())}\n");
@@ -113,6 +115,21 @@ namespace HellChangSub
 
             Console.WriteLine("0. 다음");
             Console.ReadLine();
+        }
+
+        public void TakeDamage(string Name, int CurrentHP, float Atk, float EquipAtk, float CritDmg, int Def, int EquipDef, bool crit)      //Name == 
+        {
+            float damage;
+            if (crit == true)
+            {
+                damage = (Atk + EquipAtk) * CritDmg;
+                Console.Write("치명타! ");
+            }
+            else
+                damage = Atk + EquipAtk;
+            CurrentHP -= (int)damage - Def;      //데미지값 소수 첫째자리 버림
+            Console.Write($"{Name} 을(를) 맞췄습니다. [데미지 : {(int)damage - Def - EquipDef}]");
+
         }
 
         private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // return 같은걸 써줄 필요가 전혀 없었음
