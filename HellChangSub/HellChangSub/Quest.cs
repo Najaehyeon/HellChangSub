@@ -40,7 +40,7 @@ namespace HellChangSub
             }
         }
 
-        public static void ShowFirstQuest()
+        public static void ShowFirstQuest() // "마을을 위협하는 미니언 처치" 퀘스트 보여주는 메서드 
         {
             Console.Clear();
             Console.WriteLine("마을을 위협하는 미니언 처치!");
@@ -56,7 +56,7 @@ namespace HellChangSub
             switch (choice)
             {
                 case 1:
-                    // 퀘스트 수락
+                    // 퀘스트 수락 (필요한 것 : 미니언을 몇 마리 처치했는지 확인 / 수행 시 보상 주기)
                     break;
                 case 2:
                     // 퀘스트 거절, 돌아가기
@@ -66,7 +66,7 @@ namespace HellChangSub
             }
         }
 
-        public static void ShowSecondQuest()
+        public static void ShowSecondQuest() // "장비를 장착해보자" 퀘스트 보여주는 메서드
         {
             Console.Clear();
             Console.WriteLine("장비를 장착해보자.");
@@ -82,7 +82,7 @@ namespace HellChangSub
             switch (choice)
             {
                 case 1:
-                    // 퀘스트 수락
+                    // 퀘스트 수락 (필요한 것 : 아이템을 장착했는지 확인 / 수행 시 보상 주기)
                     break;
                 case 2:
                     // 퀘스트 거절, 돌아가기
@@ -92,7 +92,7 @@ namespace HellChangSub
             }
         }
 
-        public static void ShowThirdQuest()
+        public static void ShowThirdQuest() // "더욱 더 강해지기" 퀘스트 보여주는 메서드
         {
             Console.Clear();
             Console.WriteLine("더욱 더 강해지기!");
@@ -108,7 +108,7 @@ namespace HellChangSub
             switch (choice)
             {
                 case 1:
-                    // 퀘스트 수락
+                    // 퀘스트 수락 (레벨을 달성 했는 지 확인 / 수행 시 보상 주기)
                     break;
                 case 2:
                     // 퀘스트 거절, 돌아가기
