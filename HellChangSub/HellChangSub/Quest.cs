@@ -6,15 +6,32 @@ using System.Threading.Tasks;
 
 namespace HellChangSub
 {
-    class Quest
+    public static class Quest
     {
         public static void ShowQuestList()
         {
             Console.WriteLine("퀘스트 선택하기.\n");
-            string[] quests = { "1. 마을을 위협하는 미니언 처치!", "2. 장비를 장착해보자.", "3. 더욱 더 강해지기!" };
+            string[] quests = { "마을을 위협하는 미니언 처치!", "장비를 장착해보자.", "더욱 더 강해지기!" };
             for (int i = 0; i < quests.Length; i++)
             {
-                Console.WriteLine(quests[i]);
+                if (!History.Instance.Quests.ContainsKey(quests[i]))
+                {
+                    Console.WriteLine($"{i + 1}. [수행가능]{quests[i]}");
+                }
+                else if (History.Instance.Quests[quests[i]].State == QuestState.InProgress)
+                {
+                    Console.WriteLine($"{i + 1}. [진행중]{quests[i]}");
+                }
+                else if (History.Instance.Quests[quests[i]].State == QuestState.Completed)
+                {
+                    Console.WriteLine($"{i + 1}. [미션완료]{quests[i]}");
+                }
+                else if (History.Instance.Quests[quests[i]].State == QuestState.RewardClaimed)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                    Console.WriteLine($"{i + 1}. [진행완료]{quests[i]}");
+                    Console.ResetColor();
+                }
             }
             Console.WriteLine("\n0. 나가기");
 
@@ -22,47 +39,49 @@ namespace HellChangSub
 
             switch (choice)
             {
-                case 0:
-                    // 나가기 메서드
-                    break;
-                case 1:
-                    // 1번 퀘스트 선택 메서드
-                    ShowQuest(
-                        "마을을 위협하는 미니언 처치!",
-                        "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
-                        "- 미니언 5마리 처치",
-                        new string[] { "쓸만한 방패", "500 Gold" }
-                        );
-                    break;
-                case 2:
-                    // 2번 퀘스트 선택 메서드
-                    ShowQuest(
-                        "장비를 장착해보자.",
-                        "'마을을 위협하는 미니언 처치' 퀘스트를 지행하면,\n'쓸만한 방패'를 얻을 수 있다.\n퀘스트를 진행하여 '쓸만한 방패'를 얻고, 장착해보자.",
-                        "쓸만한 방패 장착하기",
-                        new string[] { "EXP +50", "200 Gold" }
-                        );
-                    break;
-                case 3:
-                    // 3번 퀘스트 선택 메서드
-                    ShowQuest(
-                        "더욱 더 강해지기!",
-                        "특정 레벨에 도달하면 새로운 강력한 아이템을 얻을 수 있다.\nLv.10을 달성하여 더욱 더 강해져보자!",
-                        "Lv.10 달성하기",
-                        new string[] { "AK-47", "EXP +80", "1000 Gold" }
-                        );
+                case 1: // 1번 퀘스트 선택 시
+                    if (!History.Instance.Quests.ContainsKey("마을을 위협하는 미니언 처치!") || History.Instance.Quests["마을을 위협하는 미니언 처치!"].State != QuestState.RewardClaimed)
+                    {
+                        ShowQuest("마을을 위협하는 미니언 처치!", "미니언 5마리 처치", new string[] { "쓸만한 방패", "500 Gold" }, 5, 0);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("이미 완료한 퀘스트입니다.");
+                        break;
+                    }
+                case 2: // 2번 퀘스트 선택 시
+                    if (!History.Instance.Quests.ContainsKey("장비를 장착해보자.") || History.Instance.Quests["장비를 장착해보자."].State != QuestState.RewardClaimed)
+                    {
+                        ShowQuest("장비를 장착해보자.", "쓸만한 방패 장착하기", new string[] { "EXP +50", "200 Gold" }, true, false);
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("이미 완료한 퀘스트입니다.");
+                        break;
+                    }
+                case 3: // 3번 퀘스트 선택 시
+                    if (!History.Instance.Quests.ContainsKey("더욱 더 강해지기!") || History.Instance.Quests["더욱 더 강해지기!"].State != QuestState.RewardClaimed)
+                    {
+                        ShowQuest("더욱 더 강해지기!", "Lv.10 달성하기", new string[] { "AK-47", "EXP + 80", "1000 Gold" }, 10, 1); // 마지막 인자 = 현재레벨
+                        break;
+                    }
+                    else
+                    {
+                        Console.WriteLine("이미 완료한 퀘스트입니다.");
+                        break;
+                    }
+                case 0: // 0. 선택 시 나가기
                     break;
             }
         }
 
-        // 미션 만드는 메서드
-        public static void ShowQuest(string title, string description, string mission, string[] rewards)
+        public static void ShowQuest(string title, string mission, string[] rewards, object goal, object nowProgressed)
         {
             Console.Clear();
             Console.WriteLine(title);
-            Console.WriteLine();
-            Console.WriteLine(description);
-            Console.WriteLine();
+            Console.WriteLine("\n- 미션 -");
             Console.WriteLine(mission);
             Console.WriteLine("\n- 보상 -");
             foreach (string reward in rewards)
@@ -70,20 +89,77 @@ namespace HellChangSub
                 Console.WriteLine(reward);
             }
             Console.WriteLine();
-            Console.WriteLine("1. 수락\n2. 거절");
 
-            int choice = Utility.Select(1, 2);
-
-            switch (choice)
+            if (!History.Instance.Quests.ContainsKey(title)) // 미션을 수행중이 아니거나, 수행한 적이 없을 때
             {
-                case 1:
-                    // 퀘스트 수락 (미션 수행 했는지 확인하는 매개체 / 수행 시 보상 주기 / 해당 퀘스트 수행 중으로 표시하기 / 퀘스트를 완료하면, 리스트에서 완료된 표시하기)
+                Console.WriteLine("1. 수락\n2. 거절");
 
-                    break;
-                case 2:
-                    Console.Clear();
-                    ShowQuestList();
-                    break;
+                int choice = Utility.Select(1, 2);
+
+                switch (choice)
+                {
+                    case 1:
+                        AcceptQuest(title, goal, nowProgressed);
+                        break;
+                    case 2:
+                        Console.Clear();
+                        ShowQuestList();
+                        break;
+                }
+            }
+            else if (History.Instance.Quests[title].State == QuestState.InProgress) // 미션을 수행 중일 때
+            {
+                Console.WriteLine("- 진척도 -");
+                Console.WriteLine($"{History.Instance.Quests[title].NowProgressed} / {History.Instance.Quests[title].Goal}\n");
+                Console.WriteLine("1. 미션포기\n0. 나가기");
+
+                int choice = Utility.Select(0, 1);
+
+                switch (choice)
+                {
+                    case 1: // 미션 포기
+                        History.Instance.Quests.Remove(title);
+                        break;
+                    case 0: // 나가기
+                        Console.Clear();
+                        ShowQuestList();
+                        break;
+                }
+            }
+            else if (History.Instance.Quests[title].State == QuestState.Completed)
+            {
+                Console.WriteLine("1. 보상 얻기");
+
+                int choice = Utility.Select(1, 1);
+
+                switch (choice)
+                {
+                    case 1: // 보상 받기
+                        History.Instance.ClaimReward(title);
+                        break;
+                }
+            }
+        }
+
+        public static void AcceptQuest(string questName, object goal, object nowProgressed)
+        {
+            History.Instance.StartQuest(questName, goal, nowProgressed);
+            Console.WriteLine($"\"{questName}\" 퀘스트를 수락했습니다!");
+        }
+
+        public static void CompleteMission(string questName)
+        {
+            History.Instance.UpdateProgress(questName);
+
+            if (History.Instance.Quests.ContainsKey(questName) && History.Instance.Quests[questName].State == QuestState.Completed)
+            {
+                Console.WriteLine($"{questName}를 완료했습니다!");
+                Console.WriteLine("보상을 받으려면 1을 입력하세요.");
+                int rewardChoice = Utility.Select(1, 1);
+                if (rewardChoice == 1)
+                {
+                    History.Instance.ClaimReward(questName);
+                }
             }
         }
     }
