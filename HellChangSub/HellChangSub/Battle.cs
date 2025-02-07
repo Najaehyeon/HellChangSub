@@ -30,19 +30,8 @@ namespace HellChangSub
         {
             while (true)
             {
-                PlayerTurn();   //
-                if (monsters.All(m => m.IsDead))   //모든 monster의 IsDead값이 true인지 확인하는 과정
-                {
-                    Victory();
-                    break;
-                }
-
+                PlayerTurn();
                 MonsterTurn();
-                if (player.IsDead)
-                {
-                    GameOver();
-                    break;
-                }
             }
         }
 
@@ -72,16 +61,21 @@ namespace HellChangSub
                 Console.WriteLine("Battle!!\n");
                 Console.WriteLine($"{player.Name}의 공격!");
                 switch (IsOccur(10))     //몬스터 회피율 일단 10으로 계산, 추후 회피율이 다른 몬스터 만들거면 10 위치에 monster[choice - 1].Evasion 넣어야됨
+                                         //스킬을 기반으로 한 데미지일 경우 회피 계산식이 작동하지 않게 해야함 - isskill 부울값으로 할까?
                 {
                     case true:
                         Console.WriteLine($"LV.{monsters[choice - 1].Level} {monsters[choice - 1].Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
                         break;
                     case false:
                         int Mobbeforedmg = monsters[choice - 1].CurrentHealth;
-                        TakeDamage(monsters[choice - 1].Name, player.CurrentHealth, player.Atk, player.EquipAtk, player.CritDamage, player.Def, player.EquipDef, IsOccur(player.Crit));
-                        Console.WriteLine($"\nLv.{monsters[choice - 1].Level} {monsters[choice - 1].Name} 을(를) 맞췄습니다. [데미지 : {damage}]\n");   //여기부터 아래로 3줄 TakeDamage에 구현할것 - 치명타 공격! 까지
+                        TakeDamage(monsters[choice - 1].Name, monsters[choice - 1].CurrentHealth, player.Atk, player.EquipAtk, player.CritDamage, monsters[choice - 1].Def, 0, IsOccur(player.Crit));
                         Console.WriteLine($"Lv.{monsters[choice - 1].Level} {monsters[choice - 1].Name}");
                         Console.WriteLine($"HP {Mobbeforedmg} -> {(monsters[choice - 1].IsDead ? "Dead" : monsters[choice - 1].CurrentHealth.ToString())}\n");
+                        if (monsters.All(m => m.IsDead))        //모든 monster의 IsDead값이 true인지 확인하는 과정
+                        {
+                            Victory();
+                            return;
+                        }
                         break;
                 }
                 Console.WriteLine("0. 다음");
@@ -98,17 +92,21 @@ namespace HellChangSub
             foreach (var monster in monsters.Where(m => !m.IsDead))
             {
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
-                switch (IsOccur(player.Evasion))
+                switch (IsOccur(player.Evasion)) //스킬을 기반으로 한 데미지일 경우 회피 계산식이 작동하지 않게 해야함 - isskill 부울값으로 할까?
                 {
                     case true:
                         Console.WriteLine($"{player.Name} 는 {monster.Name}의 공격을 피해냈다!\n");
                         break;
                     case false:
                         int Playerbeforedmg = player.CurrentHealth;
-                        player.TakeDamage(monster.Atk, 1.6, IsOccur(monster.Crit));
-                        Console.WriteLine($"{player.Name} 을(를) 맞췄습니다. [데미지 : {damage}]\n");     //여기부터 아래로 3줄 TakeDamage에 구현할것 - 치명타 공격! 까지
-                        Console.WriteLine($"Lv.{player.Level} {player.Name}");      //이부분을 Player.TakeDamage()에 추가하고 굳이 안써도 될듯?
+                        TakeDamage(player.Name, player.CurrentHealth, monster.Atk, 0, 1.6, player.Def, player.EquipDef, IsOccur(monster.Crit));
+                        Console.WriteLine($"Lv.{player.Level} {player.Name}");
                         Console.WriteLine($"HP {Playerbeforedmg} -> {player.CurrentHealth}\n");
+                        if (player.IsDead)
+                        {
+                            GameOver();
+                            return; // 남은 몬스터 턴 스킵
+                        }
                         break;
                 }
             }
@@ -117,20 +115,24 @@ namespace HellChangSub
             Console.ReadLine();
         }
 
-        public void TakeDamage(string Name, int CurrentHP, float Atk, float EquipAtk, float CritDmg, int Def, int EquipDef, bool crit)      //Name == 
+        public void TakeDamage(string Name, ref int CurrentHealth, float Atk, float EquipAtk, float CritDmg, int Def, int EquipDef, bool crit)
         {
-            float damage;
-            if (crit == true)
-            {
-                damage = (Atk + EquipAtk) * CritDmg;
-                Console.Write("치명타! ");
-            }
-            else
-                damage = Atk + EquipAtk;
-            CurrentHP -= (int)damage - Def;      //데미지값 소수 첫째자리 버림
-            Console.Write($"{Name} 을(를) 맞췄습니다. [데미지 : {(int)damage - Def - EquipDef}]");
+            Random rand = new Random();  // 기본기능 - 전투 - 공격 항의 공격력은 10%의 오차를 가지게 됩니다 구현
+            double randomMultiplier = rand.NextDouble() * 0.2 + 0.9;  // 0.9 ~ 1.1 사이의 값 생성
 
+            float baseDamage = (Atk + EquipAtk) * (crit ? CritDmg : 1); // 기본 데미지 계산
+            double adjustedDamage = baseDamage * randomMultiplier;  // 90% ~ 110% 적용
+
+            int finalDamage = (int)Math.Ceiling(adjustedDamage) - Def - EquipDef; // 올림 처리 후 방어력 적용
+            if (finalDamage < 0) finalDamage = 0; // 방어력이 과도하게 높을경우 맞았는데 체력이 회복되는거 방지
+
+            CurrentHealth -= finalDamage;
+            if (CurrentHealth < 0) CurrentHealth = 0; // 체력이 음수가 되지 않도록 설정
+
+            Console.Write($"{Name} 을(를) 맞췄습니다. [데미지 : {finalDamage}]\n");
         }
+
+
 
         private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // return 같은걸 써줄 필요가 전혀 없었음
 

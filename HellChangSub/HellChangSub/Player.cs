@@ -122,26 +122,7 @@ namespace HellChangSub
                 Console.WriteLine("레벨업을 하였습니다.");
             }
         }
-        public void TakeDamage(float Atk, float CritDmg, bool crit)      //기본적인 데미지 공식 but 스킬 구현할 때 스킬데미지는 회피 불가도 같이 구현해줘야함
-        {
-            float damage;
-            if (crit == true)
-            {
-                damage = Atk * CritDmg;
-                Console.Write("치명타! ");
-            }
-            else
-                damage = Atk;
-            CurrentHealth -= (int)damage - Def - EquipDef;      //데미지값 소수 첫째자리 버림
-            Console.Write($"{Name}이(가) {(int)damage - Def - EquipDef}의 데미지를 받았습니다.");
-            if (IsDead)
-                Console.WriteLine($"{Name}이(가) 죽었습니다.");
-            else
-                Console.WriteLine($"남은 체력: {CurrentHealth}");
-        }
-
         
-        //스킬을 기반으로 한 데미지일 경우 회피 계산식이 작동하지 않게 해야함 - isskill 부울값으로 할까?
         //스킬 습득 여부는 어떻게할까? - islearn 부울값을 배정해서 레벨업시 직업과 레벨 충족하면 해당 부울값을 true로 하고 true인 스킬은 전투화면에서 보여지고 사용도 가능하도록
 
 
