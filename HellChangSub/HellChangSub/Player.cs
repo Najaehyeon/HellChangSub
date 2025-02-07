@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HellChangSub
 {
-    class Player
+    public class Player
     {
         public string Name { get; set; }
         public int JobCode { get; set; }        //직업 1번 전사, 2번 도적, 3번 마법사
