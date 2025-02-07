@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
-using System.Text.Json; // C# 기본 JSON 라이브러리
+using System.Text.Json;
+using HellChangSub; // C# 기본 JSON 라이브러리
 
 [Serializable]
 public class SaveData
@@ -22,4 +23,26 @@ public class SaveData
     public float Crit { get; set; }
     public float CritDamage { get; set; }
     public float Evasion { get; set; }
+
+    public SaveData(Player player)
+    {
+        Name = player.Name;
+        JobCode = player.JobCode;
+        JobName = player.JobName;
+        Level = player.Level;
+        Exp = player.Exp;
+        CurrentHealth = player.CurrentHealth;
+        MaximumHealth = player.MaximumHealth;
+        CurrentMana = player.CurrentMana;
+        MaximumMana = player.MaximumMana;
+        CurrentMana = player.CurrentMana;
+        Atk = player.Atk;
+        EquipAtk = player.EquipAtk;
+        Def = player.Def;
+        EquipDef = player.EquipDef;
+        Gold = player.Gold;
+        Crit = player.Crit;
+        CritDamage = player.CritDamage;
+        Evasion = player.Evasion;
+    }
 }

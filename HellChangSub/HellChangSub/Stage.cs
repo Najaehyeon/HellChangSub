@@ -11,7 +11,7 @@ namespace HellChangSub
         Random rand = new Random();
         List<Monster> monsters;
         private Player player;
-   
+        private Battle battle;   
 
         public Stage(Player player, int stageLvl)
         {
@@ -45,7 +45,8 @@ namespace HellChangSub
                     GameManager.Instance.ShowMainScreen();
                     break;
                 case 1:
-                    Battle.StartBattle();
+                    battle = new Battle(player, monsters);
+                    battle.StartBattle();
                     break;
             }
         }

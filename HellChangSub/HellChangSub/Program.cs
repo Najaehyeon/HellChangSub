@@ -11,8 +11,7 @@
     class GameManager//싱글톤으로 작업 싱글톤으로 사용시 최초접근시 전역적으로 접근 가능한 객체 생성후 객체 생성 불가
     {
         Player player;
-        Inventory inventory;
-        Shop shop;
+        ItemScene itemScene;
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
 
         public static GameManager Instance  // 2️ 전역적으로 접근 가능한 프로퍼티
@@ -29,30 +28,21 @@
             Console.WriteLine("저장된 게임을 불러오시겠습니까?");
             Console.WriteLine("\n1. 예\n2. 아니오");
             int choice = Utility.Select(1, 2);
-            while (true)
+            
+            if (choice == 1)
             {
-                if (choice == 1)
-                {
-                    if (inventory == null)//세이브파일 체크
-                    {
-                        //게임로드
-                        return;
-                    }
-
-                }
-                else
-                {
-                    //
-                }
+                player = SaveSystem.LoadGame();
             }
-            Console.WriteLine("플레이어 이름을 입력해주세요.");
-            Console.Write(">>");
-            string playerName = Console.ReadLine();
-            Console.WriteLine("직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
-            int playerJob = Utility.Select(1, 3);
-            player = new Player(playerName, playerJob);
-            inventory = new Inventory();
-            shop = new Shop();
+            else
+            {
+                Console.WriteLine("플레이어 이름을 입력해주세요.");
+                Console.Write(">>");
+                string playerName = Console.ReadLine();
+                Console.WriteLine("직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
+                int playerJob = Utility.Select(1, 3);
+                player = new Player(playerName, playerJob); //
+            }
+            itemScene = new ItemScene();
         }
 
         public void ShowMainScreen()
@@ -71,23 +61,19 @@
                     Stage stage = new Stage(player, 1);
                     break;
                 case 3:
-                    inventory.ShowInventory();
+                    itemScene.InventoryScene();
                     break;
                 case 4:
-                    shop.ShowShop();
+                    itemScene.ShopScene();
                     break;
                 case 5:
                     Quest.ShowQuestList();
                     break;
                 case 6:
-                    //저장기능
+                    SaveData saveData = new SaveData(player);
+                    SaveSystem.SaveGame(saveData);//저장기능
                     break;
             }
-        }
-
-        public void SaveData()
-        {
-
         }
     }
 }
