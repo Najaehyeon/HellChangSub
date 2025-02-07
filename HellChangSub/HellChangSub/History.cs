@@ -20,15 +20,46 @@ namespace HellChangSub
             }
         }
 
-        History.Instance.
-
         private History()
         {
 
         }
-        public History() { }
+        
         public int MonsterKill {  get; set; }
         public bool QuestClear1 { get; set; }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 }
