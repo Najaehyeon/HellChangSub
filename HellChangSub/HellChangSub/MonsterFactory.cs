@@ -11,7 +11,7 @@ namespace HellChangSub
         private static Random rand = new Random();
         public static Monster CreateMonster(int stageLvl)
         {
-            int randomDice = rand.Next(0, 101);
+            int randomDice = rand.Next(1, 101);
             int randomMonster;
             if (randomDice < stageLvl * 5)
             {

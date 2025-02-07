@@ -16,7 +16,7 @@ namespace HellChangSub
         {
             this.player = player;
             monsters = new List<Monster>();
-            int mosterQuantity = rand.Next(0,5 + stageLvl*2);
+            int mosterQuantity = rand.Next(1,5 + stageLvl);
             for (int i = 0; i < mosterQuantity; i++)
             {
                 Monster monster = MonsterFactory.CreateMonster(stageLvl);
@@ -33,9 +33,9 @@ namespace HellChangSub
                 Console.WriteLine($"{i+1}. {monsters[i].Level} {monsters[i].Name} HP {monsters[i].MaximumHealth}");
             }
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv. {player.Level} {player.Name} {player.JobCode}");
+            Console.WriteLine($"Lv. {player.Level} {player.Name} {player.JobName}");
             Console.WriteLine($"HP {player.MaximumHealth}/{player.CurrentHealth}");
-            Console.WriteLine($"MP {player.MaximumMP}/{player.CurrentMP}");
+            Console.WriteLine($"MP {player.MaximumMana}/{player.CurrentMana}");
             Console.WriteLine("\n1. 전투시작\n0. 나가기");
             int choice = Utility.Select(0, 1);
             switch (choice)
