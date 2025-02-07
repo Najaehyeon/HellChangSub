@@ -139,13 +139,8 @@ namespace HellChangSub
             else
                 Console.WriteLine($"남은 체력: {CurrentHealth}");
         }
-        //랜덤을 통해 치명타와 회피를 구현해야 함
-        public bool IsOccur(float prob)
-        {
-            int isOccur = new Random().Next(0, 100);
-            if (isOccur < prob) return true;
-            else return false;
-        }
+
+        
         //스킬을 기반으로 한 데미지일 경우 회피 계산식이 작동하지 않게 해야함 - isskill 부울값으로 할까?
         //스킬 습득 여부는 어떻게할까? - islearn 부울값을 배정해서 레벨업시 직업과 레벨 충족하면 해당 부울값을 true로 하고 true인 스킬은 전투화면에서 보여지고 사용도 가능하도록
 

@@ -29,7 +29,7 @@ namespace HellChangSub
         }
 
         // 스테이지 시작 메서드
-        public void Start()
+        public static void StartBattle()
         {
             Console.WriteLine($"Battle!");
             Console.WriteLine("");
@@ -65,10 +65,10 @@ namespace HellChangSub
             {
                 // 플레이어의 턴
                 Console.WriteLine($"{player.Name}의 공격!");
-                if (monster.IsOccur(monster.Evasion) == true)
+                if (IsOccur(monster.Evasion))
                     Console.WriteLine($"{monster.Name}는 공격을 피했다!");
                 else
-                    monster.TakeDamage(player.Atk, player.CritDamage, player.IsOccur(player.Crit));
+                    monster.TakeDamage(player.Atk, player.CritDamage, IsOccur(player.Crit));
                 Console.WriteLine();
                 Thread.Sleep(100);
 
@@ -76,10 +76,10 @@ namespace HellChangSub
 
                 // 몬스터의 턴
                 Console.WriteLine($"{monster.Name}의 공격!");
-                if (player.IsOccur(player.Evasion) == true)
+                if (IsOccur(player.Evasion))
                     Console.WriteLine($"{player.Name}는 공격을 피했다!");
                 else
-                    player.TakeDamage(monster.Atk, monster.CritDamage, monster.IsOccur(monster.Crit));
+                    player.TakeDamage(monster.Atk, monster.CritDamage, IsOccur(monster.Crit));
                 Console.WriteLine();
                 Thread.Sleep(100);  
             }
@@ -94,5 +94,13 @@ namespace HellChangSub
                 OnEnemyDeath?.Invoke(monster);
             }
         }
+        //랜덤을 통해 치명타와 회피를 구현해야 함
+        public static bool IsOccur(float prob)
+        {
+            int isOccur = new Random().Next(0, 100);
+            return isOccur < prob;
+        }
     }
+
+    
 }
