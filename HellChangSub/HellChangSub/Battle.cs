@@ -28,7 +28,7 @@ namespace HellChangSub
         {
             while (true)
             {
-                PlayerTurn();   //몬스터와 플레이어의 정보를 계속해서 띄워줘야 하니 PlayerTurn, MonsterTurn으로 따로 정리
+                PlayerTurn();   //
                 if (monsters.All(m => m.IsDead))   //모든 monster의 IsDead값이 true인지 확인하는 과정
                 {
                     Victory();
