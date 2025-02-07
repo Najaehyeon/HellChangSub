@@ -54,7 +54,7 @@ namespace HellChangSub
                 case 2: // 2번 퀘스트 선택 시
                     if (!History.Instance.Quests.ContainsKey("장비를 장착해보자.") || History.Instance.Quests["장비를 장착해보자."].State != QuestState.RewardClaimed)
                     {
-                        ShowQuest("장비를 장착해보자.", "쓸만한 방패 장착하기", new string[] { "EXP +50", "200 Gold" }, true, false);
+                        ShowQuest("장비를 장착해보자.", "쓸만한 방패 장착하기", new string[] { "EXP +50", "200 Gold" }, "쓸만한 방패 장착하기", "장착 안됨");
                         break;
                     }
                     else
