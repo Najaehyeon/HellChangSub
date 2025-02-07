@@ -24,5 +24,11 @@ namespace HellChangSub
                 }
             }
         }
+
+        public static void PressAnyKey()
+        {
+            Console.WriteLine("진행하려면 아무 키나 눌러주세요.");
+            Console.ReadKey();
+        }
     }
 }

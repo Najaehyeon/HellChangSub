@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Text.Json;
-using HellChangSub; // C# 기본 JSON 라이브러리
+using HellChangSub;
 
 [Serializable]
 public class SaveData
