@@ -37,11 +37,12 @@ namespace HellChangSub
             isEquip = false;
             ItemType = itemtype;
         }  
-        
-        public void EquipInvenStatus()
+
+        public string EquipInvenStatus()
         {
             string equipStr = isEquip ? "[E]" : "";
-            Console.WriteLine($"{equipStr + ItemName}  | {GetItemType()} +{Value}  | {Description}");
+            string str = $"{equipStr + ItemName}  | {GetItemType()} +{Value}  | {Description}";
+            return str;
         }
 
         public void EquipItemStatus()
@@ -91,9 +92,10 @@ namespace HellChangSub
             ItemType = itemType;
             Count = 0;
         }
-        public void UseItemStatus()
+        public string UseItemStatus()
         {
-            Console.WriteLine($"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | x {Count}개 보유" );
+            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | x {Count}개 보유";
+            return str;
         }
 
         public string GetItemType()
