@@ -160,6 +160,7 @@ namespace HellChangSub
             int monstersDefeated = monsters.Count;
             int expGained = monsters.Where(m => m.IsDead).Sum(m => m.Level);    //where를 사용해야 Sum으로 monster의 Level값 총합을 가져와 Exp를 계산 가능
             player.Exp += expGained;
+            player.Gold += expGained * 100;     // 임시로 골드획득량 경험치의 100배로 해둠, 추후 골드를 많이 주는 몬스터, 덜 주는 몬스터 등이 생길 경우 수정
             
 
             Console.Clear();
@@ -170,6 +171,8 @@ namespace HellChangSub
             Console.WriteLine($"HP {initialPlayerHealth} -> {player.CurrentHealth}");
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
+            Console.WriteLine("\n[획득 아이템]");
+            Console.WriteLine($"{expGained * 100} Gold");
             Console.WriteLine("0. 다음");
             Console.ReadLine();
             if (Utility.Select(0, 0) == 0)
