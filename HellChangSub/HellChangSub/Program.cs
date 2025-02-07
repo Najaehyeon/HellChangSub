@@ -34,7 +34,8 @@ namespace HellChangSub
             
             if (choice == 1)
             {
-                player = SaveSystem.LoadGame();
+                SaveData saveData = SaveSystem.LoadGame();//로드 메서드를 통해 saveData객체생성
+                player = new Player(saveData);//saveData를 받는 플레이어 객체 생성
             }
             else
             {

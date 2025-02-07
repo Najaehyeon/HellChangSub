@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,6 +30,28 @@ namespace HellChangSub
         public bool IsDead => CurrentHealth <= 0;
 
         public Player() { }
+
+        public Player(SaveData saveData)
+        {
+            Name = saveData.Name;
+            JobCode = saveData.JobCode;
+            JobName = saveData.JobName;
+            Level = saveData.Level;
+            Exp = saveData.Exp;
+            CurrentHealth = saveData.CurrentHealth;
+            MaximumHealth = saveData.MaximumHealth;
+            CurrentMana = saveData.CurrentMana;
+            MaximumMana = saveData.MaximumMana;
+            CurrentMana = saveData.CurrentMana;
+            Atk = saveData.Atk;
+            EquipAtk = saveData.EquipAtk;
+            Def = saveData.Def;
+            EquipDef = saveData.EquipDef;
+            Gold = saveData.Gold;
+            Crit = saveData.Crit;
+            CritDamage = saveData.CritDamage;
+            Evasion = saveData.Evasion;
+        }
 
         public Player(string name, int Job)
         {
