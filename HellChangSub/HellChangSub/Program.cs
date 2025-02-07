@@ -26,6 +26,25 @@
         }
         private GameManager() // 5 외부에서 생성하지 못하게 private
         {
+            Console.WriteLine("저장된 게임을 불러오시겠습니까?");
+            Console.WriteLine("\n1. 예\n2. 아니오");
+            int choice = Utility.Select(1, 2);
+            while (true)
+            {
+                if (choice == 1)
+                {
+                    if (inventory == null)//세이브파일 체크
+                    {
+                        //게임로드
+                        return;
+                    }
+
+                }
+                else
+                {
+                    //
+                }
+            }
             Console.WriteLine("플레이어 이름을 입력해주세요.");
             Console.Write(">>");
             string playerName = Console.ReadLine();
@@ -41,7 +60,7 @@
             Console.Clear();
             Console.WriteLine("프로틴 헬창 마을에 오신 것을 환영합니다.");
             Console.WriteLine();
-            Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 퀘스트");
+            Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 퀘스트\n6. 저장하기");
             int choice = Utility.Select(1, 5);
             switch (choice)
             {
@@ -60,7 +79,15 @@
                 case 5:
                     Quest.ShowQuestList();
                     break;
+                case 6:
+                    //저장기능
+                    break;
             }
+        }
+
+        public void SaveData()
+        {
+
         }
     }
 }
