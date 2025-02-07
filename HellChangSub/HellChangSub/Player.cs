@@ -45,8 +45,8 @@ namespace HellChangSub
                     Def = 5;
                     CurrentHealth = 100;
                     MaximumHealth = 100;
-                    CurrentMana = 30;
-                    MaximumMana = 30;
+                    CurrentMana = 50;
+                    MaximumMana = 50;
                     Crit = 10;
                     CritDamage = 1.6f;
                     Evasion = 10;
@@ -58,8 +58,8 @@ namespace HellChangSub
                     Def = 3;
                     CurrentHealth = 80;
                     MaximumHealth = 80;
-                    CurrentMana = 30;
-                    MaximumMana = 30;
+                    CurrentMana = 50;
+                    MaximumMana = 50;
                     Crit = 30;
                     CritDamage = 2.0f;
                     Evasion = 20;
@@ -71,8 +71,8 @@ namespace HellChangSub
                     Def = 0;
                     CurrentHealth = 70;
                     MaximumHealth = 70;
-                    CurrentMana = 60;
-                    MaximumMana = 60;
+                    CurrentMana = 100;
+                    MaximumMana = 100;
                     Crit = 10;
                     CritDamage = 1.6f;
                     Evasion = 0;

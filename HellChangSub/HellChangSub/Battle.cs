@@ -138,7 +138,11 @@ namespace HellChangSub
             Console.Write($"{Name} 을(를) 맞췄습니다. [데미지 : {finalDamage}]\n");
         }
 
-
+        public void Recover(string statusname, ref int status, int heal)       //statusname : HP, MP, status : 회복할 프로퍼티, heal : 회복 수단별로 정해진 값
+        {
+            Console.WriteLine($"{statusname} {status} -> {status + heal}");
+            status += heal;
+        }
 
         private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // return 같은걸 써줄 필요가 전혀 없었음
 
@@ -169,6 +173,9 @@ namespace HellChangSub
             Console.WriteLine($"던전에서 몬스터 {monstersDefeated}마리를 잡았습니다.\n");
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP {initialPlayerHealth} -> {player.CurrentHealth}");
+            int mana = player.CurrentMana;
+            Recover("MP", ref mana, 10);
+            player.CurrentMana = mana;
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             Console.WriteLine("[획득 아이템]");
