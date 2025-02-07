@@ -45,9 +45,10 @@ namespace HellChangSub
             return str;
         }
 
-        public void EquipItemStatus()
+        public string EquipItemStatus()
         {
-            Console.WriteLine($"{ItemName}  | {GetItemType()} +{Value}  | {Description}");
+            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | {IsPurchased()}";
+            return str;
         }
 
         public string GetItemType()
@@ -69,7 +70,7 @@ namespace HellChangSub
 
         public string IsPurchased()
         {
-            string purchasedStr = isPurchase ? "구매완료" : $"{Price}";
+            string purchasedStr = isPurchase ? "구매완료" : $"{Price} G";
             return purchasedStr;
         }
     }
@@ -95,6 +96,12 @@ namespace HellChangSub
         public string UseItemStatus()
         {
             string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | x {Count}개 보유";
+            return str;
+        }
+
+        public string UseShopStatus()
+        {
+            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | {Price} G";
             return str;
         }
 
