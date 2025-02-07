@@ -24,7 +24,9 @@ namespace HellChangSub
             get
             {
                 if (_instance == null)       // 3️ 인스턴스가 없으면 생성
+                {
                     _instance = new GameManager();
+                }
                 return _instance;            // 4️ 인스턴스를 반환
             }
         }

@@ -35,7 +35,6 @@ namespace HellChangSub
             Exp = player.Exp;
             CurrentHealth = player.CurrentHealth;
             MaximumHealth = player.MaximumHealth;
-            CurrentMana = player.CurrentMana;
             MaximumMana = player.MaximumMana;
             CurrentMana = player.CurrentMana;
             Atk = player.Atk;

@@ -40,7 +40,6 @@ namespace HellChangSub
             Exp = saveData.Exp;
             CurrentHealth = saveData.CurrentHealth;
             MaximumHealth = saveData.MaximumHealth;
-            CurrentMana = saveData.CurrentMana;
             MaximumMana = saveData.MaximumMana;
             CurrentMana = saveData.CurrentMana;
             Atk = saveData.Atk;
