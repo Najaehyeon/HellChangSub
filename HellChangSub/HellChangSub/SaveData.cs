@@ -24,9 +24,9 @@ namespace HellChangSub
         public float CritDamage { get; set; }
         public float Evasion { get; set; }
 
-        public SaveData() { }
+        public SaveData() { }//로드시 매개변수 없는 객체 생성을 위해 오버로드
 
-        public SaveData(Player player)
+        public SaveData(Player player)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
         {
             Name = player.Name;
             JobCode = player.JobCode;
