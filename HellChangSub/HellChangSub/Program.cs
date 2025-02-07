@@ -4,17 +4,15 @@
     {
         static void Main(string[] args)
         {
-            GameManger gb = new GameManger();
-
-            GameManger.ShowMainScreen();
+            Quest.ShowQuestList();
         }
     }
 
     class GameManger
     {
         public GameManger() 
-        { 
-        
+        {
+            
         }
 
         public static void ShowMainScreen()
