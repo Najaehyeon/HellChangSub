@@ -120,6 +120,17 @@ namespace HellChangSub
                 {
                     case 1: // 미션 포기
                         History.Instance.Quests.Remove(title);
+                        Console.WriteLine("미션을 포기했습니다!");
+                        Console.WriteLine("\n0. 나가기");
+                        Console.WriteLine("다음 행동을 선택해주세요.");
+                        int choice2 = Utility.Select(0, 0);
+                        switch (choice2)
+                        {
+                            case 0:
+                                Console.Clear();
+                                ShowQuestList();
+                                break;
+                        }
                         break;
                     case 0: // 나가기
                         Console.Clear();
@@ -137,6 +148,17 @@ namespace HellChangSub
                 {
                     case 1: // 보상 받기
                         History.Instance.ClaimReward(title);
+                        Console.WriteLine("보상을 받았습니다.");
+                        Console.WriteLine("\n0. 나가기");
+                        Console.WriteLine("다음 행동을 선택해주세요.");
+                        int choice2 = Utility.Select(0, 0);
+                        switch (choice2)
+                        {
+                            case 0:
+                                Console.Clear();
+                                ShowQuestList();
+                                break;
+                        }
                         break;
                 }
             }
