@@ -171,7 +171,7 @@ namespace HellChangSub
             Console.WriteLine($"HP {initialPlayerHealth} -> {player.CurrentHealth}");
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
-            Console.WriteLine("\n[획득 아이템]");
+            Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
             Console.WriteLine("0. 다음");
             Console.ReadLine();
