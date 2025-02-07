@@ -65,7 +65,7 @@ namespace HellChangSub
             switch (input)
             {
                 case 0:
-                    //메인스크린
+                    GameManager.Instance.ShowMainScreen();//메인스크린
                     break;
                 case 1:
                     EquipScene();
