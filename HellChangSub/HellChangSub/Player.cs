@@ -122,7 +122,7 @@ namespace HellChangSub
                 Console.WriteLine("레벨업을 하였습니다.");
             }
         }
-        public void TakeDamage(float Atk, float CritDmg, bool crit)      // 데미지 계산식
+        public void TakeDamage(float Atk, float CritDmg, bool crit)      //기본적인 데미지 공식 but 스킬 구현할 때 스킬데미지는 회피 불가도 같이 구현해줘야함
         {
             float damage;
             if (crit == true)
