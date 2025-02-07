@@ -65,7 +65,7 @@ namespace HellChangSub
                 case 3: // 3번 퀘스트 선택 시
                     if (!History.Instance.Quests.ContainsKey("더욱 더 강해지기!") || History.Instance.Quests["더욱 더 강해지기!"].State != QuestState.RewardClaimed)
                     {
-                        ShowQuest("더욱 더 강해지기!", "Lv.10 달성하기", new string[] { "AK-47", "EXP + 80", "1000 Gold" }, 10, 1); // 마지막 인자 = 현재레벨
+                        ShowQuest("더욱 더 강해지기!", "Lv.10 달성하기", new string[] { "AK-47", "EXP + 80", "1000 Gold" }, 10, GameManager.Instance.Player.Level); // 마지막 인자 = 현재레벨
                         break;
                     }
                     else

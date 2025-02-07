@@ -11,6 +11,8 @@ namespace HellChangSub
         }
     }
 
+    
+
     class GameManager//싱글톤으로 작업 싱글톤으로 사용시 최초접근시 전역적으로 접근 가능한 객체 생성후 객체 생성 불가
     {
         Player player;
@@ -48,6 +50,8 @@ namespace HellChangSub
             }
             itemManager = new ItemManager(player);
         }
+
+        public Player Player => player;
 
         public void ShowMainScreen()
         {
