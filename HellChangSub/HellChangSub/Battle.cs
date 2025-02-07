@@ -31,7 +31,7 @@ namespace HellChangSub
         // 스테이지 시작 메서드
         public void Start()
         {
-            /*Console.WriteLine($"Battle!");
+            Console.WriteLine($"Battle!");
             Console.WriteLine("");
             while(createmonster[i] == true)     //몬스터 생성방식 확실히 정해지면 그에 맞춰 이거 변경
             {
@@ -45,8 +45,21 @@ namespace HellChangSub
             Console.WriteLine("0. 취소");
             Console.WriteLine("");
             Console.WriteLine("대상을 선택해주세요");
-            int target = Convert.ToInt32(Console.ReadLine(""));
-            */
+            int target = Convert.ToInt32( Console.ReadLine() );
+            switch (target)
+            {
+                case 0:
+
+                case 1:
+
+                case 2:
+
+                case 3:
+
+                default:
+                    Console.WriteLine("올바른 대상을 선택해주세요.");
+            }
+            
 
             while (!player.IsDead && !monster.IsDead) // 플레이어 혹은 몬스터가 죽을 때까지 반복, 만나는 몬스터 수 랜덤으로 바꾸고 나면 몬스터가 "전부" 죽어야 반복문 탈출하도록 바꿔야됨
             {
@@ -57,7 +70,7 @@ namespace HellChangSub
                 else
                     monster.TakeDamage(player.Atk, player.CritDamage, player.IsOccur(player.Crit));
                 Console.WriteLine();
-                Thread.Sleep(100);  
+                Thread.Sleep(100);
 
                 if (monster.IsDead) break;  // 몬스터가 죽었다면 턴 종료
 
