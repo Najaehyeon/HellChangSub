@@ -17,7 +17,7 @@ namespace HellChangSub
         {
             this.player = player;
             monsters = new List<Monster>();
-            int mosterQuantity = rand.Next(1, 5 + stageLvl);
+            int mosterQuantity = (stageLvl == 5 ? 1:rand.Next(1, 5 + stageLvl));
             for (int i = 0; i < mosterQuantity; i++)
             {
                 Monster monster = MonsterFactory.CreateMonster(stageLvl);
