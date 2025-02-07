@@ -24,6 +24,9 @@ namespace HellChangSub
             Quests = new Dictionary<string, QuestData>();
         }
 
+        public int stageLvl { get; set; } = 1;
+
+
         // 딕셔너리로 각 퀘스트에 맞는 미션을 관리 (EX. { {"미니언 5마리 처치" , 5} , {"장비 착용", true} } )
         public Dictionary<string, QuestData> Quests { get; private set; }
 
