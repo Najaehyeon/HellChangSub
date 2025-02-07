@@ -34,8 +34,8 @@ namespace HellChangSub
             }
             Console.WriteLine("[내정보]");
             Console.WriteLine($"Lv. {player.Level} {player.Name} {player.JobName}");
-            Console.WriteLine($"HP {player.MaximumHealth}/{player.CurrentHealth}");
-            Console.WriteLine($"MP {player.MaximumMana}/{player.CurrentMana}");
+            Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
+            Console.WriteLine($"MP /{player.CurrentMana}/{player.MaximumMana}");
             Console.WriteLine("\n1. 전투시작\n0. 나가기");
             int choice = Utility.Select(0, 1);
             switch (choice)
