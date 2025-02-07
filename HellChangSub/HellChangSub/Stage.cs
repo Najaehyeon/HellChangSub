@@ -28,6 +28,7 @@ namespace HellChangSub
 
         public void ShowStage(int stageLvl)
         {
+            Console.Clear();
             Console.WriteLine($"스테이지 : {stageLvl}\n몬스터가 등장했습니다.\n\n");
             for(int i = 0;i < monsters.Count;i++) 
             {

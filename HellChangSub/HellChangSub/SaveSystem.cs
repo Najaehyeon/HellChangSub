@@ -16,12 +16,12 @@ namespace HellChangSub
         }
 
 
-        public static Player LoadGame()//SaveData 객체를 반환하는 로드게임 메서드
+        public static SaveData LoadGame()//SaveData 객체를 반환하는 로드게임 메서드
         {
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                return JsonSerializer.Deserialize<Player>(json);//경로에있는 파일을 읽어온뒤 역정렬화 해주고 이를 Plyaer객체로 반환한다.
+                return JsonSerializer.Deserialize<SaveData>(json);//경로에있는 파일을 읽어온뒤 역정렬화 해주고 이를 Plyaer객체로 반환한다.
             }
 
             Console.WriteLine("세이브 파일이 없습니다.");

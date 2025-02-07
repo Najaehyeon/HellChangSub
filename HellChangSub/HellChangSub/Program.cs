@@ -34,7 +34,8 @@ namespace HellChangSub
             
             if (choice == 1)
             {
-                player = SaveSystem.LoadGame();
+                SaveData saveData = SaveSystem.LoadGame();
+                player = new Player(saveData);
             }
             else
             {
