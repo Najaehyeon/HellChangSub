@@ -42,7 +42,7 @@ namespace HellChangSub
                 case 1: // 1번 퀘스트 선택 시
                     if (!History.Instance.Quests.ContainsKey("마을을 위협하는 미니언 처치!") || History.Instance.Quests["마을을 위협하는 미니언 처치!"].State != QuestState.RewardClaimed)
                     {
-                        ShowQuest("마을을 위협하는 미니언 처치!", "미니언 5마리 처치", new string[] { "쓸만한 방패", "500 Gold" }, 5);
+                        ShowQuest("마을을 위협하는 미니언 처치!", "미니언 5마리 처치", new string[] { "쓸만한 방패", "500 Gold" }, 5, 0);
                         break;
                     }
                     else
@@ -53,7 +53,7 @@ namespace HellChangSub
                 case 2: // 2번 퀘스트 선택 시
                     if (!History.Instance.Quests.ContainsKey("장비를 장착해보자.") || History.Instance.Quests["장비를 장착해보자."].State != QuestState.RewardClaimed)
                     {
-                        ShowQuest("장비를 장착해보자.", "쓸만한 방패 장착하기", new string[] { "EXP +50", "200 Gold" }, true);
+                        ShowQuest("장비를 장착해보자.", "쓸만한 방패 장착하기", new string[] { "EXP +50", "200 Gold" }, true, false);
                         break;
                     }
                     else
@@ -64,7 +64,7 @@ namespace HellChangSub
                 case 3: // 3번 퀘스트 선택 시
                     if (!History.Instance.Quests.ContainsKey("더욱 더 강해지기!") || History.Instance.Quests["더욱 더 강해지기!"].State != QuestState.RewardClaimed)
                     {
-                        ShowQuest("더욱 더 강해지기!", "Lv.10 달성하기", new string[] { "AK-47", "EXP + 80", "1000 Gold" }, 10);
+                        ShowQuest("더욱 더 강해지기!", "Lv.10 달성하기", new string[] { "AK-47", "EXP + 80", "1000 Gold" }, 10, 1); // 마지막 인자 = 현재레벨
                         break;
                     }
                     else
@@ -77,11 +77,11 @@ namespace HellChangSub
             }
         }
 
-        public static void ShowQuest(string title, string mission, string[] rewards, object goal)
+        public static void ShowQuest(string title, string mission, string[] rewards, object goal, object nowProgressed)
         {
             Console.Clear();
             Console.WriteLine(title);
-            Console.WriteLine();
+            Console.WriteLine("\n- 미션 -");
             Console.WriteLine(mission);
             Console.WriteLine("\n- 보상 -");
             foreach (string reward in rewards)
@@ -99,7 +99,7 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1:
-                        AcceptQuest(title, goal);
+                        AcceptQuest(title, goal, nowProgressed);
                         break;
                     case 2:
                         Console.Clear();
@@ -109,6 +109,8 @@ namespace HellChangSub
             }
             else if (History.Instance.Quests[title].State == QuestState.InProgress) // 미션을 수행 중일 때
             {
+                Console.WriteLine("- 진척도 -");
+                Console.WriteLine($"{History.Instance.Quests[title].NowProgressed} / {History.Instance.Quests[title].Goal}\n");
                 Console.WriteLine("1. 미션포기\n0. 나가기");
 
                 int choice = Utility.Select(0, 1);
@@ -133,23 +135,23 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1: // 보상 받기
-
+                        History.Instance.ClaimReward(title);
                         break;
                 }
             }
         }
 
-        public static void AcceptQuest(string questName, object goal)
+        public static void AcceptQuest(string questName, object goal, object nowProgressed)
         {
-            History.Instance.StartQuest(questName, goal);
+            History.Instance.StartQuest(questName, goal, nowProgressed);
             Console.WriteLine($"\"{questName}\" 퀘스트를 수락했습니다!");
         }
 
-        public static void CompleteMission(string questName, object progress)
+        public static void CompleteMission(string questName)
         {
-            History.Instance.UpdateProgress(questName, progress);
+            History.Instance.UpdateProgress(questName);
 
-            if (History.Instance.CheckMissionCompleted(questName))
+            if (History.Instance.Quests.ContainsKey(questName) && History.Instance.Quests[questName].State == QuestState.Completed)
             {
                 Console.WriteLine($"{questName}를 완료했습니다!");
                 Console.WriteLine("보상을 받으려면 1을 입력하세요.");
