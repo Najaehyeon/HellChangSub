@@ -8,23 +8,23 @@
         }
     }
 
-    class GameManager
+    class GameManager//싱글톤으로 작업 싱글톤으로 사용시 최초접근시 전역적으로 접근 가능한 객체 생성후 객체 생성 불가
     {
         Player player;
         Inventory inventory;
         Shop shop;
-        private static GameManager _instance; // 1️⃣ 유일한 인스턴스를 저장할 정적 변수
+        private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
 
-        public static GameManager Instance  // 2️⃣ 전역적으로 접근 가능한 프로퍼티
+        public static GameManager Instance  // 2️ 전역적으로 접근 가능한 프로퍼티
         {
             get
             {
-                if (_instance == null)       // 3️⃣ 인스턴스가 없으면 생성
+                if (_instance == null)       // 3️ 인스턴스가 없으면 생성
                     _instance = new GameManager();
-                return _instance;            // 4️⃣ 인스턴스를 반환
+                return _instance;            // 4️ 인스턴스를 반환
             }
         }
-        private GameManager()
+        private GameManager() // 5 외부에서 생성하지 못하게 private
         {
             Console.WriteLine("플레이어 이름을 입력해주세요.");
             Console.Write(">>");
