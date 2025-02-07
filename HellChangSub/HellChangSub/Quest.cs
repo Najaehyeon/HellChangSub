@@ -10,6 +10,7 @@ namespace HellChangSub
     {
         public static void ShowQuestList()
         {
+            Console.Clear();
             Console.WriteLine("퀘스트 선택하기.\n");
             string[] quests = { "마을을 위협하는 미니언 처치!", "장비를 장착해보자.", "더욱 더 강해지기!" };
             for (int i = 0; i < quests.Length; i++)
@@ -145,6 +146,16 @@ namespace HellChangSub
         {
             History.Instance.StartQuest(questName, goal, nowProgressed);
             Console.WriteLine($"\"{questName}\" 퀘스트를 수락했습니다!");
+            Console.WriteLine("\n0. 나가기");
+            Console.WriteLine("다음 행동을 선택해주세요.");
+            int choice = Utility.Select(0, 0);
+            switch (choice)
+            {
+                case 0:
+                    Console.Clear();
+                    ShowQuestList();
+                    break;
+            }
         }
 
         public static void CompleteMission(string questName)
