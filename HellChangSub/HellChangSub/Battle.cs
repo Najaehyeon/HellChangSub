@@ -52,10 +52,9 @@ namespace HellChangSub
 
             Console.WriteLine("0. 취소");
             Console.Write("대상을 선택해주세요.");
-            int choice = int.Parse(Console.ReadLine());
 
-            if (choice == 0) return;
-            if (Utility.Select(1, monsters.Count) && !monsters[choice - 1].IsDead)
+            int choice = Utility.Select(1, monsters.Count);
+            if (!monsters[choice - 1].IsDead)
             {
                 Monster target = monsters[choice - 1];
                 int mobBeforeDmg = target.CurrentHealth;
@@ -104,10 +103,15 @@ namespace HellChangSub
                         Console.WriteLine($"{player.Name} 는 {monster.Name}의 공격을 피해냈다!\n");
                         break;
                     case false:
-                        int Playerbeforedmg = player.CurrentHealth;
-                        TakeDamage(player.Name, player.CurrentHealth, monster.Atk, 0, 1.6, player.Def, player.EquipDef, IsOccur(monster.Crit));
+                        int playerBeforeDmg = player.CurrentHealth; 
+                        int playerHealth = player.CurrentHealth; // 로컬 변수 생성
+
+                        TakeDamage(player.Name, ref playerHealth, monster.Atk, 0, 1.6f, player.Def, player.EquipDef, IsOccur(monster.Crit));
+
+                        player.CurrentHealth = playerHealth; // 변경된 값을 다시 적용
                         Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                        Console.WriteLine($"HP {Playerbeforedmg} -> {player.CurrentHealth}\n");
+                        Console.WriteLine($"HP {playerBeforeDmg} -> {player.CurrentHealth}\n");
+
                         if (player.IsDead)
                         {
                             GameOver();
