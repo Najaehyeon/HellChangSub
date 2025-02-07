@@ -57,6 +57,10 @@ namespace HellChangSub
             if (choice == 0) return;
             if (choice > 0 && choice <= monsters.Count && !monsters[choice - 1].IsDead)
             {
+                Monster target = monsters[choice - 1];
+                int mobBeforeDmg = target.CurrentHealth;
+                int mobHealth = target.CurrentHealth; // 로컬 변수에 저장 - ref를 쓰기 위해
+
                 Console.Clear();
                 Console.WriteLine("Battle!!\n");
                 Console.WriteLine($"{player.Name}의 공격!");
@@ -68,10 +72,12 @@ namespace HellChangSub
                         break;
                     case false:
                         int Mobbeforedmg = monsters[choice - 1].CurrentHealth;
-                        TakeDamage(monsters[choice - 1].Name, monsters[choice - 1].CurrentHealth, player.Atk, player.EquipAtk, player.CritDamage, monsters[choice - 1].Def, 0, IsOccur(player.Crit));
-                        Console.WriteLine($"Lv.{monsters[choice - 1].Level} {monsters[choice - 1].Name}");
-                        Console.WriteLine($"HP {Mobbeforedmg} -> {(monsters[choice - 1].IsDead ? "Dead" : monsters[choice - 1].CurrentHealth.ToString())}\n");
-                        if (monsters.All(m => m.IsDead))        //모든 monster의 IsDead값이 true인지 확인하는 과정
+                        TakeDamage(target.Name, ref mobHealth, player.Atk, player.EquipAtk, player.CritDamage, target.Def, 0, IsOccur(player.Crit));
+                        target.CurrentHealth = mobHealth; // 변경된 체력을 다시 적용
+                        Console.WriteLine($"Lv.{target.Level} {target.Name}");
+                        Console.WriteLine($"HP {mobBeforeDmg} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
+
+                        if (monsters.All(m => m.IsDead))        //모든 monster가 죽으면 Victory 실행
                         {
                             Victory();
                             return;
