@@ -19,7 +19,7 @@ namespace HellChangSub
         public event playerEvent OnCharacterDeath; // 캐릭터가 죽었을 때 발생하는 이벤트
         public event EnemyEvent OnEnemyDeath;  // 몬스터가 죽었을 때 발생하는 이벤트
 
-        public Battle(Player player, Monster monster /*여기에 아이템*/)
+        public Battle(Player player, Monster monster /*여기에 보상 아이템*/)
         {
             this.player = player;
             this.monster = monster;
@@ -33,14 +33,9 @@ namespace HellChangSub
         {
             Console.WriteLine($"Battle!");
             Console.WriteLine("");
-            while(createmonster[i] == true)     //몬스터 생성방식 확실히 정해지면 그에 맞춰 이거 변경
-            {
-                Console.WriteLine($"{i}. Lv.{monster.Level} {monster.Name} HP {monster.CurrentHealth}");
-                i++
-            }
             Console.WriteLine("");
             Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv.{player.Level}   {player.Name} ({player.JobName})");
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
             Console.WriteLine("");
             Console.WriteLine("0. 취소");
             Console.WriteLine("");
@@ -61,7 +56,7 @@ namespace HellChangSub
             }
             
 
-            while (!player.IsDead && !monster.IsDead) // 플레이어 혹은 몬스터가 죽을 때까지 반복, 만나는 몬스터 수 랜덤으로 바꾸고 나면 몬스터가 "전부" 죽어야 반복문 탈출하도록 바꿔야됨
+            while (!player.IsDead && Monsters.count > 0) // 플레이어 사망 혹은 몬스터가 전부 죽을때까지 반복
             {
                 // 플레이어의 턴
                 Console.WriteLine($"{player.Name}의 공격!");
