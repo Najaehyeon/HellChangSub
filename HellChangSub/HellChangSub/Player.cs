@@ -28,6 +28,8 @@ namespace HellChangSub
 
         public bool IsDead => CurrentHealth <= 0;
 
+        public Player() { }
+
         public Player(string name, int Job)
         {
             Name = name;
@@ -142,7 +144,7 @@ namespace HellChangSub
             Console.WriteLine($"{"Evasion",-12} {Evasion}");
             Console.WriteLine("\n0. 나가기");
             int choice = Utility.Select(0, 0);
-            GameManger.ShowMainScreen();
+            GameManager.Instance.ShowMainScreen();
         }
     }
 }
