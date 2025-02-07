@@ -11,7 +11,7 @@
     class GameManager//싱글톤으로 작업 싱글톤으로 사용시 최초접근시 전역적으로 접근 가능한 객체 생성후 객체 생성 불가
     {
         Player player;
-        ItemScene itemScene;
+        ItemManager itemManager;
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
 
         public static GameManager Instance  // 2️ 전역적으로 접근 가능한 프로퍼티
@@ -42,7 +42,7 @@
                 int playerJob = Utility.Select(1, 3);
                 player = new Player(playerName, playerJob); //
             }
-            itemScene = new ItemScene();
+            itemManager = new ItemManager(player);
         }
 
         public void ShowMainScreen()
@@ -62,10 +62,10 @@
                     Stage stage = new Stage(player, 1);//도전 층수에대해 고민 스테이지 진입시 도전층수 선택? 히스토리에 지금까지 클리어한 도전층수 저장 게임 승리시 히스토리에 프로퍼티 수정 만약 5층 진입시 헬창섭 소환
                     break;
                 case 3:
-                    itemScene.InventoryScene();
+                    itemManager.InventoryScene();
                     break;
                 case 4:
-                    itemScene.ShopScene();
+                    itemManager.ShopScene();
                     break;
                 case 5:
                     Quest.ShowQuestList();
