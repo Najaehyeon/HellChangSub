@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace HellChangSub
 {
@@ -42,6 +43,52 @@ namespace HellChangSub
                     break;
                 }
             }
+        }
+
+        private void PlayerTurn()   // 플레이어 턴
+        {
+            Console.Clear();
+            Console.WriteLine("Battle!!\n");
+
+            for (int i = 0; i < monsters.Count; i++)
+            {
+                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";
+                Console.WriteLine($"{i + 1}. Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+            }
+
+            Console.WriteLine("\n[내정보]");
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
+            Console.WriteLine($"HP {player.CurrentHealth}/{player.MaxHealth}\n");
+
+            Console.WriteLine("0. 취소");
+            Console.Write("대상을 선택해주세요. >> ");
+            int choice = int.Parse(Console.ReadLine());
+
+            if (choice == 0) return;
+            if (choice > 0 && choice <= monsters.Count && !monsters[choice - 1].IsDead)
+            {
+                switch(IsOccur(monsters[choice - 1].Evasion))
+                {
+                    case true:
+                        Console.WriteLine($"LV.{monsters[choice - 1].Level} {monsters[choice - 1].Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+                        break;
+                    case false:
+                        monsters[choice - 1].TakeDamage(player.Atk, player.CritDamage, IsOccur(player.Crit));
+                        Console.Clear();
+                        Console.WriteLine("Battle!!\n");
+                        Console.WriteLine($"{player.Name}의 공격!\nLv.{monsters[choice - 1].Level} {monsters[choice - 1].Name} 을(를) 맞췄습니다. [데미지 : {damage}]\n");   //여기부터 아래로 3줄 TakeDamage에 구현할것
+                        Console.WriteLine($"Lv.{target.Level} {target.Name}");
+                        Console.WriteLine($"HP {Math.Max(0, target.CurrentHealth)} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
+                        break;
+                }
+                Console.WriteLine("0. 다음");
+                Console.ReadLine();
+            }
+        }
+
+        private void MonsterTurn()  // 몬스터 턴
+        { 
+            
         }
         /*public void StartBattle()     //위에꺼 다 다듬으면 지울거임
         {
