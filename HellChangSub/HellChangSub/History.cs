@@ -62,13 +62,13 @@ namespace HellChangSub
             }
         }
 
-        // 보상을 받았을 때 실행되는 메서드
+        // 보상받기를 했을 때 실행되는 메서드
         public void ClaimReward(string questName)
         {
             Quests[questName].State = QuestState.RewardClaimed;
             Console.WriteLine($"\"{questName}\"의 보상을 받았습니다!");
             Console.WriteLine("0. 돌아가기");
-            int choice = Utility.Select(0,0);
+            int choice = Utility.Select(0, 0);
 
             switch (choice)
             {
