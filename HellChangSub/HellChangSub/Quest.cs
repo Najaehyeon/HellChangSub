@@ -27,91 +27,60 @@ namespace HellChangSub
                     break;
                 case 1:
                     // 1번 퀘스트 선택 메서드
-                    ShowFirstQuest();
+                    ShowQuest(
+                        "마을을 위협하는 미니언 처치!",
+                        "이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!",
+                        "- 미니언 5마리 처치",
+                        new string[] { "쓸만한 방패", "500 Gold" }
+                        );
                     break;
                 case 2:
                     // 2번 퀘스트 선택 메서드
-                    ShowSecondQuest();
+                    ShowQuest(
+                        "장비를 장착해보자.",
+                        "'마을을 위협하는 미니언 처치' 퀘스트를 지행하면,\n'쓸만한 방패'를 얻을 수 있다.\n퀘스트를 진행하여 '쓸만한 방패'를 얻고, 장착해보자.",
+                        "쓸만한 방패 장착하기",
+                        new string[] { "EXP +50", "200 Gold" }
+                        );
                     break;
                 case 3:
                     // 3번 퀘스트 선택 메서드
-                    ShowThirdQuest();
+                    ShowQuest(
+                        "더욱 더 강해지기!",
+                        "특정 레벨에 도달하면 새로운 강력한 아이템을 얻을 수 있다.\nLv.10을 달성하여 더욱 더 강해져보자!",
+                        "Lv.10 달성하기",
+                        new string[] { "AK-47", "EXP +80", "1000 Gold" }
+                        );
                     break;
             }
         }
 
-        public static void ShowFirstQuest() // "마을을 위협하는 미니언 처치" 퀘스트 보여주는 메서드 
+        // 미션 만드는 메서드
+        public static void ShowQuest(string title, string description, string mission, string[] rewards)
         {
             Console.Clear();
-            Console.WriteLine("마을을 위협하는 미니언 처치!");
-            Console.WriteLine("\n이봐! 마을 근처에 미니언들이 너무 많아졌다고 생각하지 않나?\n마을주민들의 안전을 위해서라도 저것들 수를 좀 줄여야 한다고!\n모험가인 자네가 좀 처치해주게!");
-            Console.WriteLine("\n- 미니언 5마리 처치 (0/5)");
-            Console.WriteLine("\n- 보상- \n쓸만한 방패 x 1\n5G");
-
-            Console.WriteLine("\n1. 수락");
-            Console.WriteLine("2. 거절");
-
-            int choice = Utility.Select(1,2);
-
-            switch (choice)
+            Console.WriteLine(title);
+            Console.WriteLine();
+            Console.WriteLine(description);
+            Console.WriteLine();
+            Console.WriteLine(mission);
+            Console.WriteLine("\n- 보상 -");
+            foreach (string reward in rewards)
             {
-                case 1:
-                    // 퀘스트 수락 (필요한 것 : 미니언을 몇 마리 처치했는지 확인 / 수행 시 보상 주기)
-                    break;
-                case 2:
-                    // 퀘스트 거절, 돌아가기
-                    Console.Clear();
-                    ShowQuestList();
-                    break;
+                Console.WriteLine(reward);
             }
-        }
-
-        public static void ShowSecondQuest() // "장비를 장착해보자" 퀘스트 보여주는 메서드
-        {
-            Console.Clear();
-            Console.WriteLine("장비를 장착해보자.");
-            Console.WriteLine("\n'마을을 위협하는 미니언 처치' 퀘스트를 지행하면,\n'쓸만한 방패'를 얻을 수 있다.\n퀘스트를 진행하여 '쓸만한 방패'를 얻고, 장착해보자.");
-            Console.WriteLine("\n- 쓸만한 방패 장착하기 (장착 안 됨)");
-            Console.WriteLine("\n- 보상- \nEXP x 30\n5G");
-
-            Console.WriteLine("\n1. 수락");
-            Console.WriteLine("2. 거절");
+            Console.WriteLine();
+            Console.WriteLine("1. 수락\n2. 거절");
 
             int choice = Utility.Select(1, 2);
 
             switch (choice)
             {
                 case 1:
-                    // 퀘스트 수락 (필요한 것 : 아이템을 장착했는지 확인 / 수행 시 보상 주기)
+                    // 퀘스트 수락 (미션 수행 했는지 확인하는 매개체 / 수행 시 보상 주기 / 해당 퀘스트 수행 중으로 표시하기 / 퀘스트를 완료하면, 리스트에서 완료된 표시하기)
+
                     break;
                 case 2:
-                    // 퀘스트 거절, 돌아가기
-                    Console.Clear();
-                    ShowQuestList();
-                    break;
-            }
-        }
-
-        public static void ShowThirdQuest() // "더욱 더 강해지기" 퀘스트 보여주는 메서드
-        {
-            Console.Clear();
-            Console.WriteLine("더욱 더 강해지기!");
-            Console.WriteLine("\n특정 레벨에 도달하면 새로운 강력한 아이템을 얻을 수 있다.\nLv.10을 달성하여 더욱 더 강해져보자!");
-            Console.WriteLine("\n- Lv.10 달성하기 (Lv.1 / Lv.10)");
-            Console.WriteLine("\n- 보상- \nAK-47 x 1\n5G");
-
-            Console.WriteLine("\n1. 수락");
-            Console.WriteLine("2. 거절");
-
-            int choice = Utility.Select(1, 2);
-
-            switch (choice)
-            {
-                case 1:
-                    // 퀘스트 수락 (레벨을 달성 했는 지 확인 / 수행 시 보상 주기)
-                    break;
-                case 2:
-                    // 퀘스트 거절, 돌아가기
                     Console.Clear();
                     ShowQuestList();
                     break;
