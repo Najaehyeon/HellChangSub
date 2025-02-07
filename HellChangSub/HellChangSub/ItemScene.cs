@@ -29,17 +29,10 @@ namespace HellChangSub
         //string itemname, int value, string description, int price, ItemType itemType
         public List<UseItem> useItems = new List<UseItem>()
         {
-            new UseItem("체력포션", 30, "체력 상승", 50, ItemType.HpPotion),
-            new UseItem("힘포션", 30, "체력 상승", 50, ItemType.HpPotion),
-            new UseItem("방어포션", 30, "체력 상승", 50, ItemType.HpPotion)
+            new UseItem("체력포션", 50, "체력 상승", 50, ItemType.HpPotion),
+            new UseItem("힘포션", 20, "공격력 상승", 50, ItemType.AtkPotion),
+            new UseItem("방어포션", 20, "방어력 상승", 50, ItemType.DefPotion)
         };
-        public List<UseItem> useInventory = new List<UseItem>();
-
-        public void Add()
-        {
-            equipInventory.Add(equipItems[0]);
-            useInventory.Add(useItems[0]);
-        }
 
         public void InventoryScene()
         {
