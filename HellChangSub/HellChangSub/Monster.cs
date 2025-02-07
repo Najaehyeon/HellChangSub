@@ -255,4 +255,18 @@ namespace HellChangSub
             }
         }
     }
+
+    class HellChangSub : Monster
+    {
+        public HellChangSub()
+        {
+            Name = "헬창 Sup";
+            Description = "슈퍼 헬창. 뇌 근육까지 움직일 수 있어 높은 지능을 가지고 있다. 특정 게임 디렉터와는 관계없다.";
+            MaximumHealth = 3000;
+            CurrentHealth = 3000;
+            Atk = 100;
+            Def = 50;
+            Crit = 30;
+        }
+    }
 }
