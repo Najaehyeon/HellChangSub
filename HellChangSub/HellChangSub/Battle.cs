@@ -159,8 +159,11 @@ namespace HellChangSub
             Console.WriteLine($"HP {initialPlayerHealth} -> 0\n");
             Console.WriteLine("0. 다음");
             Console.ReadLine();
-            if(Utility.Select(0, 0) == 0)
+            if (Utility.Select(0, 0) == 0)
+            {
+                Console.Clear();
                 GameManager.Instance.ShowMainScreen();
+            }
         }
 
         private void Victory()
@@ -187,7 +190,10 @@ namespace HellChangSub
             Console.WriteLine("0. 다음");
             Console.ReadLine();
             if (Utility.Select(0, 0) == 0)
+            {
+                Console.Clear();
                 GameManager.Instance.ShowMainScreen();
+            }
         }
     }
 
