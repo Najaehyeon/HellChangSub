@@ -51,6 +51,7 @@
             Console.WriteLine("프로틴 헬창 마을에 오신 것을 환영합니다.");
             Console.WriteLine();
             Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 퀘스트\n6. 저장하기");
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
             int choice = Utility.Select(1, 5);
             switch (choice)
             {
