@@ -160,19 +160,11 @@ namespace HellChangSub
             Console.WriteLine($"{Name} 을(를) 맞췄습니다. [데미지 : {finalDamage}]\n");
         }
 
-<<<<<<< Updated upstream
         public void Recover(string statname, ref int stat, ref int statmax, int heal)   //statname : HP, MP, stat : 회복할 프로퍼티, statmax : 프로퍼티 최댓값, heal : 회복 수단별로 정해진 값 
         {
             int finalStat = Math.Min(stat + heal, statmax); // 최대값을 초과하지 않도록 제한
             Console.WriteLine($"{statname} {stat} -> {finalStat}"); 
             stat = finalStat; 
-=======
-        public void Recover(string statname, ref int stat, ref int statmax, int heal)       //statname : HP, MP, stat : 회복할 프로퍼티, statmax : 프로퍼티 최댓값 ,heal : 회복 수단별로 정해진 값
-        {
-                int finalStat = Math.Min(stat + heal, statmax); //최대값을 초과하지 않도록 제한
-                Console.WriteLine($"{statname} {stat} -> {finalStat}"); 
-                stat = finalStat;
->>>>>>> Stashed changes
         }
 
         private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // return 같은걸 써줄 필요가 전혀 없었음
@@ -184,18 +176,8 @@ namespace HellChangSub
             Console.WriteLine("You Lose\n");
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP {initialPlayerHealth} -> 0\n");
-<<<<<<< Updated upstream
-            Console.WriteLine("0. 다음");
-            Console.ReadLine();
-            if (Utility.Select(0, 0) == 0)
-            {
-                Console.Clear();
-                GameManager.Instance.ShowMainScreen();
-            }
-=======
             Utility.PressAnyKey();
             GameManager.Instance.ShowMainScreen();
->>>>>>> Stashed changes
         }
 
         private void Victory()
@@ -220,18 +202,8 @@ namespace HellChangSub
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
-<<<<<<< Updated upstream
-            Console.WriteLine("0. 다음");
-            Console.ReadLine();
-            if (Utility.Select(0, 0) == 0)
-            {
-                Console.Clear();
-                GameManager.Instance.ShowMainScreen();
-            }
-=======
             Utility.PressAnyKey();
             GameManager.Instance.ShowMainScreen();
->>>>>>> Stashed changes
         }
     }
 
