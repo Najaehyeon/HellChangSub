@@ -41,13 +41,13 @@ namespace HellChangSub
         public string EquipInvenStatus()
         {
             string equipStr = isEquip ? "[E]" : "";
-            string str = $"{equipStr + ItemName}  | {GetItemType()} +{Value}  | {Description}";
+            string str = $"{equipStr + ItemName,-12}  | {GetItemType(),-4} +{Value,-4}  | {Description,-15}";
             return str;
         }
 
         public string EquipItemStatus()
         {
-            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | {IsPurchased()}";
+            string str = $"{ItemName,-12}  | {GetItemType(),-4} +{Value,-4}  | {Description,-15}  | {IsPurchased()}";
             return str;
         }
 
@@ -95,13 +95,13 @@ namespace HellChangSub
         }
         public string UseItemStatus()
         {
-            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | x {Count}개 보유";
+            string str = $"{ItemName, -12}  | {GetItemType(), -4} +{Value,-4}  | {Description,-15}  | x {Count}개 보유";
             return str;
         }
 
         public string UseShopStatus()
         {
-            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | {Price} G";
+            string str = $"{ItemName, -12}  | {GetItemType(),-4} +{Value,-4}  | {Description,-15}  | {Price} G";
             return str;
         }
 

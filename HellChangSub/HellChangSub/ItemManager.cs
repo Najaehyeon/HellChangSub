@@ -10,6 +10,7 @@ namespace HellChangSub
     public class ItemManager
     {
         Player player;
+        bool purchased = false;
 
         public ItemManager(Player player)
         {
@@ -154,6 +155,7 @@ namespace HellChangSub
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
+            SoldOut(purchased);
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             int input = Utility.Select(0, equipItems.Count);
             switch (input)
@@ -162,12 +164,7 @@ namespace HellChangSub
                     ShopScene();
                     break;
                 default:
-                    if (equipItems[input-1].isPurchase)
-                    {
-                        Console.WriteLine("품절입니다.");
-                    }
-                    else
-                        EquipBuy(player, input);
+                    EquipBuy(player, input);
                     break;
             }
         }
@@ -206,12 +203,18 @@ namespace HellChangSub
             }
         }
 
+        public void SoldOut(bool purchased)
+        {
+            if(purchased)
+                Console.WriteLine("품절된 아이템입니다.");
+        }
+
         public void UseBuy(Player player, int input)
         {
             UseItem item = useItems[input - 1];
             player.Gold -= item.Price;
             item.Count++;
-            EquipShopScene();
+            UseShopScene();
         }
 
         public void UseSell(Player player, int input)
@@ -219,23 +222,32 @@ namespace HellChangSub
             UseItem item = useItems[input - 1];
             player.Gold += (item.Price / 2);
             item.Count--;
-            EquipShopScene();
+            UseShopScene(); // 판매씬으로 바꿔야함
         }
 
         public void EquipBuy(Player player, int input)
         {
             EquipItem item = equipItems[input - 1];
-            player.Gold -= item.Price;
-            equipInventory.Add(item);
+            if (item.isPurchase)
+            {
+                purchased = true;
+            }
+            else
+            {
+                player.Gold -= item.Price;
+                equipInventory.Add(item);
+                item.isPurchase = true;
+                purchased = false;
+            }
             EquipShopScene();
         }
 
         public void EquipSell(Player player, int input)
         {
-            EquipItem item = equipItems[input - 1];
+            EquipItem item = equipInventory[input - 1];
             player.Gold += (item.Price / 2);
             equipInventory.Remove(item);
-            EquipShopScene();
+            EquipShopScene(); // 판매씬으로 바꿔야함
         }
 
         //장착 메서드들
@@ -246,7 +258,7 @@ namespace HellChangSub
             {
                 if (equipInventory[i].isEquip && item != equipInventory[i] && equipInventory[i].ItemType == item.ItemType)
                 {
-                    UnEquip(player, item);
+                    UnEquip(player, equipInventory[i]);
                 }
             }
             Equip(player, item);
