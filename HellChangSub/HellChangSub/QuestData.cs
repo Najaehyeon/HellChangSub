@@ -195,7 +195,8 @@ namespace HellChangSub
 
         public override void GiveRewards()
         {
-
+            EquipItem item = GameManager.Instance.itemManager.equipItems[2];
+            GameManager.Instance.itemManager.itemUtil.QuestEquip(item);
         }
     }
 
