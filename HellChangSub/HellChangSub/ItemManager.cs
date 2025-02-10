@@ -10,7 +10,7 @@ namespace HellChangSub
     public class ItemManager
     {
         Player player;
-        ItemUtil itemUtil;
+        public ItemUtil itemUtil;
         public bool purchased = false;
         public bool goldRequired = false;
         public bool noItem = false;

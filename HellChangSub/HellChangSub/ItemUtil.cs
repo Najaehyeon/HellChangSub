@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HellChangSub
 {
-    internal class ItemUtil
+    public class ItemUtil
     {
         private ItemManager ItemManager;
 
