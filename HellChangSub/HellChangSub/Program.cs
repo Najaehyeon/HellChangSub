@@ -15,7 +15,7 @@ namespace HellChangSub
 
     class GameManager//싱글톤으로 작업 싱글톤으로 사용시 최초접근시 전역적으로 접근 가능한 객체 생성후 객체 생성 불가
     {
-        Player player;
+        public Player player;
         ItemManager itemManager;
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
 
@@ -50,8 +50,6 @@ namespace HellChangSub
             }
             itemManager = new ItemManager(player);
         }
-
-        public Player Player => player;
 
         public void ShowMainScreen()
         {

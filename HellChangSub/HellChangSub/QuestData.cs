@@ -182,6 +182,6 @@ namespace HellChangSub
         public override string Mission { get; } = "10레벨 달성하기";
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
         public override string Goal { get; } = "Lv.10";
-        public override string Progressed { get; set; } = $"Lv.{GameManager.Instance.Player.Level}";
+        public override string Progressed { get; set; } = $"Lv.{GameManager.Instance.player.Level}";
     }
 }
