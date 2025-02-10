@@ -17,18 +17,20 @@ namespace HellChangSub
         {
             this.player = player;
             monsters = new List<Monster>();
-            int mosterQuantity = (stageLvl == 5 ? 1:rand.Next(1, 5 + stageLvl));
+            int mosterQuantity = (stageLvl == 5 ? 1:rand.Next(1, 5 + stageLvl/2));
             for (int i = 0; i < mosterQuantity; i++)
             {
                 Monster monster = MonsterFactory.CreateMonster(stageLvl);
                 monsters.Add(monster);
             }
-            ShowStage(stageLvl);
+            SelectStage(stageLvl);
         }
 
-        public void SeletStage(int stageLvl)
+        public void SelectStage(int stageLvl)
         {
-            Console.WriteLine("도전 하실");
+            Console.WriteLine($"도전 하실 스테이지를 선택해주세요 (지금까지 진행된 스테이지 : {stageLvl})");
+            int choice = Utility.Select(1, stageLvl);
+            ShowStage(choice);
         }
 
         public void ShowStage(int stageLvl)
