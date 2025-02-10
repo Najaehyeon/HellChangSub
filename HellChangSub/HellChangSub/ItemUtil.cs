@@ -222,7 +222,9 @@ namespace HellChangSub
         //아이템 추가시 정렬
         public void ItemSort(List<EquipItem> itemlist)
         {
-            itemlist = itemlist.OrderBy(item => item.ItemType).ThenBy(item => item.Value).ToList();
+            List < EquipItem > sortedlist = itemlist.OrderBy(item => item.ItemType).ThenBy(item => item.Value).ToList();
+            itemlist.Clear();
+            itemlist.AddRange(sortedlist);
         }
 
     }
