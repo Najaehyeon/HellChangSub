@@ -19,7 +19,7 @@ namespace HellChangSub
         public int Crit { get; set; }
         Random rand = new Random();
         public bool IsDead => CurrentHealth <= 0;
-        public int rewardExp { get; set; } = 0;
+        public int rewardExp { get; set; } = 0;//몬스터별 기본 보상 설정 필요
         public int rewardGold { get; set; } = 0;
 
 
@@ -30,19 +30,19 @@ namespace HellChangSub
         Random rand = new Random();
         public Slime(int stageLvl)
         {
-            int randomDice = rand.Next(0, 101);
+            int randomDice = rand.Next(0, 101);//티어 별 몬스터 생성률 을 다르게 지정 스테이지 상승시 높은티어 몬스터 생성률 증가
             int randomMonster;
             if (randomDice < stageLvl * 5)
             {
-                randomMonster = 3;
-            }
-            else if (randomDice < stageLvl * 10)
-            {
                 randomMonster = 2;
+            }
+            else if (randomDice < stageLvl * 15)
+            {
+                randomMonster = 1;
             }
             else if (randomDice < stageLvl * 30)
             {
-                randomMonster = 1;
+                randomMonster = 0;
             }
             else
             {
@@ -92,15 +92,15 @@ namespace HellChangSub
             int randomMonster;
             if (randomDice < stageLvl * 5)
             {
-                randomMonster = 3;
-            }
-            else if (randomDice < stageLvl * 10)
-            {
                 randomMonster = 2;
+            }
+            else if (randomDice < stageLvl * 15)
+            {
+                randomMonster = 1;
             }
             else if (randomDice < stageLvl * 20)
             {
-                randomMonster = 1;
+                randomMonster = 0;
             }
             else
             {
@@ -150,15 +150,15 @@ namespace HellChangSub
             int randomMonster;
             if (randomDice < stageLvl * 5)
             {
-                randomMonster = 3;
-            }
-            else if (randomDice < stageLvl * 10)
-            {
                 randomMonster = 2;
+            }
+            else if (randomDice < stageLvl * 15)
+            {
+                randomMonster = 1;
             }
             else if (randomDice < stageLvl * 20)
             {
-                randomMonster = 1;
+                randomMonster = 0;
             }
             else
             {
@@ -208,15 +208,15 @@ namespace HellChangSub
             int randomMonster;
             if (randomDice < stageLvl * 5)
             {
-                randomMonster = 3;
-            }
-            else if (randomDice < stageLvl * 10)
-            {
                 randomMonster = 2;
+            }
+            else if (randomDice < stageLvl * 15)
+            {
+                randomMonster = 1;
             }
             else if (randomDice < stageLvl * 20)
             {
-                randomMonster = 1;
+                randomMonster = 0;
             }
             else
             {
@@ -262,7 +262,7 @@ namespace HellChangSub
         public HellChangSub()
         {
             Name = "헬창 Sup";
-            Description = "슈퍼 헬창. 뇌 근육까지 움직일 수 있어 높은 지능을 가지고 있다. 특정 게임 디렉터와는 관계없다.";
+            Description = "슈퍼 헬창. 뇌 근육까지 수의로 움직일 수 있어 높은 지능을 가지고 있다. 특정 게임 디렉터와는 관계없다.";
             MaximumHealth = 3000;
             CurrentHealth = 3000;
             Atk = 100;

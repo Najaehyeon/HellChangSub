@@ -24,11 +24,13 @@ namespace HellChangSub
             get
             {
                 if (_instance == null)       // 3️ 인스턴스가 없으면 생성
+                {
                     _instance = new GameManager();
+                }
                 return _instance;            // 4️ 인스턴스를 반환
             }
         }
-        private GameManager() // 5 외부에서 생성하지 못하게 private
+        private GameManager() // 5 외부에서 생성하지 못하게 private 싱글톤 처리후 게임매니저 클래스에서 생성된 객체에 접근가능 GameManager.Instance.객체명(게임매니저내 메서드).프로퍼티
         {
             Console.WriteLine("저장된 게임을 불러오시겠습니까?");
             Console.WriteLine("\n1. 예\n2. 아니오");
