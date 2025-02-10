@@ -21,7 +21,7 @@ namespace HellChangSub
         public bool IsDead => CurrentHealth <= 0;
         public int RewardExp { get; set; } //몬스터별 기본 보상 설정 필요
         public int RewardGold { get; set; } 
-        List<Skill> Skills = new List<Skill>();
+        public List<Skill> Skills = new List<Skill>();
 
     }
 
