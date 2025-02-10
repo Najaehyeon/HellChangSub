@@ -32,6 +32,7 @@ namespace HellChangSub
         public void SetHistory(SaveData saveData)
         {
             Quests = saveData.Quests;
+            stageLvl = saveData.stageLvl;
         }
     }
 
