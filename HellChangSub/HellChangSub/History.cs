@@ -36,14 +36,7 @@ namespace HellChangSub
         }
     }
 
-    // 퀘스트 진행 상태 열거형
-    public enum QuestState
-    {
-        NotStarted,
-        InProgress,
-        Completed,
-        RewardClaimed
-    }
+    
 
     // 퀘스트의 목표와 진척도, 상태 데이터를 관리하는 클래스
     public class QuestStateData

@@ -94,8 +94,6 @@ namespace HellChangSub
 
         }
 
-
-
         public void ShowMainScreen()
         {
             Console.Clear();
