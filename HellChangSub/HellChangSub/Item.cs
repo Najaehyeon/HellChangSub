@@ -11,6 +11,7 @@ namespace HellChangSub
         Weapon,
         Armor,
         HpPotion,
+        MpPotion,
         AtkPotion,
         DefPotion
     }
@@ -112,6 +113,9 @@ namespace HellChangSub
             {
                 case ItemType.HpPotion:
                     itemStr = $"HP";
+                    break;
+                case ItemType.MpPotion:
+                    itemStr = $"MP";
                     break;
                 case ItemType.AtkPotion:
                     itemStr = $"ATK";
