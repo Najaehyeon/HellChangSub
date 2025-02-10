@@ -98,8 +98,8 @@ namespace HellChangSub
 
                     Skills = new List<Skill>
                     {
-                        new Skill("사악한 일격", 3.0f, 10),
-                        new Skill("절개", 5.0f, 15)
+                        new Skill("사악한 일격", 2.0f, 10),
+                        new Skill("절개", 3.0f, 15)
                     };
                     break;
 
