@@ -27,6 +27,7 @@ namespace HellChangSub
         public float CritDamage { get; set; }
         public float Evasion { get; set; }
 
+        public List<Skill> Skills { get; private set; }
         public bool IsDead => CurrentHealth <= 0;
 
         public Player() { }//저장 및 로드 기능을 위해 생성자 3가지 형태로 오버로드 
