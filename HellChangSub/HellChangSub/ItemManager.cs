@@ -15,7 +15,12 @@ namespace HellChangSub
         public bool goldRequired = false;
         public bool noItem = false;
         public bool equiptedItem = false;
-
+        public ItemManager(SaveData saveData)
+        {
+            equipItems = saveData.equipItems;
+            equipInventory = saveData.equipInventory;
+            useItems = saveData.useItems;
+        }
         public ItemManager(Player player)
         {
             this.player = player;
