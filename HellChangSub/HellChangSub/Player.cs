@@ -78,9 +78,8 @@ namespace HellChangSub
         public float Evasion { get; set; }  // 회피율 (직업별 변동값)
         public List<Skill> Skills { get; private set; }
 
-        public Player() { }
 
-        public Player(SaveData saveData)
+        public Player(SaveData saveData) : base(saveData.Name, saveData.Level, saveData.MaximumHealth, saveData.Atk, saveData.Crit, saveData.CritDamage, saveData.Def) // 부모 생성자 호출
         {
             Name = saveData.Name;
             JobCode = saveData.JobCode;
@@ -100,6 +99,12 @@ namespace HellChangSub
             Crit = saveData.Crit;
             CritDamage = saveData.CritDamage;
             Evasion = saveData.Evasion;
+
+            // Skills 리스트 초기화
+            Skills = new List<Skill>();
+
+            // 직업에 따른 스킬 추가 (초기화 후)
+            InitializeSkills();
         }
 
         public Player(string name, int Job)
@@ -118,7 +123,7 @@ namespace HellChangSub
                     JobName = "전사";
                     Atk += 0f;
                     Def += 2;
-                    Crit += 0f;
+                    Crit += 0.0f;
                     Evasion = 10.0f;
 
                     Skills = new List<Skill>
@@ -153,7 +158,7 @@ namespace HellChangSub
                     MaximumHealth = 70;
                     MaximumMana = 100;
                     CurrentMana = 100;
-                    Crit += 0f;
+                    Crit += 0.0f;
                     Evasion = 0f;
 
                     Skills = new List<Skill>
@@ -167,55 +172,48 @@ namespace HellChangSub
 
         public void LevelUp()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
-            if (Level == 1 && Exp >= 10)
+            int oldLevel = Level;
+
+            while (true)
             {
-                Exp -= 10;
-                Level++;
+                if (Level == 1 && Exp >= 10)
+                {
+                    Exp -= 10;
+                    Level++;
+                }
+                else if (Level == 2 && Exp >= 35)
+                {
+                    Exp -= 35;
+                    Level++;
+                }
+                else if (Level == 3 && Exp >= 65)
+                {
+                    Exp -= 65;
+                    Level++;
+                }
+                else if (Level == 4 && Exp >= 100)
+                {
+                    Exp -= 100;
+                    Level++;
+                }
+                else if (Exp >= 100 + (40 + 5 * (Level - 4)) * (Level - 3))
+                {
+                    Exp -= 100 + (40 + 5 * (Level - 4)) * (Level - 3);
+                    Level++;
+                }
+                else
+                    break;
+                // 레벨업 안했으면 바로 위에서 break되서 StatUp, LearnSkill 실행 안됨
                 StatUp();
-                CurrentHealth = MaximumHealth;
-                CurrentMana = MaximumMana;
-                Console.WriteLine("레벨업을 하였습니다.");
-                LearnSkill();
+                LearnSkill(Level); // 레벨업 후 스킬 습득 가능 시 스킬 습득
             }
-            else if (Level == 2 && Exp >= 35)
+
+            if (oldLevel != Level) // 레벨이 변했을 때만 실행
             {
-                Exp -= 35;
-                Level++;
-                StatUp();
+                
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
-                Console.WriteLine("레벨업을 하였습니다.");
-                LearnSkill();
-            }
-            else if (Level == 3 && Exp >= 65)
-            {
-                Exp -= 65;
-                Level++;
-                StatUp();
-                CurrentHealth = MaximumHealth;
-                CurrentMana = MaximumMana;
-                Console.WriteLine("레벨업을 하였습니다.");
-                LearnSkill();
-            }
-            else if (Level == 4 && Exp >= 100)
-            {
-                Exp -= 100;
-                Level++;
-                StatUp();
-                CurrentHealth = MaximumHealth;
-                CurrentMana = MaximumMana;
-                Console.WriteLine("레벨업을 하였습니다.");
-                LearnSkill();
-            }
-            else if (Exp >= 100 + (40 + 5 * (Level - 4)) * (Level - 3))
-            {
-                Exp -= 100 + (40 + 5 * (Level - 4)) * (Level - 3);
-                Level++;
-                StatUp();
-                CurrentHealth = MaximumHealth;
-                CurrentMana = MaximumMana;
-                Console.WriteLine("레벨업을 하였습니다.");
-                LearnSkill();
+                Console.WriteLine($"레벨이 상승했습니다. 현재 레벨: {Level}");
             }
         }
 
@@ -244,17 +242,46 @@ namespace HellChangSub
             }
         }
 
-        public void LearnSkill()
+        private void InitializeSkills()
+        {
+            Skills = new List<Skill>(); // 초기화
+
+            switch (JobCode)
+            {
+                case 1: // 전사
+                    Skills.Add(new Skill("파워 슬래시", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."));
+                    Skills.Add(new Skill("발도", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다."));
+                    break;
+
+                case 2: // 도적
+                    Skills.Add(new Skill("사악한 일격", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."));
+                    Skills.Add(new Skill("절개", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다."));
+                    break;
+
+                case 3: // 마법사
+                    Skills.Add(new Skill("파이어볼", 3.0f, 10, "단일 대상에게 공격력의 3배의 피해를 입힙니다."));
+                    Skills.Add(new Skill("콜드 빔", 4.5f, 15, "단일 대상에게 공격력의 4.5배의 피해를 입힙니다."));
+                    break;
+            }
+
+            // 레벨이 3 이상이면 자동으로 해당 레벨까지 배운 스킬 추가 - 추후 2레벨에 배우는 스킬 추가시 i = 2 로 해줘야됨
+            for (int i = 3; i <= Level; i++)
+            {
+                LearnSkill(i);
+            }
+        }
+
+        public void LearnSkill(int level)
         {
             switch (JobCode)
             {
                 case 1: // 전사
-                    if (Level == 3)
+                    if (level == 3 && !Skills.Exists(s => s.Name == "내려찍기"))
                     {
                         Skills.Add(new Skill("내려찍기", 4.0f, 20, "단일 대상에게 공격력의 4배의 피해를 입힙니다."));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [내려찍기]");
                     }
-                    else if (Level == 7)
+                    else if (level == 7 && !Skills.Exists(s => s.Name == "분노의 일격"))
                     {
                         Skills.Add(new Skill("분노의 일격", 6.0f, 30, "단일 대상에게 공격력의 6배의 피해를 입힙니다."));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [분노의 일격]");
@@ -262,12 +289,12 @@ namespace HellChangSub
                     break;
 
                 case 2: // 도적
-                    if (Level == 3)
+                    if (level == 3 && !Skills.Exists(s => s.Name == "소닉 블리츠"))
                     {
                         Skills.Add(new Skill("소닉 블리츠", 4.0f, 20, "단일 대상에게 공격력의 4배의 피해를 입힙니다"));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [소닉 블리츠]");
                     }
-                    else if (Level == 7)
+                    else if (level == 7 && !Skills.Exists(s => s.Name == "암살"))
                     {
                         Skills.Add(new Skill("암살", 6.0f, 30, "단일 대상에게 공격력의 6배의 피해를 입힙니다."));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [암살]");
@@ -275,12 +302,12 @@ namespace HellChangSub
                     break;
 
                 case 3: // 마법사
-                    if (Level == 3)
+                    if (level == 3 && !Skills.Exists(s => s.Name == "라이트닝 볼트"))
                     {
                         Skills.Add(new Skill("라이트닝 볼트", 6.0f, 25, "단일 대상에게 공격력의 6배의 피해를 입힙니다."));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [라이트닝 볼트]");
                     }
-                    else if (Level == 7)
+                    else if (level == 7 && !Skills.Exists(s => s.Name == "윈드 블래스터"))
                     {
                         Skills.Add(new Skill("윈드 블래스터", 9.0f, 35, "단일 대상에게 공격력의 9배의 피해를 입힙니다."));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [윈드 블래스터]");
@@ -303,6 +330,22 @@ namespace HellChangSub
             Console.WriteLine($"{"Crit",-12} {Crit}");
             Console.WriteLine($"{"CritDmg",-12} {CritDamage}");
             Console.WriteLine($"{"Evasion",-12} {Evasion}");
+
+            Console.WriteLine("\n[보유 스킬]");
+            if (Skills.Count == 0)
+            {
+                Console.WriteLine(" - 없음");
+            }
+            else
+            {
+                Console.WriteLine($"{"Name",-18} {"Text",-40} {"ManaCost",-10}");
+                Console.WriteLine(new string('-', 70)); // 구분선
+
+                foreach (var skill in Skills)
+                {
+                    Console.WriteLine($"{skill.Name,-18} {skill.Text,-40} {skill.ManaCost,-10}");
+                }
+            }
             Console.WriteLine("\n0. 나가기");
             int choice = Utility.Select(0, 0);
             GameManager.Instance.ShowMainScreen();
