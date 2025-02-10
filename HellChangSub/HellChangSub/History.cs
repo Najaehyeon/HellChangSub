@@ -19,16 +19,14 @@ namespace HellChangSub
                 return _instance;
             }
         }
+        public int stageLvl { get; set; } = 1;
+
+        public Dictionary<string, QuestData> Quests { get; private set; }
 
         private History()
         {
             Quests = new Dictionary<string, QuestData>(); // 딕셔너리로 각 퀘스트 이름에 맞는 미션을 관리 (EX. { {"미니언 5마리 처치" , <해당 퀘스트 데이터>} , {"장비 착용", <해당 퀘스트 데이터>} } )
         }
-
-        public int stageLvl { get; set; } = 1;
-
-        public Dictionary<string, QuestData> Quests { get; private set; }
-
         // 퀘스트를 수락했을 때 실행되는 메서드 (이름을 받아 이름을 키로 갖고, 목표와 진척도, 진행 상태 데이터를 갖고 있는 클래스를 값으로 딕셔너리를 생성)
         public void StartQuest(string questName, object goal, object nowProgressed)
         {
@@ -38,6 +36,11 @@ namespace HellChangSub
                 Quests[questName].NowProgressed = nowProgressed;
                 Quests[questName].State = QuestState.InProgress;
             }
+        }
+
+        public void SetHistory(SaveData saveData)
+        {
+            Quests = saveData.Quests;
         }
 
         // 진척도 확인하는 메서드
