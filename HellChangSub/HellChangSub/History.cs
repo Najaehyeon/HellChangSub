@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace HellChangSub
 {
+    // 퀘스트의 진행 여부를 기록하는 클래스
     internal class History
     {
         private static History _instance;
-        public static History Instance
+        public static History Instance // 싱글톤을 이용해 하나의 객체로 생성하여, 퀘스트 클래스나 다른 클래스에서도 접근 가능하게 함.
         {
             get
             {
@@ -21,12 +22,12 @@ namespace HellChangSub
 
         private History()
         {
-            Quests = new Dictionary<string, QuestData>();
+            Quests = new Dictionary<string, QuestData>(); // 딕셔너리로 각 퀘스트 이름에 맞는 미션을 관리 (EX. { {"미니언 5마리 처치" , <해당 퀘스트 데이터>} , {"장비 착용", <해당 퀘스트 데이터>} } )
         }
 
-        // 딕셔너리로 각 퀘스트에 맞는 미션을 관리 (EX. { {"미니언 5마리 처치" , 5} , {"장비 착용", true} } )
         public Dictionary<string, QuestData> Quests { get; private set; }
 
+        // 퀘스트를 수락했을 때 실행되는 메서드 (이름을 받아 이름을 키로 갖고, 목표와 진척도, 진행 상태 데이터를 갖고 있는 클래스를 값으로 딕셔너리를 생성)
         public void StartQuest(string questName, object goal, object nowProgressed)
         {
             if (!Quests.ContainsKey(questName))
@@ -80,20 +81,21 @@ namespace HellChangSub
         }
     }
 
+    // 퀘스트의 목표와 진척도, 상태 데이터를 관리하는 클래스
     public class QuestData
     {
         public object Goal { get; private set; } // 목표 (int, bool 등 여러 타입 가능)
-        public object NowProgressed { get; set; }
+        public object NowProgressed { get; set; } // 진척도
         public QuestState State { get; set; } // 진행 상태
 
-        public QuestData(object goal)
+        public QuestData(object goal) // 생성할 때 목표를 받아오고, 상태는 NotStarted를 기본 값으로 설정
         {
             Goal = goal;
             State = QuestState.NotStarted;
         }
     }
 
-
+    // 퀘스트 진행 상태 열거형
     public enum QuestState
     {
         NotStarted,
