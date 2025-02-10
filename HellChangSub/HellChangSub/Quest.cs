@@ -63,6 +63,7 @@ namespace HellChangSub
                     StrongMoreQuest.Instance.PickQuest();
                     break;
                 case 0: // 0. 선택 시 나가기
+                    GameManager.Instance.ShowMainScreen();
                     break;
             }
         }
