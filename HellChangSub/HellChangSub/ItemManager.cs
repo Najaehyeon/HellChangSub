@@ -328,7 +328,7 @@ namespace HellChangSub
             }
         }
 
-        public void UsePotion(Player player, int input)
+        public void UsePotion(Player player, int input) //배틀 아이템 이용창 필요
         {
             UseItem item = useItems[input-1];
             switch(item.ItemType)
@@ -346,7 +346,7 @@ namespace HellChangSub
             }
         }
 
-        public void EndPotion(Player player)
+        public void EndPotion(Player player) //History 또는 Battle에서 쿨타임 설정
         {
 
         }
