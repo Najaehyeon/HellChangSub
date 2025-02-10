@@ -72,6 +72,7 @@ namespace HellChangSub
                 player = new Player(playerName, playerJob); //
                 itemManager = new ItemManager(player);
                 quest = new Quest();
+                isLoaded = true;
             }
         }
 
