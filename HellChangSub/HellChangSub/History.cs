@@ -20,67 +20,28 @@ namespace HellChangSub
             }
         }
 
+        public int stageLvl { get; set; } = 1;
+
+        public Dictionary<string, QuestStateData > Quests { get; private set; }
+
         private History()
         {
             Quests = new Dictionary<string, QuestStateData>(); // 딕셔너리로 각 퀘스트 이름에 맞는 미션을 관리 (EX. { {"미니언 5마리 처치" , <해당 퀘스트 데이터>} , {"장비 착용", <해당 퀘스트 데이터>} } )
         }
 
-        public int stageLvl { get; set; } = 1;
-
-        public Dictionary<string, QuestStateData > Quests { get; private set; }
-
-        // 퀘스트를 수락했을 때 실행되는 메서드 (이름을 받아 이름을 키로 갖고, 목표와 진척도, 진행 상태 데이터를 갖고 있는 클래스를 값으로 딕셔너리를 생성)
-        public void StartQuest(string questName, object goal, object nowProgressed)
+        public void SetHistory(SaveData saveData)
         {
-            if (!Quests.ContainsKey(questName))
-            {
-                Quests[questName] = new QuestStateData(goal);
-                Quests[questName].NowProgressed = nowProgressed;
-                Quests[questName].State = QuestState.InProgress;
-            }
+            Quests = saveData.Quests;
         }
+    }
 
-        // 진척도 확인하는 메서드
-        public void UpdateProgress(string questName)
-        {
-            if (!Quests.ContainsKey(questName)) return;
-
-            var quest = Quests[questName];
-
-            // 목표 달성시 Completed 로 전환
-            // 🎯 목표 타입에 따라 다르게 처리!
-            if (quest.Goal is int goalInt && Instance.Quests[questName].NowProgressed is int progressInt)
-            {
-                if (progressInt >= goalInt)
-                {
-                    quest.State = QuestState.Completed;
-                }
-            }
-            else if (quest.Goal is bool goalBool && Instance.Quests[questName].NowProgressed is bool progressBool)
-            {
-                if (progressBool == goalBool)
-                {
-                    quest.State = QuestState.Completed;
-                }
-            }
-        }
-
-        // 보상받기를 했을 때 실행되는 메서드
-        public void ClaimReward(string questName)
-        {
-            Quests[questName].State = QuestState.RewardClaimed;
-            Console.WriteLine($"\"{questName}\"의 보상을 받았습니다!");
-            Console.WriteLine("0. 돌아가기");
-            int choice = Utility.Select(0, 0);
-
-            switch (choice)
-            {
-                case 0:
-                    Console.Clear();
-                    Quest.ShowQuestList();
-                    break;
-            }
-        }
+    // 퀘스트 진행 상태 열거형
+    public enum QuestState
+    {
+        NotStarted,
+        InProgress,
+        Completed,
+        RewardClaimed
     }
 
     // 퀘스트의 목표와 진척도, 상태 데이터를 관리하는 클래스
@@ -95,14 +56,5 @@ namespace HellChangSub
             Goal = goal;
             State = QuestState.NotStarted;
         }
-    }
-
-    // 퀘스트 진행 상태 열거형
-    public enum QuestState
-    {
-        NotStarted,
-        InProgress,
-        Completed,
-        RewardClaimed
     }
 }

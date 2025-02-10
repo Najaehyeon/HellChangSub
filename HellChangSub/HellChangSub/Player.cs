@@ -29,7 +29,7 @@ namespace HellChangSub
 
         public bool IsDead => CurrentHealth <= 0;
 
-        public Player() { }
+        public Player() { }//저장 및 로드 기능을 위해 생성자 3가지 형태로 오버로드 
 
         public Player(SaveData saveData)
         {
@@ -40,7 +40,6 @@ namespace HellChangSub
             Exp = saveData.Exp;
             CurrentHealth = saveData.CurrentHealth;
             MaximumHealth = saveData.MaximumHealth;
-            CurrentMana = saveData.CurrentMana;
             MaximumMana = saveData.MaximumMana;
             CurrentMana = saveData.CurrentMana;
             Atk = saveData.Atk;
@@ -59,7 +58,7 @@ namespace HellChangSub
             JobCode = Job;
             Level = 1;
             Exp = 0;
-            Gold = 0;
+            Gold = 100000;
             EquipAtk = 0;
             EquipDef = 0;
             switch (JobCode)

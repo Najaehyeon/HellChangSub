@@ -3,8 +3,8 @@ using System.IO;
 using System.Text.Json;
 namespace HellChangSub
 {
-    [Serializable]
-    public class SaveData
+    [Serializable]//직렬화 가능하게 해주는 어트리뷰트(속성)  부여
+    public class SaveData// 아이템 리스트 인벤토리및 상점 아이템 , 히스토리내 기록 프로퍼티 저장 필요 추가로 로드 기능 추가 필요
     {
         public string Name { get; set; }
         public int JobCode { get; set; }
@@ -24,9 +24,15 @@ namespace HellChangSub
         public float CritDamage { get; set; }
         public float Evasion { get; set; }
 
+        public List<EquipItem> equipItems { get; set; }
+        public List<EquipItem> equipInventory { get; set; }
+        public List<UseItem> useItems;
+        public int stageLvl;
+        public Dictionary<string, QuestStateData> Quests { get; set; }
+
         public SaveData() { }//로드시 매개변수 없는 객체 생성을 위해 오버로드
 
-        public SaveData(Player player)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
+        public SaveData(Player player,ItemManager itemManager)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
         {
             Name = player.Name;
             JobCode = player.JobCode;
@@ -35,7 +41,6 @@ namespace HellChangSub
             Exp = player.Exp;
             CurrentHealth = player.CurrentHealth;
             MaximumHealth = player.MaximumHealth;
-            CurrentMana = player.CurrentMana;
             MaximumMana = player.MaximumMana;
             CurrentMana = player.CurrentMana;
             Atk = player.Atk;
@@ -46,6 +51,14 @@ namespace HellChangSub
             Crit = player.Crit;
             CritDamage = player.CritDamage;
             Evasion = player.Evasion;
+            equipItems = itemManager.equipItems;
+            equipInventory = itemManager.equipInventory;
+            useItems = itemManager.useItems;//itemamanager 생성자 신규생성필요
+            stageLvl = History.Instance.stageLvl;
+            Quests = History.Instance.Quests;
+
         }
+
+
     }
 }

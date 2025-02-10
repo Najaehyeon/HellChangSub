@@ -11,10 +11,11 @@ namespace HellChangSub
         Weapon,
         Armor,
         HpPotion,
+        MpPotion,
         AtkPotion,
         DefPotion
     }
-    // List<Item> items = {}; 로 리스트 추가
+
     public class EquipItem
     {
         public string ItemName { get; }
@@ -41,13 +42,13 @@ namespace HellChangSub
         public string EquipInvenStatus()
         {
             string equipStr = isEquip ? "[E]" : "";
-            string str = $"{equipStr + ItemName}  | {GetItemType()} +{Value}  | {Description}";
+            string str = string.Format("{0,-15}  | {1,-4}  | {2,-4}  | {3,-15}",equipStr + ItemName, GetItemType(), Value, Description);
             return str;
         }
 
         public string EquipItemStatus()
         {
-            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | {IsPurchased()}";
+            string str = string.Format("{0,-15}  | {1,-4}  | {2,-4}  | {3,-15}  | {4}",ItemName, GetItemType(), Value, Description, IsPurchased());
             return str;
         }
 
@@ -95,13 +96,13 @@ namespace HellChangSub
         }
         public string UseItemStatus()
         {
-            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | x {Count}개 보유";
+            string str = string.Format("{0,-15}  | {1,-4}  | {2,-4}  | {3,-15}  | {4}개 보유", ItemName, GetItemType(), Value, Description, Count);
             return str;
         }
 
         public string UseShopStatus()
         {
-            string str = $"{ItemName}  | {GetItemType()} +{Value}  | {Description}  | {Price} G";
+            string str = string.Format("{0,-15}  | {1,-4}  | {2,-4}  | {3,-15}  | {4} G", ItemName, GetItemType(), Value, Description, Price);
             return str;
         }
 
@@ -112,6 +113,9 @@ namespace HellChangSub
             {
                 case ItemType.HpPotion:
                     itemStr = $"HP";
+                    break;
+                case ItemType.MpPotion:
+                    itemStr = $"MP";
                     break;
                 case ItemType.AtkPotion:
                     itemStr = $"ATK";

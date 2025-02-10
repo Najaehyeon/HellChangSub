@@ -3,6 +3,7 @@
 
 namespace HellChangSub
 {
+    public delegate void Delegate();
     internal class Program
     {
         static void Main(string[] args)
@@ -24,11 +25,13 @@ namespace HellChangSub
             get
             {
                 if (_instance == null)       // 3️ 인스턴스가 없으면 생성
+                {
                     _instance = new GameManager();
+                }
                 return _instance;            // 4️ 인스턴스를 반환
             }
         }
-        private GameManager() // 5 외부에서 생성하지 못하게 private
+        private GameManager() // 5 외부에서 생성하지 못하게 private 싱글톤 처리후 게임매니저 클래스에서 생성된 객체에 접근가능 GameManager.Instance.객체명(게임매니저내 메서드).프로퍼티
         {
             Console.WriteLine("저장된 게임을 불러오시겠습니까?");
             Console.WriteLine("\n1. 예\n2. 아니오");
@@ -38,6 +41,8 @@ namespace HellChangSub
             {
                 SaveData saveData = SaveSystem.LoadGame();//로드 메서드를 통해 saveData객체생성
                 player = new Player(saveData);//saveData를 받는 플레이어 객체 생성
+                itemManager = new ItemManager(saveData);
+                History.Instance.SetHistory(saveData);
             }
             else
             {
@@ -47,10 +52,10 @@ namespace HellChangSub
                 Console.WriteLine("직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
                 int playerJob = Utility.Select(1, 3);
                 player = new Player(playerName, playerJob); //
+                itemManager = new ItemManager(player);
             }
-            itemManager = new ItemManager(player);
         }
-
+        
         public void ShowMainScreen()
         {
             Console.Clear();
@@ -65,7 +70,7 @@ namespace HellChangSub
                     player.ShowStatus();
                     break;
                 case 2:
-                    Stage stage = new Stage(player, 1);//도전 층수에대해 고민 스테이지 진입시 도전층수 선택? 히스토리에 지금까지 클리어한 도전층수 저장 게임 승리시 히스토리에 프로퍼티 수정 만약 5층 진입시 헬창섭 소환
+                    Stage stage = new Stage(player, History.Instance.stageLvl);//도전 층수에대해 고민 스테이지 진입시 도전층수 선택? 히스토리에 지금까지 클리어한 도전층수 저장 게임 승리시 히스토리에 프로퍼티 수정 만약 5층 진입시 헬창섭 소환
                     break;
                 case 3:
                     itemManager.InventoryScene();
@@ -77,7 +82,7 @@ namespace HellChangSub
                     Quest.ShowQuestList();
                     break;
                 case 6:
-                    SaveData saveData = new SaveData(player);
+                    SaveData saveData = new SaveData(player,itemManager);
                     SaveSystem.SaveGame(saveData);//저장기능
                     break;
             }

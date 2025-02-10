@@ -97,7 +97,7 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1: // 보상 받기
-                        History.Instance.ClaimReward(Title);
+                        Quest.ClaimReward(Title);
                         Console.WriteLine("보상을 받았습니다.");
                         Console.WriteLine("\n0. 나가기");
                         Console.WriteLine("다음 행동을 선택해주세요.");
