@@ -140,7 +140,7 @@ namespace HellChangSub
             for (int i = 0; i < player.Skills.Count; i++)
             {
                 Skill skill = player.Skills[i];     // 스킬 목록 추가해야 빨간줄 사라질거임 - 사라졌음
-                Console.WriteLine($"{i + 1}. {skill.Name} (MP {skill.ManaCost}, 배율 {skill.DamageMultiplier}x)");
+                Console.WriteLine($"{i + 1}. {skill.Name} - MP {skill.ManaCost}\n   {skill.Text}");
             }
 
             int skillChoice = Utility.Select(1, player.Skills.Count) - 1;
@@ -160,7 +160,7 @@ namespace HellChangSub
             if (!target.IsDead)
             {
                 int beforeHP = target.CurrentHealth;
-                player.CurrentMana -= selectedSkill.ManaCost; // MP 소모
+                player.CurrentMana -= (int)selectedSkill.ManaCost; // MP 소모 - int? 형이라 (int) 추가로 오류해결
 
                 Console.Clear();
                 Console.WriteLine("Battle!!\n");

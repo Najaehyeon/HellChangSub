@@ -22,13 +22,14 @@ namespace HellChangSub
         public float Evasion { get; set; } = 10.0f;
         public bool IsDead => CurrentHealth <= 0;
 
-        public Character(string name, int level, int maxHealth, float atk, float critDmg, int def)
+        public Character(string name, int level, int maxHealth, float atk, float crit, float critDmg, int def)
         {
             Name = name;
             Level = level;
             MaximumHealth = maxHealth;
             CurrentHealth = maxHealth;
             Atk = atk;
+            Crit = Crit;
             CritDamage = critDmg;
             Def = def;
         }
@@ -53,11 +54,11 @@ namespace HellChangSub
     public class Skill
     {
         public string Name { get; }
-        public string Text { get; }
+        public string? Text { get; }
         public float DamageMultiplier { get; }
-        public int ManaCost { get; }
+        public int? ManaCost { get; }
 
-        public Skill(string name, string text, float damageMultiplier, int manaCost)
+        public Skill(string name, float damageMultiplier, int? manaCost = null, string? text = null)
         {
             Name = name;
             Text = text;
@@ -102,7 +103,7 @@ namespace HellChangSub
         }
 
         public Player(string name, int Job)
-        : base(name, 1, 100, 10.0f, 1.6f, 5) // `Character`의 기본 생성자 호출(이름, 레벨, 최대체력, 공격력, 치명타피해량, 방어력)
+        : base(name, 1, 100, 10.0f, 10.0f, 1.6f, 5) // `Character`의 기본 생성자 호출(이름, 레벨, 최대체력, 공격력, 치명타피해량, 방어력)
         {
             JobCode = Job;
             Exp = 0;
@@ -117,13 +118,13 @@ namespace HellChangSub
                     JobName = "전사";
                     Atk += 0f;
                     Def += 2;
-                    Crit = 10.0f;
+                    Crit += 0f;
                     Evasion = 10.0f;
 
                     Skills = new List<Skill>
                     {
-                        new Skill("파워 슬래시", "단일 대상에게 공격력의 2배의 피해를 입힙니다.", 2.0f, 10),
-                        new Skill("발도", "단일 대상에게 공격력의 3배의 피해를 입힙니다.", 3.0f, 15)
+                        new Skill("파워 슬래시", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."),
+                        new Skill("발도", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다.")
                     };
                     break;
 
@@ -133,14 +134,14 @@ namespace HellChangSub
                     Def -= 2;
                     MaximumHealth = 80;
                     CurrentHealth = 80;
-                    Crit = 30.0f;
+                    Crit += 20.0f;
                     CritDamage = 2.0f;
                     Evasion = 20.0f;
 
                     Skills = new List<Skill>
                     {
-                        new Skill("사악한 일격", "단일 대상에게 공격력의 2배의 피해를 입힙니다.", 2.0f, 10),
-                        new Skill("절개", "단일 대상에게 공격력의 3배의 피해를 입힙니다.", 3.0f, 15)
+                        new Skill("사악한 일격", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."),
+                        new Skill("절개", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다.")
                     };
                     break;
 
@@ -152,13 +153,13 @@ namespace HellChangSub
                     MaximumHealth = 70;
                     MaximumMana = 100;
                     CurrentMana = 100;
-                    Crit = 10.0f;
+                    Crit += 0f;
                     Evasion = 0f;
 
                     Skills = new List<Skill>
                     {
-                        new Skill("파이어볼", "단일 대상에게 공격력의 4배의 피해를 입힙니다.", 4.0f, 10),
-                        new Skill("콜드 빔", "단일 대상에게 공격력의 6배의 피해를 입힙니다.", 6.0f, 15)
+                        new Skill("파이어볼", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다."),
+                        new Skill("콜드 빔", 4.5f, 20, "단일 대상에게 공격력의 4.5배의 피해를 입힙니다.")
                     };
                     break;
             }
@@ -170,46 +171,123 @@ namespace HellChangSub
             {
                 Exp -= 10;
                 Level++;
+                StatUp();
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
-                Atk += 0.5f;
-                Def += 1;
                 Console.WriteLine("레벨업을 하였습니다.");
+                LearnSkill();
             }
-            else if (Level == 2 && Exp >= 35) 
+            else if (Level == 2 && Exp >= 35)
             {
                 Exp -= 35;
                 Level++;
+                StatUp();
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
-                Atk += 0.5f;
-                Def += 1;
                 Console.WriteLine("레벨업을 하였습니다.");
+                LearnSkill();
             }
             else if (Level == 3 && Exp >= 65)
             {
                 Exp -= 65;
                 Level++;
+                StatUp();
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
-                Atk += 0.5f;
-                Def += 1;
                 Console.WriteLine("레벨업을 하였습니다.");
+                LearnSkill();
             }
             else if (Level == 4 && Exp >= 100)
             {
                 Exp -= 100;
                 Level++;
+                StatUp();
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
-                Atk += 0.5f;
-                Def += 1;
                 Console.WriteLine("레벨업을 하였습니다.");
+                LearnSkill();
+            }
+            else if (Exp >= 100 + (40 + 5 * (Level - 4)) * (Level - 3))
+            {
+                Exp -= 100 + (40 + 5 * (Level - 4)) * (Level - 3);
+                Level++;
+                StatUp();
+                CurrentHealth = MaximumHealth;
+                CurrentMana = MaximumMana;
+                Console.WriteLine("레벨업을 하였습니다.");
+                LearnSkill();
             }
         }
-        
-        //스킬 습득 여부는 어떻게할까? - islearn 부울값을 배정해서 레벨업시 직업과 레벨 충족하면 해당 부울값을 true로 하고 true인 스킬은 전투화면에서 보여지고 사용도 가능하도록
 
+        public void StatUp()
+        {
+            switch (JobCode)        // 직업별 레벨업시 스탯증가 - 추후 다른방식으로 스탯이 오르게 할지도
+            {
+                case 1:
+                    MaximumHealth += 50;
+                    MaximumMana += 20;
+                    Atk += 3.0f;
+                    Def += 2;
+                    break;
+                case 2:
+                    MaximumHealth += 30;
+                    MaximumMana += 20;
+                    Atk += 3.0f;
+                    Def += 1;
+                    break;
+                case 3:
+                    MaximumHealth += 20;
+                    MaximumMana += 50;
+                    Atk += 2.0f;
+                    Def += 0;
+                    break;
+            }
+        }
+
+        public void LearnSkill()
+        {
+            switch (JobCode)
+            {
+                case 1: // 전사
+                    if (Level == 3)
+                    {
+                        Skills.Add(new Skill("내려찍기", 4.0f, 20, "단일 대상에게 공격력의 4배의 피해를 입힙니다."));
+                        Console.WriteLine("새로운 스킬을 습득했습니다! [내려찍기]");
+                    }
+                    else if (Level == 7)
+                    {
+                        Skills.Add(new Skill("분노의 일격", 6.0f, 30, "단일 대상에게 공격력의 6배의 피해를 입힙니다."));
+                        Console.WriteLine("새로운 스킬을 습득했습니다! [분노의 일격]");
+                    }
+                    break;
+
+                case 2: // 도적
+                    if (Level == 3)
+                    {
+                        Skills.Add(new Skill("소닉 블리츠", 4.0f, 20, "단일 대상에게 공격력의 4배의 피해를 입힙니다"));
+                        Console.WriteLine("새로운 스킬을 습득했습니다! [소닉 블리츠]");
+                    }
+                    else if (Level == 7)
+                    {
+                        Skills.Add(new Skill("암살", 6.0f, 30, "단일 대상에게 공격력의 6배의 피해를 입힙니다."));
+                        Console.WriteLine("새로운 스킬을 습득했습니다! [암살]");
+                    }
+                    break;
+
+                case 3: // 마법사
+                    if (Level == 3)
+                    {
+                        Skills.Add(new Skill("라이트닝 볼트", 6.0f, 25, "단일 대상에게 공격력의 6배의 피해를 입힙니다."));
+                        Console.WriteLine("새로운 스킬을 습득했습니다! [라이트닝 볼트]");
+                    }
+                    else if (Level == 7)
+                    {
+                        Skills.Add(new Skill("윈드 블래스터", 9.0f, 35, "단일 대상에게 공격력의 9배의 피해를 입힙니다."));
+                        Console.WriteLine("새로운 스킬을 습득했습니다! [윈드 블래스터]");
+                    }
+                    break;
+            }
+        }
 
         public void ShowStatus()
         {
