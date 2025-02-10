@@ -52,6 +52,22 @@ namespace HellChangSub
             }
         }
         //장비
+
+        public void QuestEquip(EquipItem item)
+        {
+            if (item.isPurchase)
+            {
+                Console.WriteLine("이미 구매한 아이템입니다");
+                GameManager.Instance.player.Gold += item.Price;
+            }
+            else
+            {
+                ItemManager.equipInventory.Add(item);
+                item.isPurchase = true;
+                ItemSort(ItemManager.equipInventory);
+            }
+        }
+
         public void EquipBuy(Player player, int input)
         {
             EquipItem item = ItemManager.equipItems[input - 1];
