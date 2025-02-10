@@ -186,6 +186,7 @@ namespace HellChangSub
                 }
             }
         }
+
         public override QuestState QuestState { get; set; } = QuestState.NotStarted;
 
         public override void FormatMission()
