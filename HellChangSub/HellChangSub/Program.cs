@@ -79,7 +79,7 @@ namespace HellChangSub
 
         public void ShowStartScreen()
         {
-            Console.SetWindowSize(120, 60);
+            
             Console.Clear();
             Encoding originalEncoding = Console.OutputEncoding;
 

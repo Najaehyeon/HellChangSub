@@ -27,19 +27,7 @@ namespace HellChangSub
 
     class Slime : Monster
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int MaximumHealth { get; set; }
-        public int CurrentHealth { get; set; }
-        public int Level { get; set; }
-
-        public int Atk { get; set; }
-        public int Def { get; set; }
-        public int Crit { get; set; }
-
-        public bool IsDead => CurrentHealth <= 0;
-        public int RewardExp { get; set; } = 0;//몬스터별 기본 보상 설정 필요
-        public int RewardGold { get; set; } = 0;
+        
         Random rand = new Random();
         public Slime(int stageLvl)
         {
@@ -99,19 +87,7 @@ namespace HellChangSub
     class Skeleton : Monster
     {
         Random rand = new Random();
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int MaximumHealth { get; set; }
-        public int CurrentHealth { get; set; }
-        public int Level { get; set; }
-
-        public int Atk { get; set; }
-        public int Def { get; set; }
-        public int Crit { get; set; }
-
-        public bool IsDead => CurrentHealth <= 0;
-        public int RewardExp { get; set; } = 0;//몬스터별 기본 보상 설정 필요
-        public int RewardGold { get; set; } = 0;
+        
         public Skeleton(int stageLvl) 
         {
             int randomDice = rand.Next(0, 101);
@@ -170,19 +146,6 @@ namespace HellChangSub
     class Orge : Monster
     {
         Random rand = new Random();
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int MaximumHealth { get; set; }
-        public int CurrentHealth { get; set; }
-        public int Level { get; set; }
-
-        public int Atk { get; set; }
-        public int Def { get; set; }
-        public int Crit { get; set; }
-
-        public bool IsDead => CurrentHealth <= 0;
-        public int RewardExp { get; set; } = 0;//몬스터별 기본 보상 설정 필요
-        public int RewardGold { get; set; } = 0;
         public Orge(int stageLvl)
         {
             int randomDice = rand.Next(0, 101);
@@ -241,19 +204,6 @@ namespace HellChangSub
     class Dragon : Monster
     {
         Random rand = new Random();
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int MaximumHealth { get; set; }
-        public int CurrentHealth { get; set; }
-        public int Level { get; set; }
-
-        public int Atk { get; set; }
-        public int Def { get; set; }
-        public int Crit { get; set; }
-
-        public bool IsDead => CurrentHealth <= 0;
-        public int RewardExp { get; set; } = 0;//몬스터별 기본 보상 설정 필요
-        public int RewardGold { get; set; } = 0;
         public Dragon(int stageLvl)
         {
             int randomDice = rand.Next(0, 101);
@@ -311,19 +261,7 @@ namespace HellChangSub
 
     class HellChangSub : Monster
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public int MaximumHealth { get; set; }
-        public int CurrentHealth { get; set; }
-        public int Level { get; set; }
-
-        public int Atk { get; set; }
-        public int Def { get; set; }
-        public int Crit { get; set; }
-
-        public bool IsDead => CurrentHealth <= 0;
-        public int RewardExp { get; set; } = 0;//몬스터별 기본 보상 설정 필요
-        public int RewardGold { get; set; } = 0;
+        
         public HellChangSub()
         {
             Name = "헬창 Sup";
