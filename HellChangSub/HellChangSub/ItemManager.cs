@@ -10,12 +10,16 @@ namespace HellChangSub
     public class ItemManager
     {
         Player player;
-        bool purchased = false;
-        bool goldRequired = false;
+        ItemUtil itemUtil;
+        public bool purchased = false;
+        public bool goldRequired = false;
+        public bool noItem = false;
+        public bool equiptedItem = false;
 
         public ItemManager(Player player)
         {
             this.player = player;
+            itemUtil = new ItemUtil(this);
         }
         //string name, int value, string description, int price, ItemType itemtype
         public List<EquipItem> equipItems = new List<EquipItem>
@@ -31,7 +35,8 @@ namespace HellChangSub
         //string itemname, int value, string description, int price, ItemType itemType
         public List<UseItem> useItems = new List<UseItem>()
         {
-            new UseItem("체력포션", 50, "체력 상승", 50, ItemType.HpPotion),
+            new UseItem("체력포션", 50, "체력 회복", 50, ItemType.HpPotion),
+            new UseItem("마나포션", 50, "마나 회복", 50, ItemType.MpPotion),
             new UseItem("힘포션", 20, "공격력 상승", 50, ItemType.AtkPotion),
             new UseItem("방어포션", 20, "방어력 상승", 50, ItemType.DefPotion)
         };
@@ -55,7 +60,9 @@ namespace HellChangSub
             Console.WriteLine("[소비 아이템]");
             for (int i = 0; i < useItems.Count; i++)
             {
-                Console.WriteLine($"- {useItems[i].UseItemStatus()}");
+                if (useItems[i].Count == 0)
+                    continue;
+                Console.WriteLine($"- {useItems[i].ItemName, -10}  | {useItems[i].Count} 개");
             }
 
             Console.WriteLine("1. 장착 관리");
@@ -100,7 +107,7 @@ namespace HellChangSub
                     InventoryScene();
                     break;
                 default:
-                    EquipChange(player, input);
+                    itemUtil.EquipChange(player, input);
                     break;
             }
         }
@@ -118,13 +125,15 @@ namespace HellChangSub
             Console.WriteLine();
 
             Console.WriteLine("구매를 원하는 아이템의 종류를 선택해주세요");
-            Console.WriteLine("1. 장비 아이템");
-            Console.WriteLine("2. 소비 아이템");
+            Console.WriteLine("1. 장비 아이템 구매");
+            Console.WriteLine("2. 소비 아이템 구매");
+            Console.WriteLine("3. 장비 아이템 판매");
+            Console.WriteLine("4. 소비 아이템 판매");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            int input = Utility.Select(0, 2);
+            int input = Utility.Select(0, 4);
             switch (input)
             {
                 case 0:
@@ -136,6 +145,12 @@ namespace HellChangSub
                 case 2:
                     UseShopScene();
                     break;
+                case 3:
+                    EquipSellScene();
+                    break;
+                case 4:
+                    UseSellScene();
+                    break;
             }
         }
 
@@ -143,7 +158,7 @@ namespace HellChangSub
         public void EquipShopScene()
         {
             Console.Clear();
-            Console.WriteLine("상점");
+            Console.WriteLine("[상점]");
             Console.WriteLine("필요한 장비를 얻을 수 있는 상점입니다.");
             Console.WriteLine();
 
@@ -161,8 +176,8 @@ namespace HellChangSub
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
-            SoldOut(purchased);
-            GoldRequired(goldRequired); //구매완료,재화부족 message 메서드
+            itemUtil.SoldOut(purchased);
+            itemUtil.GoldRequired(goldRequired); //구매완료,재화부족 message 메서드
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             int input = Utility.Select(0, equipItems.Count);
             switch (input)
@@ -171,7 +186,43 @@ namespace HellChangSub
                     ShopScene();
                     break;
                 default:
-                    EquipBuy(player, input);
+                    itemUtil.EquipBuy(player, input);
+                    break;
+            }
+        }
+
+        public void EquipSellScene()
+        {
+            Console.Clear();
+            Console.WriteLine("[상점]");
+            Console.WriteLine("장비를 팔수 있는 상점입니다.");
+            Console.WriteLine();
+
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{player.Gold} G");
+            Console.WriteLine();
+
+            Console.WriteLine("[장비 아이템]");
+            for (int i = 0; i < equipInventory.Count; i++)
+            {
+                Console.WriteLine($"{i + 1} {equipInventory[i].EquipInvenStatus()}");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
+
+            itemUtil.CantSell(noItem);
+            itemUtil.EquiptedItem(equiptedItem);
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            int input = Utility.Select(0, equipInventory.Count);
+            switch (input)
+            {
+                case 0:
+                    ShopScene();
+                    break;
+                default:
+                    itemUtil.EquipSell(player, input);
                     break;
             }
         }
@@ -180,8 +231,8 @@ namespace HellChangSub
         public void UseShopScene()
         {
             Console.Clear();
-            Console.WriteLine("상점");
-            Console.WriteLine("필요한 장비를 얻을 수 있는 상점입니다.");
+            Console.WriteLine("[상점]");
+            Console.WriteLine("소비 아이템을 얻을 수 있는 상점입니다.");
             Console.WriteLine();
 
             Console.WriteLine("[보유 골드]");
@@ -198,7 +249,7 @@ namespace HellChangSub
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
-            GoldRequired(goldRequired); //재화부족 message 메서드
+            itemUtil.GoldRequired(goldRequired); //재화부족 message 메서드
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             int input = Utility.Select(0, useItems.Count);
             switch (input)
@@ -207,150 +258,45 @@ namespace HellChangSub
                     ShopScene();
                     break;
                 default:
-                    UseBuy(player, input);
+                    itemUtil.UseBuy(player, input);
                     break;
             }
         }
 
-        public void SoldOut(bool purchased)
+        public void UseSellScene()
         {
-            if(purchased)
-                Console.WriteLine("품절된 아이템입니다.");
-        }
+            Console.Clear();
+            Console.WriteLine("[상점]");
+            Console.WriteLine("소비 아이템을 팔수 있는 상점입니다.");
+            Console.WriteLine();
 
-        public void GoldRequired(bool goldRequired)
-        {
-            if (goldRequired)
-                Console.WriteLine("골드가 부족합니다.");
-        }
+            Console.WriteLine("[보유 골드]");
+            Console.WriteLine($"{player.Gold} G");
+            Console.WriteLine();
 
-        public void UseBuy(Player player, int input)
-        {
-            UseItem item = useItems[input - 1];
-            if (player.Gold < item.Price)
+            Console.WriteLine("[소비 아이템]");
+            for (int i = 0; i < useItems.Count; i++)
             {
-                goldRequired = true;
+                Console.WriteLine($"{i + 1} {useItems[i].UseShopStatus()}");
             }
-            else
-            {
-                player.Gold -= item.Price;
-                item.Count++;
-            }
-            UseShopScene();
-        }
 
-        public void UseSell(Player player, int input)
-        {
-            UseItem item = useItems[input - 1];
-            player.Gold += (item.Price / 2);
-            item.Count--;
-            UseShopScene(); // 판매씬으로 바꿔야함
-        }
+            Console.WriteLine();
+            Console.WriteLine("0. 나가기");
+            Console.WriteLine();
 
-        public void EquipBuy(Player player, int input)
-        {
-            EquipItem item = equipItems[input - 1];
-            if (item.isPurchase)
+            itemUtil.CantSell(noItem);
+            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            int input = Utility.Select(0, useItems.Count);
+            switch (input)
             {
-                purchased = true;
-            }
-            else
-            {
-                if (player.Gold < item.Price)
-                {
-                    goldRequired = true;
-                }
-                else
-                {
-                    player.Gold -= item.Price;
-                    equipInventory.Add(item);
-                    item.isPurchase = true;
-                    purchased = false;
-                }
-            }
-            EquipShopScene();
-        }
-
-        public void EquipSell(Player player, int input)
-        {
-            EquipItem item = equipInventory[input - 1];
-            player.Gold += (item.Price / 2);
-            equipInventory.Remove(item);
-            EquipShopScene(); // 판매씬으로 바꿔야함
-        }
-
-        //장착 메서드들
-        public void EquipChange(Player player, int input)
-        {
-            EquipItem item = equipInventory[input - 1];
-            for (int i = 0; i < equipInventory.Count; i++)
-            {
-                if (equipInventory[i].isEquip && item != equipInventory[i] && equipInventory[i].ItemType == item.ItemType)
-                {
-                    UnEquip(player, equipInventory[i]);
-                }
-            }
-            Equip(player, item);
-
-            EquipScene();
-        }
-        public void Equip(Player player, EquipItem item)
-        {
-            if (!item.isEquip)
-            {
-                item.isEquip = true;
-                if (item.ItemType == ItemType.Weapon)
-                {
-                    player.EquipAtk += item.Value;
-                }
-                else
-                {
-                    player.EquipDef += item.Value;
-                }
-            }
-            else
-                UnEquip(player, item);
-        }
-
-        public void UnEquip(Player player, EquipItem item)
-        {
-            if (item.isEquip)
-            {
-                item.isEquip = false;
-                if (item.ItemType == ItemType.Weapon)
-                {
-                    player.EquipAtk -= item.Value;
-                }
-                else
-                {
-                    player.EquipDef -= item.Value;
-                }
-            }
-        }
-
-        public void UsePotion(Player player, int input) //배틀 아이템 이용창 필요
-        {
-            UseItem item = useItems[input-1];
-            switch(item.ItemType)
-            {
-                case ItemType.HpPotion:
-                    player.CurrentHealth += item.Value;
-                    player.CurrentHealth = player.CurrentHealth >= player.MaximumHealth ? player.MaximumHealth : player.CurrentHealth;
+                case 0:
+                    ShopScene();
                     break;
-                case ItemType.AtkPotion:
-                    player.EquipAtk += item.Value;
-                    break;
-                case ItemType.DefPotion:
-                    player.EquipDef += item.Value;
+                default:
+                    itemUtil.UseSell(player, input);
                     break;
             }
         }
-
-        public void EndPotion(Player player) //History 또는 Battle에서 쿨타임 설정
-        {
-
-        }
-
 
     }
 }
