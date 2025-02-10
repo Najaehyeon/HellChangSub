@@ -28,7 +28,7 @@ namespace HellChangSub
         public List<EquipItem> equipInventory { get; set; }
         public List<UseItem> useItems;
         public int stageLvl;
-        public List<QuestData> questDataList; {  get; set; }
+        public List<QuestData> questDataList {  get; set; }
 
         public SaveData() { }//로드시 매개변수 없는 객체 생성을 위해 오버로드
 

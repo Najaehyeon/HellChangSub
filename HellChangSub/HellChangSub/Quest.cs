@@ -67,12 +67,10 @@ namespace HellChangSub
                     break;
             }
         }
-        
 
         // 퀘스트를 수락했을 때 실행되는 메서드 (퀘스트의 이름이랑, 목표, 진척도를 전달해줌)
         public void AcceptQuest(string questName, object goal, object nowProgressed)
         {
-            StartQuest(questName, goal, nowProgressed);
             Console.WriteLine($"\"{questName}\" 퀘스트를 수락했습니다!");
             Console.WriteLine("\n0. 나가기");
             Console.WriteLine("다음 행동을 선택해주세요.");
@@ -83,76 +81,6 @@ namespace HellChangSub
                     Console.Clear();
                     ShowQuestList();
                     break;
-            }
-        }
-
-        // 퀘스트를 수락했을 때 실행되는 메서드 (이름을 받아 이름을 키로 갖고, 목표와 진척도, 진행 상태 데이터를 갖고 있는 클래스를 값으로 딕셔너리를 생성)
-        public void StartQuest(string questName, object goal, object nowProgressed)
-        {
-            if (!History.Instance.Quests.ContainsKey(questName))
-            {
-                History.Instance.Quests[questName] = new QuestStateData(goal);
-                History.Instance.Quests[questName].NowProgressed = nowProgressed;
-                History.Instance.Quests[questName].State = QuestState.InProgress;
-            }
-        }
-
-        // 진척도 확인하는 메서드
-        public void UpdateProgress(string questName)
-        {
-            if (!History.Instance.Quests.ContainsKey(questName)) return;
-
-            var quest = History.Instance.Quests[questName];
-
-            // 목표 달성시 Completed 로 전환
-            // 🎯 목표 타입에 따라 다르게 처리!
-            if (quest.Goal is int goalInt && History.Instance.Quests[questName].NowProgressed is int progressInt)
-            {
-                if (progressInt >= goalInt)
-                {
-                    quest.State = QuestState.Completed;
-                }
-            }
-            else if (quest.Goal is bool goalBool && History.Instance.Quests[questName].NowProgressed is bool progressBool)
-            {
-                if (progressBool == goalBool)
-                {
-                    quest.State = QuestState.Completed;
-                }
-            }
-        }
-
-        // 보상받기를 했을 때 실행되는 메서드
-        public void ClaimReward(string questName)
-        {
-            History.Instance.Quests[questName].State = QuestState.RewardClaimed;
-            Console.WriteLine($"\"{questName}\"의 보상을 받았습니다!");
-            Console.WriteLine("0. 돌아가기");
-            int choice = Utility.Select(0, 0);
-
-            switch (choice)
-            {
-                case 0:
-                    Console.Clear();
-                    Quest.ShowQuestList();
-                    break;
-            }
-        }
-
-        // 미션을 완료하고 보상을 받을 때 실행되는 메서드
-        public void CompleteMission(string questName)
-        {
-            UpdateProgress(questName);
-
-            if (History.Instance.Quests.ContainsKey(questName) && History.Instance.Quests[questName].State == QuestState.Completed)
-            {
-                Console.WriteLine($"{questName}를 완료했습니다!");
-                Console.WriteLine("보상을 받으려면 1을 입력하세요.");
-                int rewardChoice = Utility.Select(1, 1);
-                if (rewardChoice == 1)
-                {
-                    ClaimReward(questName);
-                }
             }
         }
     }
