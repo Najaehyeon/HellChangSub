@@ -8,7 +8,7 @@ namespace HellChangSub
     {
         static void Main(string[] args)
         {
-            GameManager.Instance.ShowMainScreen();
+            GameManager.Instance.ShowStartScreen();
         }
     }
 
@@ -36,7 +36,7 @@ namespace HellChangSub
         }
         private GameManager() // 5 외부에서 생성하지 못하게 private 싱글톤 처리후 게임매니저 클래스에서 생성된 객체에 접근가능 GameManager.Instance.객체명(게임매니저내 메서드).프로퍼티
         {
-            ShowStartScreen();
+            
             Console.WriteLine("저장된 게임을 불러오시겠습니까?");
             Console.WriteLine("\n1. 예\n2. 아니오");
             int choice = Utility.Select(1, 2);
@@ -61,6 +61,7 @@ namespace HellChangSub
                 player = new Player(saveData);//saveData를 받는 플레이어 객체 생성
                 itemManager = new ItemManager(saveData);
                 quest = new Quest(saveData);
+                ShowMainScreen();
             }
             else
             {
@@ -72,6 +73,7 @@ namespace HellChangSub
                 player = new Player(playerName, playerJob); //
                 itemManager = new ItemManager(player);
                 quest = new Quest();
+                ShowMainScreen(); 
             }
         }
 
@@ -112,38 +114,27 @@ namespace HellChangSub
 
 
 
-            for (int i = 0; i < 5; i++)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Clear();
-                Console.WriteLine(asciiArt);
-                Thread.Sleep(70);
-                Console.ResetColor();
-                Console.Clear();
-                Console.WriteLine(asciiArt);
-                Thread.Sleep(70);
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Clear();
-                Console.WriteLine(asciiArt);
-                Thread.Sleep(150);
-                Console.ResetColor();
-                Console.Clear();
-                Console.WriteLine(asciiArt);
-                Thread.Sleep(150);
-            }
             for (int i = 0; i < 2; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Clear();
                 Console.WriteLine(asciiArt);
-                Thread.Sleep(300);
+                Thread.Sleep(70);
                 Console.ResetColor();
                 Console.Clear();
                 Console.WriteLine(asciiArt);
-                Thread.Sleep(300);
+                Thread.Sleep(70);
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Clear();
+                Console.WriteLine(asciiArt);
+                Thread.Sleep(150);
+                Console.ResetColor();
+                Console.Clear();
+                Console.WriteLine(asciiArt);
+                Thread.Sleep(150);
             }
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Clear();
@@ -152,14 +143,14 @@ namespace HellChangSub
             Console.ResetColor();
             Console.WriteLine("헬창섭의 저주");
             Utility.PressAnyKey();
-            
+            CreateObjects(isLoaded);
 
 
         }
 
         public void ShowMainScreen()
         {
-            CreateObjects(isLoaded);
+            
             Console.Clear();
             Console.WriteLine("프로틴 헬창 마을에 오신 것을 환영합니다.");
             Console.WriteLine();
@@ -172,7 +163,7 @@ namespace HellChangSub
                     player.ShowStatus();
                     break;
                 case 2:
-                    Stage stage = new Stage(player, History.Instance.stageLvl);//도전 층수에대해 고민 스테이지 진입시 도전층수 선택? 히스토리에 지금까지 클리어한 도전층수 저장 게임 승리시 히스토리에 프로퍼티 수정 만약 5층 진입시 헬창섭 소환
+                    Stage stage = new Stage(player, History.Instance.StageLvl);//도전 층수에대해 고민 스테이지 진입시 도전층수 선택? 히스토리에 지금까지 클리어한 도전층수 저장 게임 승리시 히스토리에 프로퍼티 수정 만약 5층 진입시 헬창섭 소환
                     break;
                 case 3:
                     itemManager.InventoryScene();

@@ -26,6 +26,16 @@ namespace HellChangSub
             
         }
 
+        public static int CalculateDamage(float attackerAtk, float attackerEquipAtk, float critDamage, bool crit,
+                                  float randomMultiplier, float damageMultiplier, int defenderDef, int defenderEquipDef)
+        {
+            float baseDamage = (attackerAtk + attackerEquipAtk) * (crit ? critDamage : 1);
+            double adjustedDamage = baseDamage * randomMultiplier * damageMultiplier;
+            int finalDamage = (int)Math.Ceiling(adjustedDamage) - defenderDef - defenderEquipDef;
+
+            return Math.Max(finalDamage, 0); // 방어력이 높아 데미지가 음수일 경우 0 처리
+        }
+
         public void StartBattle()
         {
             while (true)
@@ -125,9 +135,17 @@ namespace HellChangSub
                 }
                 else
                 {
-                    target.TakeDamage(player, 1.0f, IsOccur(player.Crit)); // 데미지 계산 실행, TakeDamage 빨간줄 몬스터에 Character 상속 안시켜줘서
+                    Random rand = new Random();
+                    float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
+
+                    int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit),
+                                                 randomMultiplier, 1.0f, target.Def, 0);
+
+                    target.CurrentHealth -= damage;
+                    target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
+
                     Console.WriteLine($"Lv.{target.Level} {target.Name}");
-                    Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");  // 대상 죽으면 현재 체력 대신 dead가 보이도록 함
+                    Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
                 }
                 Utility.PressAnyKey();
             }
@@ -161,11 +179,15 @@ namespace HellChangSub
             {
                 int beforeHP = target.CurrentHealth;
                 player.CurrentMana -= (int)selectedSkill.ManaCost; // MP 소모 - int? 형이라 (int) 추가로 오류해결
-
+                Random rand = new Random();
+                float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
                 Console.Clear();
                 Console.WriteLine("Battle!!\n");
                 Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
-                target.TakeDamage(player, selectedSkill.DamageMultiplier, IsOccur(player.Crit));
+                int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit),
+                             randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
+                target.CurrentHealth -= damage;
+                target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
 
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
                 Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
@@ -183,7 +205,14 @@ namespace HellChangSub
             else
             {
                 int beforeHP = player.CurrentHealth;
-                player.TakeDamage(monster, 1.0f, IsOccur(monster.Crit)); // 일반 공격
+                Random rand = new Random();
+                float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
+
+                int damage = CalculateDamage(monster.Atk, 0, 1.6f, IsOccur(monster.Crit),
+                                             randomMultiplier, 1.0f, player.Def, player.EquipDef);
+
+                player.CurrentHealth -= damage;
+                player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
                 Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
@@ -194,13 +223,18 @@ namespace HellChangSub
         {
             Skill selectedSkill = monster.Skills[new Random().Next(monster.Skills.Count)]; // 스킬 목록 추가해야 빨간줄 사라질거임
             int beforeHP = player.CurrentHealth;
-
+            Random rand = new Random();
+            float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
             Console.WriteLine($"{monster.Name} 이(가) {selectedSkill.Name} 을(를) 사용했다!");
-            player.TakeDamage(monster, selectedSkill.DamageMultiplier, IsOccur(monster.Crit));
+            int damage = CalculateDamage(monster.Atk, 0, 1.6f, IsOccur(monster.Crit),
+                             randomMultiplier, selectedSkill.DamageMultiplier, player.Def, 0);
+            player.CurrentHealth -= damage;
+            player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
         }
+
 
         public void Recover(string statname, ref int stat, ref int statmax, int heal)   //statname : HP, MP, stat : 회복할 프로퍼티, statmax : 프로퍼티 최댓값, heal : 회복 수단별로 정해진 값 
         {
@@ -244,6 +278,10 @@ namespace HellChangSub
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
+            if (History.Instance.StageLvl == History.Instance.ChallengeLvl)
+            {
+                History.Instance.StageLvl++;
+            }
             Utility.PressAnyKey();
             GameManager.Instance.ShowMainScreen();
         }
