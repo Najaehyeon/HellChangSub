@@ -14,6 +14,7 @@ namespace HellChangSub
         public abstract string[] Rewards { get; }
         public abstract string Goal { get; }
         public abstract string Progressed { get; set; }
+        public abstract QuestState QuestState { get; set; }
 
         public void PickQuest()
         {
@@ -137,6 +138,7 @@ namespace HellChangSub
         public override string[] Rewards { get; } = new string[] { "쓸만한 방패", "500 Gold" };
         public override string Goal { get; } = "10";
         public override string Progressed { get; set; } = "0";
+        public override QuestState QuestState { get; set; } = QuestState.NotStarted;
     }
 
 
@@ -160,6 +162,7 @@ namespace HellChangSub
         public override string[] Rewards { get; } = new string[] { "EXP +50", "200 Gold" };
         public override string Goal { get; } = "쓸만한 방패 장착하기";
         public override string Progressed { get; set; } = "장착 안됨";
+        public override QuestState QuestState { get; set; } = QuestState.NotStarted;
     }
 
 
@@ -183,5 +186,15 @@ namespace HellChangSub
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
         public override string Goal { get; } = "Lv.10";
         public override string Progressed { get; set; } = $"Lv.{GameManager.Instance.player.Level}";
+        public override QuestState QuestState { get; set; } = QuestState.NotStarted;
+    }
+
+    // 퀘스트 진행 상태 열거형
+    public enum QuestState
+    {
+        NotStarted,
+        InProgress,
+        Completed,
+        RewardClaimed
     }
 }

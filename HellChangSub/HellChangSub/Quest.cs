@@ -8,7 +8,11 @@ namespace HellChangSub
 {
     public static class Quest
     {
+        public Quest(SaveData saveData)
+        {
 
+        }
+        List<QuestData> questDataList = new List<QuestData>();
         public static void ShowQuestList() // 퀘스트 목록 씬을 보여주는 메서드
         {
             Console.Clear();
