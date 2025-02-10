@@ -69,7 +69,7 @@ namespace HellChangSub
                     UseSkill();
                     break;
                 case 3:
-                    Console.WriteLine("보유중인 소모품 이름 - 효과 - 갯수 보여주기");
+                    Console.WriteLine("보유중인 소모품 이름 - 효과 - 갯수 보여주기");    // 스킬작업 다 끝나고 추가
                     break;
 
             }
@@ -104,24 +104,7 @@ namespace HellChangSub
         Utility.PressAnyKey();
         }
 
-        public void TakeDamage(Character target, float damageMultiplier, bool crit)     // 데미지 계산식
-        {
-            Random rand = new Random();  // 기본기능 - 전투 - 공격 항의 공격력은 10%의 오차를 가지게 됩니다 구현
-            double randomMultiplier = rand.NextDouble() * 0.2 + 0.9;  // 0.9 ~ 1.1 사이의 값 생성
-
-            float baseDamage = (target.Atk + target.EquipAtk) * (crit ? target.CritDamage : 1); // 기본 데미지 계산
-            double adjustedDamage = baseDamage * randomMultiplier * damageMultiplier;  // 90% ~ 110% 적용
-
-            int finalDamage = (int)Math.Ceiling(adjustedDamage) - target.Def - target.EquipDef; // 올림 처리 후 방어력 적용
-            if (finalDamage < 0) finalDamage = 0; // 방어력이 과도하게 높을경우 맞았는데 체력이 회복되는거 방지
-
-            target.CurrentHealth -= finalDamage;
-            if (target.CurrentHealth < 0) target.CurrentHealth = 0; // 체력이 음수가 되지 않도록 설정
-
-            Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalDamage}]\n");
-        }   // 인터페이스
-
-        private void NormalAttack()      // 선택지에서 기본 공격 선택시 / 몬스터가 기본 공격 사용시
+        private void NormalAttack()      // 선택지에서 기본 공격 선택시
         {
             Console.WriteLine("공격할 대상을 선택하세요.");
             int targetIndex = Utility.Select(1, monsters.Count) - 1;
@@ -142,11 +125,10 @@ namespace HellChangSub
                 }
                 else
                 {
-                    TakeDamage(target, 1.0f, IsOccur(player.Crit)); // 데미지 계산 실행
+                    target.TakeDamage(player, 1.0f, IsOccur(player.Crit)); // 데미지 계산 실행, TakeDamage 빨간줄 몬스터에 Character 상속 안시켜줘서
                     Console.WriteLine($"Lv.{target.Level} {target.Name}");
                     Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");  // 대상 죽으면 현재 체력 대신 dead가 보이도록 함
                 }
-
                 Utility.PressAnyKey();
             }
         }
@@ -183,7 +165,7 @@ namespace HellChangSub
                 Console.Clear();
                 Console.WriteLine("Battle!!\n");
                 Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
-                TakeDamage(target, selectedSkill.DamageMultiplier, IsOccur(player.Crit));
+                target.TakeDamage(player, selectedSkill.DamageMultiplier, IsOccur(player.Crit));
 
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
                 Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
@@ -192,16 +174,16 @@ namespace HellChangSub
             }
         }
 
-        private void NormalMonsterAttack(Monster monster)
+        private void NormalMonsterAttack(Monster monster)       // 몬스터 기본 공격
         {
-            if (IsOccur(player.Evasion))  // ✅ 회피 가능
+            if (IsOccur(player.Evasion))  // 회피 가능
             {
                 Console.WriteLine($"{player.Name} 는 {monster.Name}의 공격을 피해냈다!\n");
             }
             else
             {
                 int beforeHP = player.CurrentHealth;
-                TakeDamage(player, 1.0f, IsOccur(monster.Crit)); // 일반 공격
+                player.TakeDamage(monster, 1.0f, IsOccur(monster.Crit)); // 일반 공격
 
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
                 Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
@@ -214,7 +196,7 @@ namespace HellChangSub
             int beforeHP = player.CurrentHealth;
 
             Console.WriteLine($"{monster.Name} 이(가) {selectedSkill.Name} 을(를) 사용했다!");
-            TakeDamage(player, selectedSkill.DamageMultiplier, IsOccur(monster.Crit));
+            player.TakeDamage(monster, selectedSkill.DamageMultiplier, IsOccur(monster.Crit));
 
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
