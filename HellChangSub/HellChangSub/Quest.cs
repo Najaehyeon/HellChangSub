@@ -17,7 +17,13 @@ namespace HellChangSub
 
         public Quest()
         {
-            questDataList = new List<QuestData>() { KillMinionQuest.Instance, EquipShieldQuest.Instance, StrongMoreQuest.Instance };
+            // GameManager.Instance를 이용해 각 퀘스트의 인스턴스를 리스트에 추가
+            questDataList = new List<QuestData>
+        {
+            new KillMinionQuest(),
+            new EquipShieldQuest(),
+            new StrongMoreQuest()
+        };
         }
 
         public void ShowQuestList() // 퀘스트 목록 씬을 보여주는 메서드
@@ -51,20 +57,13 @@ namespace HellChangSub
             int choice = Utility.Select(0, 3);
 
             // 퀘스트 선택 시 작동
-            switch (choice)
+            if (choice > 0 && choice <= questDataList.Count)
             {
-                case 1: // 1번 퀘스트 선택 시
-                    KillMinionQuest.Instance.PickQuest();
-                    break;
-                case 2: // 2번 퀘스트 선택 시
-                    EquipShieldQuest.Instance.PickQuest();
-                    break;
-                case 3: // 3번 퀘스트 선택 시
-                    StrongMoreQuest.Instance.PickQuest();
-                    break;
-                case 0: // 0. 선택 시 나가기
-                    GameManager.Instance.ShowMainScreen();
-                    break;
+                questDataList[choice - 1].PickQuest(); // 선택한 퀘스트 실행
+            }
+            else if (choice == 0)
+            {
+                GameManager.Instance.ShowMainScreen();
             }
         }
     }
