@@ -9,14 +9,17 @@ namespace HellChangSub
     public class Quest
     {
         public List<QuestData> questDataList;
+
         public Quest(SaveData saveData)
         {
             questDataList = saveData.questDataList;
         }
+
         public Quest()
         {
-            questDataList = new List<QuestData>();
+            questDataList = new List<QuestData>() { KillMinionQuest.Instance, EquipShieldQuest.Instance, StrongMoreQuest.Instance };
         }
+
         public static void ShowQuestList() // 퀘스트 목록 씬을 보여주는 메서드
         {
             Console.Clear();
