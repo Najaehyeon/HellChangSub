@@ -30,6 +30,7 @@ namespace HellChangSub
         {
             Console.WriteLine($"도전 하실 스테이지를 선택해주세요 (지금까지 진행된 스테이지 : {stageLvl})");
             int choice = Utility.Select(1, stageLvl);
+            History.Instance.ChallengeLvl = choice;
             ShowStage(choice);
         }
 
