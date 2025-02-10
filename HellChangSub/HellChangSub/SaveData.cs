@@ -3,8 +3,8 @@ using System.IO;
 using System.Text.Json;
 namespace HellChangSub
 {
-    [Serializable]
-    public class SaveData
+    [Serializable]//직렬화 가능하게 해주는 어트리뷰트(속성)  부여
+    public class SaveData// 아이템 리스트 인벤토리및 상점 아이템 , 히스토리내 기록 프로퍼티 저장 필요 추가로 로드 기능 추가 필요
     {
         public string Name { get; set; }
         public int JobCode { get; set; }
