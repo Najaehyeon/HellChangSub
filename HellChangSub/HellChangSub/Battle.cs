@@ -177,8 +177,12 @@ namespace HellChangSub
             Console.WriteLine("공격할 대상을 선택하세요.");
             int targetIndex = Utility.Select(1, monsters.Count) - 1;
             Monster target = monsters[targetIndex];
-
-            if (!target.IsDead)
+            if (target.IsDead)
+            {
+                Console.WriteLine("이미 죽은 대상입니다.");
+                Utility.PressAnyKey(); return;
+            }
+            else if (!target.IsDead)
             {
                 int beforeHP = target.CurrentHealth;
                 player.CurrentMana -= (int)selectedSkill.ManaCost; // MP 소모 - int? 형이라 (int) 추가로 오류해결
