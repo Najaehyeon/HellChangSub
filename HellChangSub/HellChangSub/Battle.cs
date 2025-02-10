@@ -139,7 +139,7 @@ namespace HellChangSub
 
             for (int i = 0; i < player.Skills.Count; i++)
             {
-                Skill skill = player.Skills[i];     // 스킬 목록 추가해야 빨간줄 사라질거임
+                Skill skill = player.Skills[i];     // 스킬 목록 추가해야 빨간줄 사라질거임 - 사라졌음
                 Console.WriteLine($"{i + 1}. {skill.Name} (MP {skill.ManaCost}, 배율 {skill.DamageMultiplier}x)");
             }
 

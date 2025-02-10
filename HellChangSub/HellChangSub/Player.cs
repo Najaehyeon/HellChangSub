@@ -198,7 +198,7 @@ namespace HellChangSub
             }
             else if (Level == 4 && Exp >= 100)
             {
-                Exp = 0;
+                Exp -= 100;
                 Level++;
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
