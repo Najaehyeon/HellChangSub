@@ -113,38 +113,27 @@ namespace HellChangSub
 
 
 
-            for (int i = 0; i < 5; i++)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Clear();
-                Console.WriteLine(asciiArt);
-                Thread.Sleep(70);
-                Console.ResetColor();
-                Console.Clear();
-                Console.WriteLine(asciiArt);
-                Thread.Sleep(70);
-            }
-            for (int i = 0; i < 3; i++)
-            {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.Clear();
-                Console.WriteLine(asciiArt);
-                Thread.Sleep(150);
-                Console.ResetColor();
-                Console.Clear();
-                Console.WriteLine(asciiArt);
-                Thread.Sleep(150);
-            }
             for (int i = 0; i < 2; i++)
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.Clear();
                 Console.WriteLine(asciiArt);
-                Thread.Sleep(300);
+                Thread.Sleep(70);
                 Console.ResetColor();
                 Console.Clear();
                 Console.WriteLine(asciiArt);
-                Thread.Sleep(300);
+                Thread.Sleep(70);
+            }
+            for (int i = 0; i < 1; i++)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Clear();
+                Console.WriteLine(asciiArt);
+                Thread.Sleep(150);
+                Console.ResetColor();
+                Console.Clear();
+                Console.WriteLine(asciiArt);
+                Thread.Sleep(150);
             }
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Clear();
