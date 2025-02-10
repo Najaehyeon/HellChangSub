@@ -28,9 +28,9 @@ namespace HellChangSub
         public ItemType ItemType { get; }
 
 
-        public EquipItem(string name, int value, string description, int price, ItemType itemtype)
+        public EquipItem(string itemname, int value, string description, int price, ItemType itemtype)
         {
-            ItemName = name;
+            ItemName = itemname;
             Description = description;
             Price = price;
             Value = value;
@@ -85,14 +85,14 @@ namespace HellChangSub
         public ItemType ItemType { get; }
         public int Count { get; set; }
 
-        public UseItem(string itemname, int value, string description, int price, ItemType itemType)
+        public UseItem(string itemname, int value, string description, int price, ItemType itemType, int count)
         {
             ItemName = itemname;
             Description = description;
             Price = price;
             Value = value;
             ItemType = itemType;
-            Count = 0;
+            Count = count;
         }
         public string UseItemStatus()
         {
