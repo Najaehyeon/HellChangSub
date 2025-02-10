@@ -146,6 +146,9 @@ namespace HellChangSub
 
                     Console.WriteLine($"Lv.{target.Level} {target.Name}");
                     Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
+
+                    if (monsters.All(m => m.IsDead))
+                        Victory();
                 }
                 Utility.PressAnyKey();
             }
@@ -191,6 +194,8 @@ namespace HellChangSub
 
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
                 Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
+                if (monsters.All(m => m.IsDead))
+                    Victory();
 
                 Utility.PressAnyKey();
             }
