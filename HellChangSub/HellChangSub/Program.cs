@@ -119,7 +119,7 @@ namespace HellChangSub
                     itemManager.ShopScene();
                     break;
                 case 5:
-                    Quest.ShowQuestList();
+                    quest.ShowQuestList();
                     break;
                 case 6:
                     SaveData saveData = new SaveData(player,itemManager,quest);

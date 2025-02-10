@@ -18,7 +18,7 @@ namespace HellChangSub
 
         public void PickQuest()
         {
-            if (!History.Instance.Quests.ContainsKey(Title) || History.Instance.Quests[Title].State != QuestState.RewardClaimed)
+            if (QuestState != QuestState.RewardClaimed)
             {
                 ShowQuest();
             }
@@ -42,7 +42,7 @@ namespace HellChangSub
             }
             Console.WriteLine();
 
-            if (!History.Instance.Quests.ContainsKey(Title)) // 미션을 수행중이 아니거나, 수행한 적이 없을 때
+            if (QuestState == QuestState.NotStarted) // 수행한 적이 없을 때
             {
                 Console.WriteLine("1. 수락\n2. 거절");
 
@@ -51,18 +51,18 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1:
-                        Quest.AcceptQuest(Title, Goal, Progressed);
+                        QuestState = QuestState.InProgress;
                         break;
                     case 2:
                         Console.Clear();
-                        Quest.ShowQuestList();
+                        GameManager.Instance.quest.ShowQuestList();
                         break;
                 }
             }
-            else if (History.Instance.Quests[Title].State == QuestState.InProgress) // 미션을 수행 중일 때
+            else if (QuestState == QuestState.InProgress) // 미션을 수행 중일 때
             {
                 Console.WriteLine("- 진척도 -");
-                Console.WriteLine($"{History.Instance.Quests[Title].NowProgressed} / {History.Instance.Quests[Title].Goal}\n");
+                Console.WriteLine($"{Progressed} / {Goal}\n");
                 Console.WriteLine("1. 미션포기\n0. 나가기");
 
                 int choice = Utility.Select(0, 1);
@@ -70,7 +70,7 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1: // 미션 포기
-                        History.Instance.Quests.Remove(Title);
+                        QuestState = QuestState.NotStarted;
                         Console.WriteLine("미션을 포기했습니다!");
                         Console.WriteLine("\n0. 나가기");
                         Console.WriteLine("다음 행동을 선택해주세요.");
@@ -79,17 +79,17 @@ namespace HellChangSub
                         {
                             case 0:
                                 Console.Clear();
-                                Quest.ShowQuestList();
+                                GameManager.Instance.quest.ShowQuestList();
                                 break;
                         }
                         break;
                     case 0: // 나가기
                         Console.Clear();
-                        Quest.ShowQuestList();
+                        GameManager.Instance.quest.ShowQuestList();
                         break;
                 }
             }
-            else if (History.Instance.Quests[Title].State == QuestState.Completed)
+            else if (QuestState == QuestState.Completed)
             {
                 Console.WriteLine("1. 보상 받기");
 
@@ -98,7 +98,7 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1: // 보상 받기
-                        Quest.ClaimReward(Title);
+                        QuestState = QuestState.RewardClaimed;
                         Console.WriteLine("보상을 받았습니다.");
                         Console.WriteLine("\n0. 나가기");
                         Console.WriteLine("다음 행동을 선택해주세요.");
@@ -107,7 +107,7 @@ namespace HellChangSub
                         {
                             case 0:
                                 Console.Clear();
-                                Quest.ShowQuestList();
+                                GameManager.Instance.quest.ShowQuestList();
                                 break;
                         }
                         break;
