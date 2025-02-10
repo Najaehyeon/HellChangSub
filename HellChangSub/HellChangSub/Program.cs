@@ -69,7 +69,7 @@ namespace HellChangSub
                     player.ShowStatus();
                     break;
                 case 2:
-                    Stage stage = new Stage(player, 1);//도전 층수에대해 고민 스테이지 진입시 도전층수 선택? 히스토리에 지금까지 클리어한 도전층수 저장 게임 승리시 히스토리에 프로퍼티 수정 만약 5층 진입시 헬창섭 소환
+                    Stage stage = new Stage(player, History.Instance.stageLvl);//도전 층수에대해 고민 스테이지 진입시 도전층수 선택? 히스토리에 지금까지 클리어한 도전층수 저장 게임 승리시 히스토리에 프로퍼티 수정 만약 5층 진입시 헬창섭 소환
                     break;
                 case 3:
                     itemManager.InventoryScene();
