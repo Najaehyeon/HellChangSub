@@ -195,7 +195,7 @@ namespace HellChangSub
 
         private void NormalMonsterAttack(Monster monster)
         {
-            if (IsOccur(player.Evasion))  // ✅ 회피 가능
+            if (IsOccur(player.Evasion))  // 회피 가능
             {
                 Console.WriteLine($"{player.Name} 는 {monster.Name}의 공격을 피해냈다!\n");
             }
