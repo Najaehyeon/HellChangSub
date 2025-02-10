@@ -54,7 +54,7 @@ namespace HellChangSub
             equipItems = itemManager.equipItems;
             equipInventory = itemManager.equipInventory;
             useItems = itemManager.useItems;//itemamanager 생성자 신규생성필요
-            stageLvl = History.Instance.stageLvl;
+            stageLvl = History.Instance.StageLvl;
             questDataList = quest.questDataList;
 
         }

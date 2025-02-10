@@ -20,15 +20,16 @@ namespace HellChangSub
             }
         }
 
-        public int stageLvl { get; set; } = 1;
-
+        public int StageLvl { get; set; } = 1;
+        public int ChallengeLvl { get; set; } = 1;
+        
         private History()
         {
                     }
 
         public void SetHistory(SaveData saveData)
         {
-            stageLvl = saveData.stageLvl;
+            StageLvl = saveData.stageLvl;
         }
     }
 }
