@@ -42,7 +42,7 @@ namespace HellChangSub
             }
             Console.WriteLine();
 
-            if (QuestState == QuestState.NotStarted) // 수행한 적이 없을 때
+            if (QuestState == QuestState.NotStarted) // 수행한 적이 없을 때, 보여줄 내용
             {
                 Console.WriteLine("1. 수락\n2. 거절");
 
@@ -51,7 +51,7 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1:
-                        QuestState = QuestState.InProgress;
+                        AcceptQuest();
                         break;
                     case 2:
                         Console.Clear();
@@ -59,7 +59,7 @@ namespace HellChangSub
                         break;
                 }
             }
-            else if (QuestState == QuestState.InProgress) // 미션을 수행 중일 때
+            else if (QuestState == QuestState.InProgress) // 미션을 수행 중일 때, 보여줄 내용
             {
                 Console.WriteLine("- 진척도 -");
                 Console.WriteLine($"{Progressed} / {Goal}\n");
@@ -70,18 +70,7 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1: // 미션 포기
-                        QuestState = QuestState.NotStarted;
-                        Console.WriteLine("미션을 포기했습니다!");
-                        Console.WriteLine("\n0. 나가기");
-                        Console.WriteLine("다음 행동을 선택해주세요.");
-                        int choice2 = Utility.Select(0, 0);
-                        switch (choice2)
-                        {
-                            case 0:
-                                Console.Clear();
-                                GameManager.Instance.quest.ShowQuestList();
-                                break;
-                        }
+                        GiveUpQuest();
                         break;
                     case 0: // 나가기
                         Console.Clear();
@@ -89,7 +78,7 @@ namespace HellChangSub
                         break;
                 }
             }
-            else if (QuestState == QuestState.Completed)
+            else if (QuestState == QuestState.Completed) // 퀘스트 미션을 완료했을 때, 보여줄 내용
             {
                 Console.WriteLine("1. 보상 받기");
 
@@ -98,6 +87,7 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1: // 보상 받기
+                        GiveRewards();
                         QuestState = QuestState.RewardClaimed;
                         Console.WriteLine("보상을 받았습니다.");
                         Console.WriteLine("\n0. 나가기");
@@ -114,6 +104,47 @@ namespace HellChangSub
                 }
             }
         }
+
+        // 퀘스트를 수락했을 때, 실행되는 메서드
+        public void AcceptQuest ()
+        {
+            QuestState = QuestState.InProgress;
+            Console.WriteLine($"\"{Title}\" 퀘스트를 수락했습니다!");
+            Console.WriteLine("\n0. 나가기");
+            Console.WriteLine("다음 행동을 선택해주세요.");
+            int choice2 = Utility.Select(0, 0);
+            switch (choice2)
+            {
+                case 0:
+                    Console.Clear();
+                    GameManager.Instance.quest.ShowQuestList();
+                    break;
+            }
+        }
+
+        // 퀘스트를 포기했을 때, 실행되는 메서드
+        public void GiveUpQuest()
+        {
+            FormatMission();
+            QuestState = QuestState.NotStarted;
+            Console.WriteLine("미션을 포기했습니다!");
+            Console.WriteLine("\n0. 나가기");
+            Console.WriteLine("다음 행동을 선택해주세요.");
+            int choice2 = Utility.Select(0, 0);
+            switch (choice2)
+            {
+                case 0:
+                    Console.Clear();
+                    GameManager.Instance.quest.ShowQuestList();
+                    break;
+            }
+        }
+
+        // 퀘스트를 포기했을 때, 수행한 미션 초기화
+        public abstract void FormatMission();
+
+        //
+        public abstract void GiveRewards();
     }
 
 
@@ -137,8 +168,35 @@ namespace HellChangSub
         public override string Mission { get; } = "미니언 10마리 처치!";
         public override string[] Rewards { get; } = new string[] { "쓸만한 방패", "500 Gold" };
         public override string Goal { get; } = "10";
-        public override string Progressed { get; set; } = "0";
+
+
+        private string progressed = "0";
+        public override string Progressed
+        {
+            get { return progressed; }
+            set
+            {
+                if (QuestState == QuestState.InProgress) // 퀘스트가 진행중일 때만 수정 가능
+                {
+                    progressed = value;
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
         public override QuestState QuestState { get; set; } = QuestState.NotStarted;
+
+        public override void FormatMission()
+        {
+            progressed = "0";
+        }
+
+        public override void GiveRewards()
+        {
+
+        }
     }
 
 
@@ -161,8 +219,36 @@ namespace HellChangSub
         public override string Mission { get; } = "쓸만한 방패 장착하기";
         public override string[] Rewards { get; } = new string[] { "EXP +50", "200 Gold" };
         public override string Goal { get; } = "쓸만한 방패 장착하기";
-        public override string Progressed { get; set; } = "장착 안됨";
+
+
+        private string progressed = "장착 안됨";
+        public override string Progressed
+        {
+            get { return progressed; }
+            set
+            {
+                if (QuestState == QuestState.InProgress) // 퀘스트가 진행중일 때만 수정 가능
+                {
+                    progressed = value;
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+
         public override QuestState QuestState { get; set; } = QuestState.NotStarted;
+
+        public override void FormatMission()
+        {
+            progressed = "장착 안됨";
+        }
+
+        public override void GiveRewards()
+        {
+
+        }
     }
 
 
@@ -185,8 +271,36 @@ namespace HellChangSub
         public override string Mission { get; } = "10레벨 달성하기";
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
         public override string Goal { get; } = "Lv.10";
-        public override string Progressed { get; set; } = $"Lv.{GameManager.Instance.player.Level}";
+
+
+        private string progressed = $"Lv.{GameManager.Instance.player.Level}"; 
+        public override string Progressed
+        {
+            get { return progressed; }
+            set
+            {
+                if (QuestState == QuestState.InProgress) // 퀘스트가 진행중일 때만 수정 가능
+                {
+                    progressed = value;
+                }
+                else
+                {
+                    return;
+                }
+            }
+        }
+
         public override QuestState QuestState { get; set; } = QuestState.NotStarted;
+
+        public override void FormatMission()
+        {
+            progressed = $"Lv.{GameManager.Instance.player.Level}";
+        }
+
+        public override void GiveRewards()
+        {
+
+        }
     }
 
     // 퀘스트 진행 상태 열거형
