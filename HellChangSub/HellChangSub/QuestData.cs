@@ -97,7 +97,7 @@ namespace HellChangSub
                 switch (choice)
                 {
                     case 1: // 보상 받기
-                        History.Instance.ClaimReward(Title);
+                        Quest.ClaimReward(Title);
                         Console.WriteLine("보상을 받았습니다.");
                         Console.WriteLine("\n0. 나가기");
                         Console.WriteLine("다음 행동을 선택해주세요.");
@@ -182,6 +182,6 @@ namespace HellChangSub
         public override string Mission { get; } = "10레벨 달성하기";
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
         public override string Goal { get; } = "Lv.10";
-        public override string Progressed { get; set; } = $"Lv.{GameManager.Instance.Player.Level}";
+        public override string Progressed { get; set; } = $"Lv.{GameManager.Instance.player.Level}";
     }
 }
