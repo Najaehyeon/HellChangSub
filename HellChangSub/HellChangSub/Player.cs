@@ -81,7 +81,7 @@ namespace HellChangSub
             Name = name;
             JobCode = Job;
             Exp = 0;
-            Gold = 0;
+            Gold = 1000000000;
             EquipAtk = 0;
             EquipDef = 0;
             switch (JobCode)
