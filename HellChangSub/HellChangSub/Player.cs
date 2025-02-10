@@ -70,10 +70,8 @@ namespace HellChangSub
             Evasion = saveData.Evasion;
 
             // Skills 리스트 초기화
-            Skills = new List<Skill>();
+            Skills = saveData.Skills;
 
-            // 직업에 따른 스킬 추가 (초기화 후)
-            InitializeSkills();
         }
 
         public Player(string name, int Job)

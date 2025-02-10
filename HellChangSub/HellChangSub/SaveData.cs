@@ -23,6 +23,7 @@ namespace HellChangSub
         public float Crit { get; set; }
         public float CritDamage { get; set; }
         public float Evasion { get; set; }
+        public List<Skill> Skills { get; set; }
 
         public List<EquipItem> equipItems { get; set; }
         public List<EquipItem> equipInventory { get; set; }
@@ -56,7 +57,7 @@ namespace HellChangSub
             useItems = itemManager.useItems;//itemamanager 생성자 신규생성필요
             stageLvl = History.Instance.StageLvl;
             questDataList = quest.questDataList;
-
+            Skills = player.Skills;
         }
 
 
