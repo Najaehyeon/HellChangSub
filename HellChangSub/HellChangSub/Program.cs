@@ -37,18 +37,7 @@ namespace HellChangSub
         private GameManager() // 5 외부에서 생성하지 못하게 private 싱글톤 처리후 게임매니저 클래스에서 생성된 객체에 접근가능 GameManager.Instance.객체명(게임매니저내 메서드).프로퍼티
         {
             
-            Console.WriteLine("저장된 게임을 불러오시겠습니까?");
-            Console.WriteLine("\n1. 예\n2. 아니오");
-            int choice = Utility.Select(1, 2);
-            
-            if (choice == 1)
-            {
-                isLoaded = true;
-            }
-            else
-            {
-                isLoaded = false;
-            }
+           
         }
 
         
@@ -61,7 +50,6 @@ namespace HellChangSub
                 player = new Player(saveData);//saveData를 받는 플레이어 객체 생성
                 itemManager = new ItemManager(saveData);
                 quest = new Quest(saveData);
-                ShowMainScreen();
             }
             else
             {
@@ -73,8 +61,9 @@ namespace HellChangSub
                 player = new Player(playerName, playerJob); //
                 itemManager = new ItemManager(player);
                 quest = new Quest();
-                ShowMainScreen(); 
             }
+
+            ShowMainScreen();
         }
 
         public void ShowStartScreen()
@@ -144,6 +133,19 @@ namespace HellChangSub
             Console.ResetColor();
             Console.WriteLine("헬창섭의 저주");
             Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("저장된 게임을 불러오시겠습니까?");
+            Console.WriteLine("\n1. 예\n2. 아니오");
+            int choice = Utility.Select(1, 2);
+
+            if (choice == 1)
+            {
+                isLoaded = true;
+            }
+            else
+            {
+                isLoaded = false;
+            }
             CreateObjects(isLoaded);
 
 
