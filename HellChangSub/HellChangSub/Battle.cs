@@ -21,8 +21,8 @@ namespace HellChangSub
         {
             this.player = player;
             this.monsters = monsters;
-            this.initialPlayerHealth = player.CurrentHealth;
-            this.initialPlayerExp = player.Exp;
+            this.initialPlayerHealth = player.CurrentHealth;        // 결과 화면에서 체력 변화량을 보여주기 위해 전투 시작시의 체력 저장
+            this.initialPlayerExp = player.Exp;     // 윗줄가 마찬가지의 이유로 전투 시작시의 경험치 저장
             
         }
 
@@ -40,7 +40,7 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine("Battle!!\n");
 
-            for (int i = 0; i < monsters.Count; i++)
+            for (int i = 0; i < monsters.Count; i++)        // 몬스터들의 정보를 가져오고 이를 화면에 출력
             {
                 string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";    // 몬스터의 현재 체력이 0 이하이면 Dead 상태로 표시, 그렇지 않다면 HP {현재체력}으로 표시하도록
                 Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
@@ -55,55 +55,23 @@ namespace HellChangSub
             Console.WriteLine("3. 아이템");
             Console.WriteLine("0. 도주");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            switch (Utility.Select(0, 4))
+            switch (Utility.Select(0, 4))       // 행동 선택
             {
                 case 0:
                     Console.WriteLine($"{player.Name}은 도망쳤다!");
                     Utility.PressAnyKey();
                     GameManager.Instance.ShowMainScreen();
                     break;
-                case 1:
-                    Console.WriteLine("공격 타겟 정하기");
+                case 1:     // 기본 공격
+                    NormalAttack();
                     break;
-                case 2:
-                    Console.WriteLine("배운 스킬 이름 - 소모MP\n스킬 효과 보여주기");
+                case 2:     // player.cs에 있는 스킬 목록에서 스킬 사용 - 스킬은 battle.cs 스킬사용 정리한 뒤 추가
+                    UseSkill();
                     break;
                 case 3:
                     Console.WriteLine("보유중인 소모품 이름 - 효과 - 갯수 보여주기");
                     break;
 
-            }
-            int choice = Utility.Select(1, monsters.Count);
-            if (!monsters[choice - 1].IsDead)
-            {
-                Monster target = monsters[choice - 1];
-                int mobBeforeDmg = target.CurrentHealth;
-                int mobHealth = target.CurrentHealth; // 로컬 변수에 저장 - ref를 쓰기 위해
-
-                Console.Clear();
-                Console.WriteLine("Battle!!\n");
-                Console.WriteLine($"{player.Name}의 공격!");
-                switch (IsOccur(10))     //몬스터 회피율 일단 10으로 계산, 추후 회피율이 다른 몬스터 만들거면 10 위치에 monster[choice - 1].Evasion 넣어야됨
-                                         //스킬을 기반으로 한 데미지일 경우 회피 계산식이 작동하지 않게 해야함 - isskill 부울값으로 할까?
-                {
-                    case true:
-                        Console.WriteLine($"LV.{monsters[choice - 1].Level} {monsters[choice - 1].Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
-                        break;
-                    case false:
-                        int Mobbeforedmg = monsters[choice - 1].CurrentHealth;
-                        TakeDamage(target.Name, ref mobHealth, player.Atk, player.EquipAtk, player.CritDamage, target.Def, 0, IsOccur(player.Crit));
-                        target.CurrentHealth = mobHealth; // 변경된 체력을 다시 적용
-                        Console.WriteLine($"Lv.{target.Level} {target.Name}");
-                        Console.WriteLine($"HP {mobBeforeDmg} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
-
-                        if (monsters.All(m => m.IsDead))        //모든 monster가 죽으면 Victory 실행
-                        {
-                            Victory();
-                            return;
-                        }
-                        break;
-                }
-                Utility.PressAnyKey();
             }
         }
 
@@ -111,53 +79,146 @@ namespace HellChangSub
         {
             Console.Clear();
             Console.WriteLine("Battle!!\n");
-            
 
             foreach (var monster in monsters.Where(m => !m.IsDead))
             {
                 Console.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
-                switch (IsOccur(player.Evasion)) //스킬을 기반으로 한 데미지일 경우 회피 계산식이 작동하지 않게 해야함 - isskill 부울값으로 할까?
+
+                bool useSkill = IsOccur(30); // 30% 확률로 스킬 사용
+                if (useSkill && monster.Skills.Count > 0)
                 {
-                    case true:
-                        Console.WriteLine($"{player.Name} 는 {monster.Name}의 공격을 피해냈다!\n");
-                        break;
-                    case false:
-                        int playerBeforeDmg = player.CurrentHealth; 
-                        int playerHealth = player.CurrentHealth; // 로컬 변수 생성
+                    UseMonsterSkill(monster); // 몬스터 스킬 사용
+                }
+                else
+                {
+                    NormalMonsterAttack(monster); // 일반 공격
+                }
 
-                        TakeDamage(player.Name, ref playerHealth, monster.Atk, 0, 1.6f, player.Def, player.EquipDef, IsOccur(monster.Crit));
-
-                        player.CurrentHealth = playerHealth; // 변경된 값을 다시 적용
-                        Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                        Console.WriteLine($"HP {playerBeforeDmg} -> {player.CurrentHealth}\n");
-
-                        if (player.IsDead)
-                        {
-                            GameOver();
-                            return; // 남은 몬스터 턴 스킵
-                        }
-                        break;
+                if (player.IsDead)
+                {
+                    GameOver();
+                    return;
                 }
             }
 
-            Utility.PressAnyKey();
+        Utility.PressAnyKey();
         }
 
-        public void TakeDamage(string Name, ref int CurrentHealth, float Atk, float EquipAtk, float CritDmg, int Def, int EquipDef, bool crit)
+        public void TakeDamage(Character target, float damageMultiplier, bool crit)     // 데미지 계산식
         {
             Random rand = new Random();  // 기본기능 - 전투 - 공격 항의 공격력은 10%의 오차를 가지게 됩니다 구현
             double randomMultiplier = rand.NextDouble() * 0.2 + 0.9;  // 0.9 ~ 1.1 사이의 값 생성
 
-            float baseDamage = (Atk + EquipAtk) * (crit ? CritDmg : 1); // 기본 데미지 계산
-            double adjustedDamage = baseDamage * randomMultiplier;  // 90% ~ 110% 적용
+            float baseDamage = (target.Atk + target.EquipAtk) * (crit ? target.CritDamage : 1); // 기본 데미지 계산
+            double adjustedDamage = baseDamage * randomMultiplier * damageMultiplier;  // 90% ~ 110% 적용
 
-            int finalDamage = (int)Math.Ceiling(adjustedDamage) - Def - EquipDef; // 올림 처리 후 방어력 적용
+            int finalDamage = (int)Math.Ceiling(adjustedDamage) - target.Def - target.EquipDef; // 올림 처리 후 방어력 적용
             if (finalDamage < 0) finalDamage = 0; // 방어력이 과도하게 높을경우 맞았는데 체력이 회복되는거 방지
 
-            CurrentHealth -= finalDamage;
-            if (CurrentHealth < 0) CurrentHealth = 0; // 체력이 음수가 되지 않도록 설정
+            target.CurrentHealth -= finalDamage;
+            if (target.CurrentHealth < 0) target.CurrentHealth = 0; // 체력이 음수가 되지 않도록 설정
 
-            Console.WriteLine($"{Name} 을(를) 맞췄습니다. [데미지 : {finalDamage}]\n");
+            Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalDamage}]\n");
+        }
+
+        private void NormalAttack()      // 선택지에서 기본 공격 선택시 / 몬스터가 기본 공격 사용시
+        {
+            Console.WriteLine("공격할 대상을 선택하세요.");
+            int targetIndex = Utility.Select(1, monsters.Count) - 1;
+            Monster target = monsters[targetIndex];
+
+            if (!target.IsDead)
+            {
+                int beforeHP = target.CurrentHealth;
+                int mobHealth = target.CurrentHealth;
+
+                Console.Clear();
+                Console.WriteLine("Battle!!\n");
+                Console.WriteLine($"{player.Name}의 공격!");
+
+                if (IsOccur(10))  // 몬스터 10퍼확률로 회피, 추후 몬스터 개별 회피값 적용시 그 변수 넣어야함
+                {
+                    Console.WriteLine($"LV.{target.Level} {target.Name} 을(를) 공격했지만 아무일도 일어나지 않았습니다.\n");
+                }
+                else
+                {
+                    TakeDamage(target, 1.0f, IsOccur(player.Crit)); // 데미지 계산 실행
+                    Console.WriteLine($"Lv.{target.Level} {target.Name}");
+                    Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");  // 대상 죽으면 현재 체력 대신 dead가 보이도록 함
+                }
+
+                Utility.PressAnyKey();
+            }
+        }
+
+        private void UseSkill()      // 플레이어 스킬, 회피 불가
+        {
+            Console.WriteLine("사용할 스킬을 선택하세요.");
+
+            for (int i = 0; i < player.Skills.Count; i++)
+            {
+                Skill skill = player.Skills[i];     // 스킬 목록 추가해야 빨간줄 사라질거임
+                Console.WriteLine($"{i + 1}. {skill.Name} (MP {skill.ManaCost}, 배율 {skill.DamageMultiplier}x)");
+            }
+
+            int skillChoice = Utility.Select(1, player.Skills.Count) - 1;
+            Skill selectedSkill = player.Skills[skillChoice];
+
+            if (player.CurrentMana < selectedSkill.ManaCost)    // MP가 부족할 경우 사용 불가
+            {
+                Console.WriteLine("마나가 부족합니다!\n");
+                Console.WriteLine("0. 다음");
+                Utility.Select(0, 0);
+                return;
+            }
+
+            Console.WriteLine("공격할 대상을 선택하세요.");
+            int targetIndex = Utility.Select(1, monsters.Count) - 1;
+            Monster target = monsters[targetIndex];
+
+            if (!target.IsDead)
+            {
+                int beforeHP = target.CurrentHealth;
+                player.CurrentMana -= selectedSkill.ManaCost; // MP 소모
+
+                Console.Clear();
+                Console.WriteLine("Battle!!\n");
+                Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
+                TakeDamage(target, selectedSkill.DamageMultiplier, IsOccur(player.Crit));
+
+                Console.WriteLine($"Lv.{target.Level} {target.Name}");
+                Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
+
+                Utility.PressAnyKey();
+            }
+        }
+
+        private void NormalMonsterAttack(Monster monster)
+        {
+            if (IsOccur(player.Evasion))  // ✅ 회피 가능
+            {
+                Console.WriteLine($"{player.Name} 는 {monster.Name}의 공격을 피해냈다!\n");
+            }
+            else
+            {
+                int beforeHP = player.CurrentHealth;
+                TakeDamage(player, 1.0f, IsOccur(monster.Crit)); // 일반 공격
+
+                Console.WriteLine($"Lv.{player.Level} {player.Name}");
+                Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
+            }
+        }
+
+        private void UseMonsterSkill(Monster monster)       // 몬스터 스킬, 회피 불가
+        {
+            Skill selectedSkill = monster.Skills[new Random().Next(monster.Skills.Count)]; // 스킬 목록 추가해야 빨간줄 사라질거임
+            int beforeHP = player.CurrentHealth;
+
+            Console.WriteLine($"{monster.Name} 이(가) {selectedSkill.Name} 을(를) 사용했다!");
+            TakeDamage(player, selectedSkill.DamageMultiplier, IsOccur(monster.Crit));
+
+            Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
         }
 
         public void Recover(string statname, ref int stat, ref int statmax, int heal)   //statname : HP, MP, stat : 회복할 프로퍼티, statmax : 프로퍼티 최댓값, heal : 회복 수단별로 정해진 값 

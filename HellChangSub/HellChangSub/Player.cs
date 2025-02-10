@@ -27,6 +27,7 @@ namespace HellChangSub
         public float CritDamage { get; set; }
         public float Evasion { get; set; }
 
+        public List<Skill> Skills { get; private set; }
         public bool IsDead => CurrentHealth <= 0;
 
         public Player() { }
