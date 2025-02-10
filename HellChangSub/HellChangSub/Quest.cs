@@ -24,26 +24,25 @@ namespace HellChangSub
         {
             Console.Clear();
             Console.WriteLine("퀘스트 선택하기.\n");
-            string[] quests = { "마을을 위협하는 미니언 처치!", "장비를 장착해보자.", "더욱 더 강해지기!" };
-            for (int i = 0; i < quests.Length; i++)
+            for (int i = 0; i < questDataList.Count; i++)
             {
                 // 진행 상태에 따라 표시를 다르게 해줌
                 if (questDataList[i].QuestState == QuestState.NotStarted) // 해당 퀘스트가 수행중이 아니고, 수행한 적이 없을 때
                 {
-                    Console.WriteLine($"{i + 1}. [수행가능]{quests[i]}");
+                    Console.WriteLine($"{i + 1}. [수행가능]{questDataList[i].Title}");
                 }
                 else if (questDataList[i].QuestState == QuestState.InProgress) // 해당 퀘스트를 수행중일 때
                 {
-                    Console.WriteLine($"{i + 1}. [진행중]{quests[i]}");
+                    Console.WriteLine($"{i + 1}. [진행중]{questDataList[i].Title}");
                 }
                 else if (questDataList[i].QuestState == QuestState.Completed) // 해당 퀘스트의 미션을 완수했을 때
                 {
-                    Console.WriteLine($"{i + 1}. [미션완료]{quests[i]}");
+                    Console.WriteLine($"{i + 1}. [미션완료]{questDataList[i].Title}");
                 }
                 else if (questDataList[i].QuestState == QuestState.RewardClaimed) // 해당 퀘스트의 보상을 받았을 때
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
-                    Console.WriteLine($"{i + 1}. [진행완료]{quests[i]}");
+                    Console.WriteLine($"{i + 1}. [진행완료]{questDataList[i].Title}");
                     Console.ResetColor();
                 }
             }
@@ -64,22 +63,6 @@ namespace HellChangSub
                     StrongMoreQuest.Instance.PickQuest();
                     break;
                 case 0: // 0. 선택 시 나가기
-                    break;
-            }
-        }
-
-        // 퀘스트를 수락했을 때 실행되는 메서드 (퀘스트의 이름이랑, 목표, 진척도를 전달해줌)
-        public void AcceptQuest(string questName, object goal, object nowProgressed)
-        {
-            Console.WriteLine($"\"{questName}\" 퀘스트를 수락했습니다!");
-            Console.WriteLine("\n0. 나가기");
-            Console.WriteLine("다음 행동을 선택해주세요.");
-            int choice = Utility.Select(0, 0);
-            switch (choice)
-            {
-                case 0:
-                    Console.Clear();
-                    ShowQuestList();
                     break;
             }
         }
