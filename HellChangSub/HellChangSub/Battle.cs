@@ -58,7 +58,8 @@ namespace HellChangSub
 
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
-            Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}\n");
+            Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
+            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
 
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
@@ -152,6 +153,11 @@ namespace HellChangSub
                 }
                 Utility.PressAnyKey();
             }
+            else if (target.IsDead)
+            {
+                Console.WriteLine("이미 죽은 대상입니다.");
+                NormalAttack();
+            }
         }
 
         private void UseSkill()      // 플레이어 스킬, 회피 불가
@@ -171,7 +177,7 @@ namespace HellChangSub
             {
                 Console.WriteLine("마나가 부족합니다!\n");
                 Utility.PressAnyKey();
-                return;
+                UseSkill();
             }
 
             Console.WriteLine("공격할 대상을 선택하세요.");
@@ -180,7 +186,8 @@ namespace HellChangSub
             if (target.IsDead)
             {
                 Console.WriteLine("이미 죽은 대상입니다.");
-                Utility.PressAnyKey(); return;
+                Utility.PressAnyKey();
+                UseSkill();
             }
             else if (!target.IsDead)
             {
