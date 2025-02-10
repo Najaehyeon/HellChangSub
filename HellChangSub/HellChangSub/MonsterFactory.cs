@@ -9,7 +9,7 @@ namespace HellChangSub
     class MonsterFactory
     {
         private static Random rand = new Random();
-        public static Monster CreateMonster(int stageLvl) //스테이지 레벨을 매개변수로 받아 몬스터 객체를 생성하는 메서드
+        public static Monster CreateMonster(int stageLvl) //스테이지 레벨을 매개변수로 받아 몬스터 객체를 반환값으로 받는 메서드
         {
             if (stageLvl == 5)
             {

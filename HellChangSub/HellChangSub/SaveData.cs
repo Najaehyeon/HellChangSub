@@ -28,11 +28,11 @@ namespace HellChangSub
         public List<EquipItem> equipInventory { get; set; }
         public List<UseItem> useItems;
         public int stageLvl;
-        public Dictionary<string, QuestStateData> Quests { get; set; }
+        public List<QuestData> questDataList; {  get; set; }
 
         public SaveData() { }//로드시 매개변수 없는 객체 생성을 위해 오버로드
 
-        public SaveData(Player player,ItemManager itemManager)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
+        public SaveData(Player player,ItemManager itemManager,Quest quest)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
         {
             Name = player.Name;
             JobCode = player.JobCode;
@@ -55,7 +55,7 @@ namespace HellChangSub
             equipInventory = itemManager.equipInventory;
             useItems = itemManager.useItems;//itemamanager 생성자 신규생성필요
             stageLvl = History.Instance.stageLvl;
-            Quests = History.Instance.Quests;
+            questDataList = quest.questDataList;
 
         }
 
