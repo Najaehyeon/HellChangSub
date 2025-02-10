@@ -8,26 +8,27 @@ namespace HellChangSub
 {
     public static class Quest
     {
-        public static void ShowQuestList()
+        public static void ShowQuestList() // 퀘스트 목록 씬을 보여주는 메서드
         {
             Console.Clear();
             Console.WriteLine("퀘스트 선택하기.\n");
             string[] quests = { "마을을 위협하는 미니언 처치!", "장비를 장착해보자.", "더욱 더 강해지기!" };
             for (int i = 0; i < quests.Length; i++)
             {
-                if (!History.Instance.Quests.ContainsKey(quests[i]))
+                // 진행 상태에 따라 표시를 다르게 해줌
+                if (!History.Instance.Quests.ContainsKey(quests[i])) // 해당 퀘스트가 수행중이 아니고, 수행한 적이 없을 때
                 {
                     Console.WriteLine($"{i + 1}. [수행가능]{quests[i]}");
                 }
-                else if (History.Instance.Quests[quests[i]].State == QuestState.InProgress)
+                else if (History.Instance.Quests[quests[i]].State == QuestState.InProgress) // 해당 퀘스트를 수행중일 때
                 {
                     Console.WriteLine($"{i + 1}. [진행중]{quests[i]}");
                 }
-                else if (History.Instance.Quests[quests[i]].State == QuestState.Completed)
+                else if (History.Instance.Quests[quests[i]].State == QuestState.Completed) // 해당 퀘스트의 미션을 완수했을 때
                 {
                     Console.WriteLine($"{i + 1}. [미션완료]{quests[i]}");
                 }
-                else if (History.Instance.Quests[quests[i]].State == QuestState.RewardClaimed)
+                else if (History.Instance.Quests[quests[i]].State == QuestState.RewardClaimed) // 해당 퀘스트의 보상을 받았을 때
                 {
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                     Console.WriteLine($"{i + 1}. [진행완료]{quests[i]}");
@@ -38,6 +39,7 @@ namespace HellChangSub
 
             int choice = Utility.Select(0, 3);
 
+            // 퀘스트 선택 시 작동
             switch (choice)
             {
                 case 1: // 1번 퀘스트 선택 시
@@ -54,7 +56,7 @@ namespace HellChangSub
                 case 2: // 2번 퀘스트 선택 시
                     if (!History.Instance.Quests.ContainsKey("장비를 장착해보자.") || History.Instance.Quests["장비를 장착해보자."].State != QuestState.RewardClaimed)
                     {
-                        ShowQuest("장비를 장착해보자.", "쓸만한 방패 장착하기", new string[] { "EXP +50", "200 Gold" }, true, false);
+                        ShowQuest("장비를 장착해보자.", "쓸만한 방패 장착하기", new string[] { "EXP +50", "200 Gold" }, "쓸만한 방패 장착하기", "장착 안됨");
                         break;
                     }
                     else
@@ -77,7 +79,8 @@ namespace HellChangSub
                     break;
             }
         }
-
+        
+        // 퀘스트 목록에서 특정 퀘스트를 선택했을 때 실행되는 메서드(미션이랑 보상을 보여줌, 진행 상태에 따라 보여지는 게 다름)
         public static void ShowQuest(string title, string mission, string[] rewards, object goal, object nowProgressed)
         {
             Console.Clear();
@@ -140,7 +143,7 @@ namespace HellChangSub
             }
             else if (History.Instance.Quests[title].State == QuestState.Completed)
             {
-                Console.WriteLine("1. 보상 얻기");
+                Console.WriteLine("1. 보상 받기");
 
                 int choice = Utility.Select(1, 1);
 
@@ -164,6 +167,7 @@ namespace HellChangSub
             }
         }
 
+        // 퀘스트를 수락했을 때 실행되는 메서드 (퀘스트의 이름이랑, 목표, 진척도를 전달해줌)
         public static void AcceptQuest(string questName, object goal, object nowProgressed)
         {
             History.Instance.StartQuest(questName, goal, nowProgressed);
@@ -180,6 +184,7 @@ namespace HellChangSub
             }
         }
 
+        // 미션을 완료하고 보상을 받을 때 실행되는 메서드
         public static void CompleteMission(string questName)
         {
             History.Instance.UpdateProgress(questName);
