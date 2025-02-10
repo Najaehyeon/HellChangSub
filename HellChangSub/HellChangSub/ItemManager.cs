@@ -182,7 +182,7 @@ namespace HellChangSub
             Console.WriteLine();
 
             itemUtil.SoldOut(purchased);
-            itemUtil.GoldRequired(goldRequired); //구매완료,재화부족 message 메서드
+            itemUtil.GoldRequired(goldRequired); //구매완료,재화부족 message 
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             int input = Utility.Select(0, equipItems.Count);
             switch (input)

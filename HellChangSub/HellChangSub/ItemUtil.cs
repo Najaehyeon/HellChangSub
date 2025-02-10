@@ -70,6 +70,7 @@ namespace HellChangSub
                     player.Gold -= item.Price;
                     ItemManager.equipInventory.Add(item);
                     item.isPurchase = true;
+                    ItemSort(ItemManager.equipInventory);
                 }
             }
             ItemManager.EquipShopScene();
@@ -92,8 +93,7 @@ namespace HellChangSub
                 ItemManager.equipInventory.Remove(item);
                 item.isPurchase = false;
             }
-            ItemManager.EquipSellScene(); // 판매씬으로 바꿔야함
-
+            ItemManager.EquipSellScene();
         }
 
         //장착 메서드들
@@ -173,7 +173,7 @@ namespace HellChangSub
                 player.Gold += (item.Price / 2);
                 item.Count--;
             }
-            ItemManager.UseSellScene(); // 판매씬으로 바꿔야함
+            ItemManager.UseSellScene();
         }
 
 
@@ -185,30 +185,44 @@ namespace HellChangSub
                 case ItemType.HpPotion:
                     player.CurrentHealth += item.Value;
                     player.CurrentHealth = player.CurrentHealth >= player.MaximumHealth ? player.MaximumHealth : player.CurrentHealth;
+                    item.Count--;
                     break;
                 case ItemType.MpPotion:
                     player.CurrentMana += item.Value;
                     player.CurrentMana = player.CurrentMana >= player.MaximumMana ? player.MaximumMana : player.CurrentMana;
+                    item.Count--;
                     break;
                 case ItemType.AtkPotion:
                     player.EquipAtk += item.Value;
+                    item.Count--;
+                    //EndPotion(player, item);
                     break;
                 case ItemType.DefPotion:
                     player.EquipDef += item.Value;
+                    item.Count--;
+                    //EndPotion(player, item);
                     break;
             }
         }
 
-        public void EndPotion(Player player) //History 또는 Battle에서 쿨타임 설정
+        public void EndPotion(Player player, UseItem item) //History 또는 Battle에서 쿨타임 설정
         {
-
+            switch (item.ItemType)
+            {
+                case ItemType.AtkPotion:
+                    player.EquipAtk -= item.Value;
+                    break;
+                case ItemType.DefPotion:
+                    player.EquipDef -= item.Value;
+                    break;
+            }
         }
 
 
         //아이템 추가시 정렬
-        public void ItemSort()
+        public void ItemSort(List<EquipItem> itemlist)
         {
-
+            itemlist = itemlist.OrderBy(item => item.ItemType).ThenBy(item => item.Value).ToList();
         }
 
     }
