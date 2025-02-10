@@ -119,7 +119,7 @@ namespace HellChangSub
             if (target.CurrentHealth < 0) target.CurrentHealth = 0; // 체력이 음수가 되지 않도록 설정
 
             Console.WriteLine($"{target.Name} 을(를) 맞췄습니다. [데미지 : {finalDamage}]\n");
-        }
+        }   // 인터페이스
 
         private void NormalAttack()      // 선택지에서 기본 공격 선택시 / 몬스터가 기본 공격 사용시
         {
@@ -167,8 +167,7 @@ namespace HellChangSub
             if (player.CurrentMana < selectedSkill.ManaCost)    // MP가 부족할 경우 사용 불가
             {
                 Console.WriteLine("마나가 부족합니다!\n");
-                Console.WriteLine("0. 다음");
-                Utility.Select(0, 0);
+                Utility.PressAnyKey();
                 return;
             }
 

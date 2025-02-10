@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HellChangSub
 {
-    public class Player
+    public class Player //: Character
     {
         public string Name { get; set; }
         public int JobCode { get; set; }        //직업 1번 전사, 2번 도적, 3번 마법사
@@ -76,6 +76,12 @@ namespace HellChangSub
                     Crit = 10;
                     CritDamage = 1.6f;
                     Evasion = 10;
+
+                    Skills = new List<Skill>
+                    {
+                        new Skill("파워 슬래시", 1.5f, 10),
+                        new Skill("발도", 2.0f, 15)
+                    };
                     break;
 
                 case 2:         // 도적 - 중간 공격력, 치명타율 회피율 높음, 방어 체력 낮음
@@ -89,6 +95,12 @@ namespace HellChangSub
                     Crit = 30;
                     CritDamage = 2.0f;
                     Evasion = 20;
+
+                    Skills = new List<Skill>
+                    {
+                        new Skill("사악한 일격", 3.0f, 10),
+                        new Skill("절개", 5.0f, 15)
+                    };
                     break;
 
                 case 3:         // 마법사 - 높은 공격력과 마나, 방어력과 체력이 낮고 회피 불가, 스킬 구현 후에는 기본 공격력을 낮추고 마법사 스킬들의 피해 계수를 높게 잡기
@@ -102,6 +114,12 @@ namespace HellChangSub
                     Crit = 10;
                     CritDamage = 1.6f;
                     Evasion = 0;
+
+                    Skills = new List<Skill>
+                    {
+                        new Skill("파이어볼", 3.0f, 10),
+                        new Skill("콜드 빔", 5.0f, 15)
+                    };
                     break;
             }
         }
