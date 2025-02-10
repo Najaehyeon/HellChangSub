@@ -17,7 +17,8 @@ namespace HellChangSub
     class GameManager//싱글톤으로 작업 싱글톤으로 사용시 최초접근시 전역적으로 접근 가능한 객체 생성후 객체 생성 불가
     {
         public Player player;
-        ItemManager itemManager;
+        public ItemManager itemManager;
+        public Quest quest;
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
 
         public static GameManager Instance  // 2️ 전역적으로 접근 가능한 프로퍼티
@@ -42,7 +43,7 @@ namespace HellChangSub
                 SaveData saveData = SaveSystem.LoadGame();//로드 메서드를 통해 saveData객체생성
                 player = new Player(saveData);//saveData를 받는 플레이어 객체 생성
                 itemManager = new ItemManager(saveData);
-                History.Instance.SetHistory(saveData);
+                quest = new Quest(saveData);
             }
             else
             {
@@ -53,6 +54,7 @@ namespace HellChangSub
                 int playerJob = Utility.Select(1, 3);
                 player = new Player(playerName, playerJob); //
                 itemManager = new ItemManager(player);
+                quest = new Quest();
             }
         }
 
@@ -120,7 +122,7 @@ namespace HellChangSub
                     Quest.ShowQuestList();
                     break;
                 case 6:
-                    SaveData saveData = new SaveData(player,itemManager);
+                    SaveData saveData = new SaveData(player,itemManager,quest);
                     SaveSystem.SaveGame(saveData);//저장기능
                     break;
             }
