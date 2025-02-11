@@ -162,7 +162,7 @@ namespace HellChangSub
     {
         public override string Title { get; } = "마을을 위협하는 슬라임 처치!";
         public override string Mission { get; } = "슬라임 10마리 처치!";
-        public override string[] Rewards { get; } = new string[] { "쓸만한 방패", "500 Gold" };
+        public override string[] Rewards { get; } = new string[] { "스파르타의 창", "500 Gold" };
         public override int Goal { get; } = 3;
 
 
@@ -202,8 +202,8 @@ namespace HellChangSub
     // "장비 장착하기" 퀘스트 데이터
     public class EquipShieldQuest : QuestData
     {
-        public override string Title { get; } = "장비를 장착해보자.";
-        public override string Mission { get; } = "쓸만한 방패 장착하기";
+        public override string Title { get; } = "장비를 구매하여 장착해보자.";
+        public override string Mission { get; } = "장비 장착하기";
         public override string[] Rewards { get; } = new string[] { "EXP +50", "200 Gold" };
         public override int Goal { get; } = 1;
 
@@ -246,7 +246,7 @@ namespace HellChangSub
     {
         public override string Title { get; } = "더욱 더 강해지기!";
         public override string Mission { get; } = "3레벨 달성하기";
-        public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
+        public override string[] Rewards { get; } = new string[] { "EXP + 80", "1000 Gold" };
         public override int Goal { get; } = 3;
 
         private int progressed = GameManager.Instance.player.Level;
