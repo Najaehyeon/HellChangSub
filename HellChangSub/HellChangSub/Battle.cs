@@ -266,32 +266,8 @@ namespace HellChangSub
 
         private void GetKillData(String Name)
         {
-            if (Name == "슬라임")
-                History.Instance.SlimeKillCount1++;
-            else if (Name == "검은 슬라임")
-                History.Instance.SlimeKillCount2++;
-            else if (Name == "황금 슬라임")
-                History.Instance.SlimeKillCount3++;
-            else if (Name == "스켈레톤")
-                History.Instance.SkeletonKillCount1++;
-            else if (Name == "검은 스켈레톤")
-                History.Instance.SkeletonKillCount2++;
-            else if (Name == "황금 스켈레톤")
-                History.Instance.SkeletonKillCount3++;
-            else if (Name == "오우거")
-                History.Instance.OgreKillCount1++;
-            else if (Name == "검은 오우거")
-                History.Instance.OgreKillCount2++;
-            else if (Name == "황금 오우거")
-                History.Instance.OgreKillCount3++;
-            else if (Name == "드래곤")
-                History.Instance.DragonKillCount1++;
-            else if (Name == "암흑 드래곤")
-                History.Instance.DragonKillCount2++;
-            else if (Name == "황금 드래곤")
-                History.Instance.DragonKillCount3++;
-            else if (Name == "헬창 Sup")
-                History.Instance.NormalKillCount++;
+            if (Name == "오우거")
+                GameManager.Instance.quest.questDataList[0].Progressed++;
             else
                 return;
         }
