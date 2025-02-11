@@ -119,6 +119,19 @@ namespace HellChangSub
 
         private void NormalAttack()      // 플레이어 기본 공격
         {
+            Console.Clear();
+            Console.WriteLine("Battle!!\n");
+
+            for (int i = 0; i < monsters.Count; i++)        // 몬스터들의 정보를 가져오고 이를 화면에 출력
+            {
+                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";    // 몬스터의 현재 체력이 0 이하이면 Dead 상태로 표시, 그렇지 않다면 HP {현재체력}으로 표시하도록
+                Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+            }
+
+            Console.WriteLine("\n[내정보]");
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
+            Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
+            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
             Console.WriteLine("공격할 대상을 선택하세요.");
             int targetIndex = Utility.Select(1, monsters.Count) - 1;
             Monster target = monsters[targetIndex];
@@ -165,6 +178,19 @@ namespace HellChangSub
 
         private void UseSkill()      // 플레이어 스킬, 회피 불가
         {
+            Console.Clear();
+            Console.WriteLine("Battle!!\n");
+
+            for (int i = 0; i < monsters.Count; i++)        // 몬스터들의 정보를 가져오고 이를 화면에 출력
+            {
+                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";    // 몬스터의 현재 체력이 0 이하이면 Dead 상태로 표시, 그렇지 않다면 HP {현재체력}으로 표시하도록
+                Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+            }
+
+            Console.WriteLine("\n[내정보]");
+            Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
+            Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
+            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
             Console.WriteLine("사용할 스킬을 선택하세요.");
 
             for (int i = 0; i < player.Skills.Count; i++)
@@ -217,6 +243,18 @@ namespace HellChangSub
 
             else
             {
+                Console.Clear();
+                Console.WriteLine("Battle!!\n");
+                for (int i = 0; i < monsters.Count; i++)        // 몬스터들의 정보를 가져오고 이를 화면에 출력
+                {
+                    string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";    // 몬스터의 현재 체력이 0 이하이면 Dead 상태로 표시, 그렇지 않다면 HP {현재체력}으로 표시하도록
+                    Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+                }
+
+                Console.WriteLine("\n[내정보]");
+                Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
+                Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
+                Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
                 // 단일 대상 공격의 경우 대상 선택
                 Console.WriteLine("공격할 대상을 선택하세요.");
                 int targetIndex = Utility.Select(1, monsters.Count) - 1;

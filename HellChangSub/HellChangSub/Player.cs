@@ -115,13 +115,15 @@ namespace HellChangSub
                     Def = 3;
                     MaximumHealth = 80;
                     CurrentHealth = 80;
-                    Crit = 30.0f;
+                    MaximumMana = 50;
+                    CurrentMana = 50;
+                    Crit = 50.0f;
                     CritDamage = 2.0f;
                     Evasion = 20.0f;
 
                     Skills = new List<Skill>
                     {
-                        new Skill("사악한 일격", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."),
+                        new Skill("칼날 부채", 1.0f, 10, "적 전체에게 공격력만큼의 피해를 입힙니다.", true),
                         new Skill("절개", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다.")
                     };
                     break;
@@ -374,12 +376,12 @@ namespace HellChangSub
                 case 2: // 도적
                     if (level == 3 && !Skills.Exists(s => s.Name == "소닉 블리츠"))
                     {
-                        Skills.Add(new Skill("소닉 블리츠", 5.0f, 20, "단일 대상에게 공격력의 5배의 피해를 입힙니다"));
+                        Skills.Add(new Skill("소닉 블리츠", 6.0f, 20, "단일 대상에게 공격력의 6배의 피해를 입힙니다"));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [소닉 블리츠]");
                     }
                     else if (level == 7 && !Skills.Exists(s => s.Name == "암살"))
                     {
-                        Skills.Add(new Skill("암살", 7.0f, 30, "단일 대상에게 공격력의 7배의 피해를 입힙니다."));
+                        Skills.Add(new Skill("암살", 10.0f, 35, "단일 대상에게 공격력의 10배의 피해를 입힙니다."));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [암살]");
                     }
                     break;
