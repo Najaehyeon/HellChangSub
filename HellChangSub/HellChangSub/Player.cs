@@ -76,14 +76,16 @@ namespace HellChangSub
 
         }
 
-        public Player(string name, int Job)
+        public Player(string name, int jobCode)
         {
             Name = name;
-            JobCode = Job;
+            JobCode = jobCode;
+            Level = 1;
             Exp = 0;
             Gold = 1000000000;
             EquipAtk = 0;
             EquipDef = 0;
+            NeedExp = 5;
             switch (JobCode)
             {
                 case 1:         // 전사 - 방어력 체력이 높음
@@ -398,7 +400,8 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine($"{"Name",-12} {Name}");
             Console.WriteLine($"{"Level",-12} {Level}");
-            Console.WriteLine($"{"Exp",-12} {Exp}");
+            Console.Write($"{"Exp",-12} {Exp}");
+            Console.WriteLine($"            {"Next",-12} {NeedExp}");
             Console.WriteLine($"{"Gold",-12} {Gold}");
             Console.WriteLine($"{"HP",-12} {CurrentHealth}/{MaximumHealth}");
             Console.WriteLine($"{"MP",-12} {CurrentMana}/{MaximumMana}");

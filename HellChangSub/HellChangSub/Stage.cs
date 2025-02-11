@@ -16,13 +16,7 @@ namespace HellChangSub
         public Stage(Player player, int stageLvl)
         {
             this.player = player;
-            monsters = new List<Monster>();
-            int mosterQuantity = (stageLvl == 5 ? 1:rand.Next(1, 4 + stageLvl/2));//1스테이지에서 최대 3마리 이후 스테이지레벨/2 만큼 증가
-            for (int i = 0; i < mosterQuantity; i++)
-            {
-                Monster monster = MonsterFactory.CreateMonster(stageLvl);
-                monsters.Add(monster);
-            }
+            
             SelectStage(stageLvl);
         }
 
@@ -37,6 +31,13 @@ namespace HellChangSub
         public void ShowStage(int stageLvl)
         {
             Console.Clear();
+            monsters = new List<Monster>();
+            int mosterQuantity = (stageLvl == 5 ? 1 : rand.Next(1, 4 + stageLvl / 2));//1스테이지에서 최대 3마리 이후 스테이지레벨/2 만큼 증가
+            for (int i = 0; i < mosterQuantity; i++)
+            {
+                Monster monster = MonsterFactory.CreateMonster(stageLvl);
+                monsters.Add(monster);
+            }
             Console.WriteLine($"[스테이지 : {stageLvl}]\n몬스터가 등장했습니다.\n\n[몬스터]");
             for(int i = 0;i < monsters.Count;i++) 
             {
