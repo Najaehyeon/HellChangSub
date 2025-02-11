@@ -201,7 +201,7 @@ namespace HellChangSub
             if (selectedSkill.IsAoE)
             {
                 // AoE 스킬인 경우, 모든 살아있는 몬스터에게 피해 적용
-                Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용! (모든 적 공격)");
+                Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
                 foreach (var target in monsters.Where(m => !m.IsDead))
                 {
                     int beforeHP = target.CurrentHealth;
