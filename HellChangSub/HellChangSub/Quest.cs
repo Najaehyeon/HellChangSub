@@ -35,15 +35,24 @@ namespace HellChangSub
                 // 진행 상태에 따라 표시를 다르게 해줌
                 if (questDataList[i].QuestState == QuestState.NotStarted) // 해당 퀘스트가 수행중이 아니고, 수행한 적이 없을 때
                 {
-                    Console.WriteLine($"{i + 1}. [수행가능]{questDataList[i].Title}");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write(i + 1 + ". ");
+                    Console.ResetColor();
+                    Console.WriteLine($"[수행가능]{questDataList[i].Title}");
                 }
                 else if (questDataList[i].QuestState == QuestState.InProgress) // 해당 퀘스트를 수행중일 때
                 {
-                    Console.WriteLine($"{i + 1}. [진행중]{questDataList[i].Title}");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write(i + 1 + ". ");
+                    Console.ResetColor();
+                    Console.WriteLine($"[수행중]{questDataList[i].Title}");
                 }
                 else if (questDataList[i].QuestState == QuestState.Completed) // 해당 퀘스트의 미션을 완수했을 때
                 {
-                    Console.WriteLine($"{i + 1}. [미션완료]{questDataList[i].Title}");
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.Write(i + 1 + ". ");
+                    Console.ResetColor();
+                    Console.WriteLine($"[미션완료]{questDataList[i].Title}");
                 }
                 else if (questDataList[i].QuestState == QuestState.RewardClaimed) // 해당 퀘스트의 보상을 받았을 때
                 {
@@ -52,7 +61,11 @@ namespace HellChangSub
                     Console.ResetColor();
                 }
             }
-            Console.WriteLine("\n0. 나가기");
+
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("\n0. ");
+            Console.ResetColor();
+            Console.WriteLine("나가기");
 
             int choice = Utility.Select(0, 3);
 

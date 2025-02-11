@@ -46,7 +46,14 @@ namespace HellChangSub
             Console.WriteLine();
             if (QuestState == QuestState.NotStarted) // 수행한 적이 없을 때, 보여줄 내용
             {
-                Console.WriteLine("1. 수락\n2. 거절");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("1. ");
+                Console.ResetColor();
+                Console.WriteLine("수락");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("2. ");
+                Console.ResetColor();
+                Console.WriteLine("거절");
 
                 int choice = Utility.Select(1, 2);
 
@@ -65,7 +72,14 @@ namespace HellChangSub
             {
                 Console.WriteLine("- 진척도 -");
                 Console.WriteLine($" {Progressed} / {Goal}\n");
-                Console.WriteLine("1. 미션포기\n0. 나가기");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("1. ");
+                Console.ResetColor();
+                Console.WriteLine("미션포기");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("0. ");
+                Console.ResetColor();
+                Console.WriteLine("나가기");
 
                 int choice = Utility.Select(0, 1);
 
@@ -82,7 +96,10 @@ namespace HellChangSub
             }
             else if (QuestState == QuestState.Completed) // 퀘스트 미션을 완료했을 때, 보여줄 내용
             {
-                Console.WriteLine("1. 보상 받기");
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.Write("1. ");
+                Console.ResetColor();
+                Console.WriteLine("보상받기");
 
                 int choice = Utility.Select(1, 1);
 
@@ -92,7 +109,10 @@ namespace HellChangSub
                         GiveRewards();
                         QuestState = QuestState.RewardClaimed;
                         Console.WriteLine("보상을 받았습니다.");
-                        Console.WriteLine("\n0. 나가기");
+                        Console.ForegroundColor = ConsoleColor.Cyan;
+                        Console.Write("\n0. ");
+                        Console.ResetColor();
+                        Console.WriteLine("나가기");
                         Console.WriteLine("다음 행동을 선택해주세요.");
                         int choice2 = Utility.Select(0, 0);
                         switch (choice2)
@@ -113,7 +133,10 @@ namespace HellChangSub
             QuestState = QuestState.InProgress;
             JudgeState();
             Console.WriteLine($"\"{Title}\" 퀘스트를 수락했습니다!");
-            Console.WriteLine("\n0. 나가기");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("\n0. ");
+            Console.ResetColor();
+            Console.WriteLine("나가기");
             Console.WriteLine("다음 행동을 선택해주세요.");
             int choice2 = Utility.Select(0, 0);
             switch (choice2)
@@ -131,7 +154,10 @@ namespace HellChangSub
             FormatMission();
             QuestState = QuestState.NotStarted;
             Console.WriteLine("미션을 포기했습니다!");
-            Console.WriteLine("\n0. 나가기");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.Write("\n0. ");
+            Console.ResetColor();
+            Console.WriteLine("나가기");
             Console.WriteLine("다음 행동을 선택해주세요.");
             int choice2 = Utility.Select(0, 0);
             switch (choice2)
