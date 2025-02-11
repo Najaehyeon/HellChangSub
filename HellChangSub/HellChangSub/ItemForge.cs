@@ -19,10 +19,10 @@ namespace HellChangSub
 
 
         //string name, string description, int value, StoneType stoneType,int count
-        public List<ItemPowerStone> powerStones = new List<ItemPowerStone>
+        public List<PowerStone> powerStones = new List<PowerStone>
         {
-            new ItemPowerStone("무기강화석","무기를 강화할 수 있습니다.",5,StoneType.WeaponPowerStone,0),
-            new ItemPowerStone("방어구강화석","방어구를 강화할 수 있습니다.",5,StoneType.ArmorPowerStone,0)
+            new PowerStone("무기강화석","무기를 강화할 수 있습니다.",5,StoneType.WeaponPowerStone,0),
+            new PowerStone("방어구강화석","방어구를 강화할 수 있습니다.",5,StoneType.ArmorPowerStone,0)
         };
         public void BlacksmithScreen()
         {
