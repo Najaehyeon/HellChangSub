@@ -142,6 +142,55 @@ namespace HellChangSub
             }
         }
 
+        public class Buff       // 버프 관리 클래스 - 현재는 공격포션, 방어포션뿐
+        {
+            public ItemType BuffType { get; set; }   // 예: AtkPotion 또는 DefPotion
+            public int Value { get; set; }           // 증가한 능력치 수치
+            public int RemainingTurns { get; set; }  // 남은 턴 수
+        }
+
+        // Player 클래스 내부
+        public List<Buff> ActiveBuffs { get; set; } = new List<Buff>();
+
+        public void UpdateBuffs()       // 버프의 턴수 관리 및 지속턴 끝나면 효과종료
+        {
+            List<Buff> expiredBuffs = new List<Buff>();
+            foreach (var buff in ActiveBuffs)
+            {
+                buff.RemainingTurns--;
+                if (buff.RemainingTurns <= 0)
+                {
+                    if (buff.BuffType == ItemType.AtkPotion)
+                    {
+                        EquipAtk -= buff.Value;
+                        Console.WriteLine("공격력 버프의 지속시간이 끝났습니다.");
+                    }
+                    else if (buff.BuffType == ItemType.DefPotion)
+                    {
+                        EquipDef -= buff.Value;
+                        Console.WriteLine("방어력 버프의 지속시간이 끝났습니다.");
+                    }
+                    expiredBuffs.Add(buff);
+                }
+            }
+            foreach (var buff in expiredBuffs)
+            {
+                ActiveBuffs.Remove(buff);
+            }
+        }
+
+        public void ClearAllBuffs()     // 전투가 끝나면 포션 남은턴수 0으로 초기화시키고 효과종료
+        {
+            foreach (var buff in ActiveBuffs)
+            {
+                if (buff.BuffType == ItemType.AtkPotion)
+                    EquipAtk -= buff.Value;
+                else if (buff.BuffType == ItemType.DefPotion)
+                    EquipDef -= buff.Value;
+            }
+            ActiveBuffs.Clear();
+        }
+
         /*public void LevelUp2()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
             int oldLevel = Level;
@@ -188,7 +237,7 @@ namespace HellChangSub
                 Console.WriteLine($"레벨이 상승했습니다. 현재 레벨: {Level}");
             }
         }*/
-        
+
         public void LevelUp()
         {
             if (Exp >= NeedExp)
