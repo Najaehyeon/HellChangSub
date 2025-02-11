@@ -79,7 +79,6 @@ namespace HellChangSub
 
         public void ShowStartScreen()
         {
-            
             Console.Clear();
             Encoding originalEncoding = Console.OutputEncoding;
 
