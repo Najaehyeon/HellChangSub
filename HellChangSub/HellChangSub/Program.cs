@@ -159,8 +159,7 @@ namespace HellChangSub
             Console.WriteLine();
             Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 대장간\n6. 퀘스트\n7. 휴식하기\n8. 저장하기");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            int choice = Utility.Select(1, 8);
-            switch (choice)
+            switch (Utility.Select(1, 8))
             {
                 case 1:
                     player.ShowStatus();
