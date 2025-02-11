@@ -14,13 +14,15 @@ namespace HellChangSub
         public string? Text { get; }
         public float DamageMultiplier { get; }
         public int? ManaCost { get; }
+        public bool IsAoE { get; }
 
-        public Skill(string name, float damageMultiplier, int? manaCost = null, string? text = null)
+        public Skill(string name, float damageMultiplier, int? manaCost = null, string? text = null, bool isAoE = false)
         {
             Name = name;
             Text = text;
             DamageMultiplier = damageMultiplier;
             ManaCost = manaCost;
+            IsAoE = isAoE;
         }
     }
 
@@ -103,7 +105,7 @@ namespace HellChangSub
                     Skills = new List<Skill>
                     {
                         new Skill("파워 슬래시", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."),
-                        new Skill("발도", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다.")
+                        new Skill("휘둘러치기", 2.0f, 20, "적 전체에게 공격력의 2배의 피해를 입힙니다.", true)
                     };
                     break;
 
@@ -372,20 +374,20 @@ namespace HellChangSub
                 case 2: // 도적
                     if (level == 3 && !Skills.Exists(s => s.Name == "소닉 블리츠"))
                     {
-                        Skills.Add(new Skill("소닉 블리츠", 4.0f, 20, "단일 대상에게 공격력의 4배의 피해를 입힙니다"));
+                        Skills.Add(new Skill("소닉 블리츠", 5.0f, 20, "단일 대상에게 공격력의 5배의 피해를 입힙니다"));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [소닉 블리츠]");
                     }
                     else if (level == 7 && !Skills.Exists(s => s.Name == "암살"))
                     {
-                        Skills.Add(new Skill("암살", 6.0f, 30, "단일 대상에게 공격력의 6배의 피해를 입힙니다."));
+                        Skills.Add(new Skill("암살", 7.0f, 30, "단일 대상에게 공격력의 7배의 피해를 입힙니다."));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [암살]");
                     }
                     break;
 
                 case 3: // 마법사
-                    if (level == 3 && !Skills.Exists(s => s.Name == "라이트닝 볼트"))
+                    if (level == 3 && !Skills.Exists(s => s.Name == "체인 라이트닝"))
                     {
-                        Skills.Add(new Skill("라이트닝 볼트", 6.0f, 25, "단일 대상에게 공격력의 6배의 피해를 입힙니다."));
+                        Skills.Add(new Skill("체인 라이트닝", 4.0f, 30, "적 전체에게 공격력의 4배의 피해를 입힙니다.", true));
                         Console.WriteLine("새로운 스킬을 습득했습니다! [라이트닝 볼트]");
                     }
                     else if (level == 7 && !Skills.Exists(s => s.Name == "윈드 블래스터"))
