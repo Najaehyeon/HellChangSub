@@ -443,7 +443,7 @@ namespace HellChangSub
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
-            for( int i = 0; i < monstersDefeated;)
+            for (int i = 0; i < monstersDefeated; i++)
             {
                 int randomFactor = rand.Next(1, 101);
                 int getPowerStoneType = rand.Next(0,2);
