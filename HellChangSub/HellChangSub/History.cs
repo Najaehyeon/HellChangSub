@@ -23,9 +23,7 @@ namespace HellChangSub
         public int StageLvl { get; set; } = 1;
         public int ChallengeLvl { get; set; } = 1;
         
-        private History()
-        {
-                    }
+        private History() { }
 
         public void SetHistory(SaveData saveData)
         {
