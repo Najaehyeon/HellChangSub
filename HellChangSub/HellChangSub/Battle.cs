@@ -16,6 +16,7 @@ namespace HellChangSub
         private List<Monster> monsters;
         private int initialPlayerHealth;
         private int initialPlayerExp;
+        int turnCount = 0;
 
         public Battle(Player player, List<Monster> monsters)
         {
@@ -42,6 +43,7 @@ namespace HellChangSub
             {
                 PlayerTurn();
                 MonsterTurn();
+                turnCount++;        // 지속 턴수가 있는 효과들 턴수 체크용
             }
         }
 
