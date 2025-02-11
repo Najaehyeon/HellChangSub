@@ -242,13 +242,13 @@ namespace HellChangSub
             Console.WriteLine();
             string line = "  『 진정한 정상화란... 힘으로 만드는 것이 아니었다... 』";
             char[] chars = line.ToCharArray();
-            foreach (char c in chars) Console.WriteLine(c); Thread.Sleep(50);
+            foreach (char c in chars) Console.Write(c); Thread.Sleep(50);
             Thread.Sleep(500);
             Console.WriteLine();
             Console.WriteLine("──────────────────────────────────────");
             Console.WriteLine("  세상은 다시 평화를 되찾았다.");
             Thread.Sleep(500);
-            Console.Write("  그러나"); Thread.Sleep(200); Console.Write("."); Thread.Sleep(200); Console.Write("."); Thread.Sleep(200); Console.Write("."); Thread.Sleep(200); Console.Write(".");
+            Console.Write("  그러나"); Thread.Sleep(500); Console.Write("."); Thread.Sleep(500); Console.Write("."); Thread.Sleep(500); Console.Write("."); Thread.Sleep(500); Console.Write(".");
             Thread.Sleep(500);
             Console.WriteLine("  플레이어는 공허한 마음으로 폐허가 된 세계를 바라본다.");
             Thread.Sleep(500);
