@@ -371,7 +371,7 @@ namespace HellChangSub
                 player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
+                Console.WriteLine(player.CurrentHealth < beforeHP? $"HP {beforeHP} -> {player.CurrentHealth}" : $"{player.Name}은(는) 공격을 완벽하게 막아내었다.");
             }
         }
 
@@ -388,7 +388,7 @@ namespace HellChangSub
             player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
-            Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
+            Console.WriteLine(player.CurrentHealth < beforeHP ? $"HP {beforeHP} -> {player.CurrentHealth}" : $"{player.Name}은(는) 공격을 완벽하게 막아내었다.");
         }
 
 
