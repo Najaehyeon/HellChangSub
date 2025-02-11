@@ -41,14 +41,15 @@ namespace HellChangSub
             EnhanceLvl = enhanceLvl;
         }  
 
-        public string EquipInvenStatus()
+        public string EquipInvenStatus() //소지아이템목록
         {
+            string enhanceStr = EnhanceLvl > 0 ? $"+ {EnhanceLvl.ToString()}" : ""; 
             string equipStr = isEquip ? "[E]" : "";
-            string str = $"{Utility.FixWidth(equipStr + ItemName,20)} | {Utility.FixWidth(GetItemType(),6)} | {Utility.FixWidth((Value).ToString(),5)} | {Utility.FixWidth(Description,25)}";
+            string str = $"{Utility.FixWidth(equipStr + ItemName + enhanceStr,20)} | {Utility.FixWidth(GetItemType(),6)} | {Utility.FixWidth((Value).ToString(),5)} | {Utility.FixWidth(Description,25)}";
             return str;
         }
 
-        public string EquipItemStatus()
+        public string EquipItemStatus() //아이템목록
         {
             string str = $"{Utility.FixWidth(ItemName, 20)} | {Utility.FixWidth(GetItemType(), 6)} | {Utility.FixWidth((Value).ToString(), 5)} | {Utility.FixWidth(Description, 25)}  | {Utility.FixWidth(IsPurchased(),10)}";
             return str;
@@ -98,16 +99,16 @@ namespace HellChangSub
             Value = value;
             ItemType = itemType;
             Count = count;
-            PotionDuration = 0;
+            PotionDuration = 4;
             ItemBuff = false;
         }
-        public string UseItemStatus()
+        public string UseItemStatus()  //소지아이템목록
         {
             string str = $"{Utility.FixWidth(ItemName,20)} | {Utility.FixWidth(GetItemType(),6)} | {Utility.FixWidth(Value.ToString(),5)} | {Utility.FixWidth(Description,25)} | {Utility.FixWidth(Count.ToString(),10)}";
             return str;
         }
 
-        public string UseShopStatus()
+        public string UseShopStatus() //아이템목록
         {
             string str = $"{Utility.FixWidth(ItemName, 20)} | {Utility.FixWidth(GetItemType(), 6)} | {Utility.FixWidth(Value.ToString(), 5)} | {Utility.FixWidth(Description, 25)} | {Utility.FixWidth(Price.ToString(), 10)}";
             return str;

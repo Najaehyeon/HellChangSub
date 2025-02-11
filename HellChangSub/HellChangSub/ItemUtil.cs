@@ -108,6 +108,7 @@ namespace HellChangSub
                 player.Gold += (item.Price / 2);
                 ItemManager.equipInventory.Remove(item);
                 item.isPurchase = false;
+                item.EnhanceLvl = 0;
             }
             ItemManager.EquipSellScene();
         }
@@ -215,7 +216,8 @@ namespace HellChangSub
                     if(item.ItemBuff)
                     {
                         Console.WriteLine("이미 사용중입니다");
-                        //다시 선택창으로
+                        Utility.PressAnyKey();
+                        return;
                     }
                     else
                     {
@@ -229,7 +231,8 @@ namespace HellChangSub
                     if (item.ItemBuff)
                     {
                         Console.WriteLine("이미 사용중입니다");
-                        //다시 선택창으로
+                        Utility.PressAnyKey();
+                        return;
                     }
                     else
                     {
@@ -265,10 +268,12 @@ namespace HellChangSub
                 case ItemType.AtkPotion:
                     player.EquipAtk -= item.Value;
                     item.ItemBuff = false;
+                    item.PotionDuration = 4; //쿨타임 +1
                     break;
                 case ItemType.DefPotion:
                     player.EquipDef -= item.Value;
                     item.ItemBuff = false;
+                    item.PotionDuration = 4; //쿨타임 +1
                     break;
             }
         }

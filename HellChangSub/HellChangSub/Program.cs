@@ -19,6 +19,7 @@ namespace HellChangSub
         public Player player;
         public ItemManager itemManager;
         public Quest quest;
+        public ItemForge itemForge;
         private bool isLoaded = false;
 
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
@@ -38,34 +39,6 @@ namespace HellChangSub
         {
             
            
-        }
-
-        
-
-        public void CreateObjects(bool isLoaded)
-        {
-            if (isLoaded)
-            {
-                SaveData loadedData = SaveSystem.LoadGame();//로드 메서드를 통해 saveData객체생성
-                player = new Player(loadedData);//saveData를 받는 플레이어 객체 생성
-                itemManager = new ItemManager(loadedData,player);
-                SaveQuestData loadedQuestData = SaveSystem.LoadGameQuest();//퀘스트데이터 객체생성시 player의 프로퍼티값 참조필요 플레이어 객체 생성시점 뒤로 이동
-                quest = new Quest(loadedQuestData);
-                History.Instance.SetHistory(loadedData);
-            }
-            else
-            {
-                Console.WriteLine("플레이어 이름을 입력해주세요.");
-                Console.Write(">>");
-                string playerName = Console.ReadLine();
-                Console.WriteLine("직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
-                int playerJob = Utility.Select(1, 3);
-                player = new Player(playerName, playerJob); //
-                itemManager = new ItemManager(player);
-                quest = new Quest();
-            }
-
-            ShowMainScreen();
         }
 
         public void ShowStartScreen()
@@ -152,6 +125,36 @@ namespace HellChangSub
 
         }
 
+        public void CreateObjects(bool isLoaded)
+        {
+            if (isLoaded)
+            {
+                SaveData loadedData = SaveSystem.LoadGame();//로드 메서드를 통해 saveData객체생성
+                player = new Player(loadedData);//saveData를 받는 플레이어 객체 생성
+                itemManager = new ItemManager(loadedData,player);
+                SaveQuestData loadedQuestData = SaveSystem.LoadGameQuest();//퀘스트데이터 객체생성시 player의 프로퍼티값 참조필요 플레이어 객체 생성시점 뒤로 이동
+                quest = new Quest(loadedQuestData);
+                itemForge = new ItemForge(loadedData);
+                History.Instance.SetHistory(loadedData);
+            }
+            else
+            {
+                Console.WriteLine("플레이어 이름을 입력해주세요.");
+                Console.Write(">>");
+                string playerName = Console.ReadLine();
+                Console.WriteLine("직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
+                int playerJob = Utility.Select(1, 3);
+                player = new Player(playerName, playerJob); //
+                itemManager = new ItemManager(player);
+                quest = new Quest();
+                itemForge = new ItemForge();
+            }
+
+            ShowMainScreen();
+        }
+
+        
+
         public void ShowMainScreen()
         {
             
@@ -175,7 +178,7 @@ namespace HellChangSub
                     itemManager.ShopScene();
                     break;
                 case 5:
-                    Console.WriteLine("ItPowerUp.BlacksmithScreen();");
+                    itemForge.BlacksmithScreen();
                     break;
                 case 6:
                     quest.ShowQuestList();
@@ -184,7 +187,7 @@ namespace HellChangSub
                     Rest();
                     break;
                 case 8:
-                    SaveData saveData = new SaveData(player, itemManager);
+                    SaveData saveData = new SaveData(player, itemManager, itemForge);
                     SaveQuestData saveQuestData = new SaveQuestData(quest);
                     SaveSystem.SaveGame(saveData,saveQuestData);//저장기능
                     break;

@@ -105,7 +105,7 @@ namespace HellChangSub
                     Skills = new List<Skill>
                     {
                         new Skill("파워 슬래시", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."),
-                        new Skill("휘둘러치기", 2.0f, 20, "적 전체에게 공격력의 2배의 피해를 입힙니다.", true)
+                        new Skill("휘둘러치기", 1.5f, 15, "적 전체에게 공격력의 1.5배의 피해를 입힙니다.", true)
                     };
                     break;
 
@@ -388,12 +388,12 @@ namespace HellChangSub
                     if (level == 3 && !Skills.Exists(s => s.Name == "체인 라이트닝"))
                     {
                         Skills.Add(new Skill("체인 라이트닝", 4.0f, 30, "적 전체에게 공격력의 4배의 피해를 입힙니다.", true));
-                        Console.WriteLine("새로운 스킬을 습득했습니다! [라이트닝 볼트]");
+                        Console.WriteLine("새로운 스킬을 습득했습니다! [체인 라이트닝]");
                     }
-                    else if (level == 7 && !Skills.Exists(s => s.Name == "윈드 블래스터"))
+                    else if (level == 7 && !Skills.Exists(s => s.Name == "플레임 서클"))
                     {
-                        Skills.Add(new Skill("윈드 블래스터", 9.0f, 35, "단일 대상에게 공격력의 9배의 피해를 입힙니다."));
-                        Console.WriteLine("새로운 스킬을 습득했습니다! [윈드 블래스터]");
+                        Skills.Add(new Skill("플레임 서클", 6.0f, 45, "적 전체에게 공격력의 6배의 피해를 입힙니다.", true));
+                        Console.WriteLine("새로운 스킬을 습득했습니다! [플레임 서클]");
                     }
                     break;
             }

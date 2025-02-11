@@ -25,6 +25,9 @@ namespace HellChangSub
             else
             {
                 Console.WriteLine("이미 완료한 퀘스트입니다.");
+                Utility.PressAnyKey();
+                Console.Clear();
+                GameManager.Instance.quest.ShowQuestList();
             }
         }
         
@@ -232,6 +235,7 @@ namespace HellChangSub
         public override void GiveRewards()
         {
             GameManager.Instance.player.Exp += 50;
+            GameManager.Instance.player.LevelUp();
             GameManager.Instance.player.Gold += 200;
         }
     }
@@ -265,6 +269,7 @@ namespace HellChangSub
         public override void GiveRewards()
         {
             GameManager.Instance.player.Exp += 80;
+            GameManager.Instance.player.LevelUp();
             GameManager.Instance.player.Gold += 1000;
         }
     }
