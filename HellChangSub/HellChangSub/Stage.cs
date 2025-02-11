@@ -32,7 +32,7 @@ namespace HellChangSub
         {
             Console.Clear();
             monsters = new List<Monster>();
-            int mosterQuantity = (stageLvl == 5 ? 1 : rand.Next(1, 4 + stageLvl / 2));//1스테이지에서 최대 3마리 이후 스테이지레벨/2 만큼 증가
+            int mosterQuantity = (stageLvl == 5 ? 1 : rand.Next(1 + stageLvl / 2, 4 + stageLvl / 2));//1스테이지에서 최대 3마리 이후 스테이지레벨/2 만큼 증가
             for (int i = 0; i < mosterQuantity; i++)
             {
                 Monster monster = MonsterFactory.CreateMonster(stageLvl);
