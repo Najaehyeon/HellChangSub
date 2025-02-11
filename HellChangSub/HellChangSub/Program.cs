@@ -347,22 +347,25 @@ namespace HellChangSub
             int startLine = screenHeight;    // 크레딧이 시작할 위치 (화면 아래쪽에서 시작)
 
             // 크레딧을 화면 아래에서부터 위로 스크롤
-            for (int i = 0; i < totalLines + screenHeight; i++)
+            for (int i = 0; i < totalLines + screenHeight+1; i++)//총 줄수 + 화면높이 만큼 해야 모든줄이 화면위로 올라감 i가 증가할때마다 한줄씩 올라감
             {
-                Console.Clear();
+                Console.Clear();// 한줄 올라갈때마다 콘솔 클리어
 
                 // 크레딧이 화면 위로 올라가는 연출
-                for (int j = 0; j < totalLines; j++)
+                for (int j = 0; j < totalLines; j++)//여기서 한줄 올라갈때마다 필요한만큼의 크레딧 스트링들을 출력
                 {
-                    int currentLine = startLine - i + j; // 현재 출력할 줄 위치 계산
-                    if (currentLine >= 0 && currentLine < screenHeight)
+                    int currentLine = startLine - i + j; // 현재 출력할 줄 위치 계산  크레딧 전체줄수 
+                    if (currentLine >= 0 && currentLine < screenHeight)//출력 범위는 현재 줄 위치가 0이상 스크린 높이 미만 일때만 출력한다
                     {
-                        Console.SetCursorPosition((screenWidth - credits[j].Length) / 2, currentLine);
-                        Console.Write(credits[j]);
+                        Console.SetCursorPosition((screenWidth - Utility.GetWidth(credits[j])) / 2, currentLine);//커서 위치를 x는 (화면너비-스트링의 실제길이)/2 에서 시작하여 출력시 가운데 정렬 y값은 현재 줄 위치
+                        Console.Write(credits[j]);// 현재 줄위치에서 크레딧을 위에서부터 출력
                     }
+                    // 화면 길이가 5줄 크레딧이 15줄이라고 가정했을때 i 0 j 0 일 때 currentLine = 5 이는 currentLine < screenHeight에 해당되지 않으므로 출력x
+                    // i = 1 부터 출력시작 이때는 j = 0에서만 출력 위치 x = 가운데 정렬 y = 4(화면높이가 5일때 4가 제일 아래) 에서 credits[0]을 출력
+                    // i = 2 일때 j = 0,1 출력 credits[0]은 y = 3에서 credits[1]은 y = 4에서 출력 이러한 방식으로 총 줄수 + 화면높이 만큼 반복
                 }
 
-                Thread.Sleep(200); // 크레딧 속도 조절 (더 빠르게 하고 싶으면 숫자를 줄임)
+                Thread.Sleep(220); // 크레딧 속도 조절 (더 빠르게 하고 싶으면 숫자를 줄임)
             }
             Console.OutputEncoding = originalEncoding;
             Console.SetCursorPosition(0, screenHeight - 1);
