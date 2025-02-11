@@ -1,9 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Text.Json;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+
 namespace HellChangSub
 {
     [Serializable]//직렬화 가능하게 해주는 어트리뷰트(속성)  부여
+    
     public class SaveData// 아이템 리스트 인벤토리및 상점 아이템 , 히스토리내 기록 프로퍼티 저장 필요 추가로 로드 기능 추가 필요
     {
         public string Name { get; set; }
@@ -29,11 +32,11 @@ namespace HellChangSub
         public List<EquipItem> equipInventory { get; set; }
         public List<UseItem> useItems;
         public int stageLvl;
-        public List<QuestData> questDataList {  get; set; }
+
 
         public SaveData() { }//로드시 매개변수 없는 객체 생성을 위해 오버로드
-
-        public SaveData(Player player,ItemManager itemManager,Quest quest)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
+        
+        public SaveData(Player player,ItemManager itemManager)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
         {
             Name = player.Name;
             JobCode = player.JobCode;
@@ -56,8 +59,24 @@ namespace HellChangSub
             equipInventory = itemManager.equipInventory;
             useItems = itemManager.useItems;//itemamanager 생성자 신규생성필요
             stageLvl = History.Instance.StageLvl;
-            questDataList = quest.questDataList;
             Skills = player.Skills;
+        }
+
+
+    }
+
+    public class SaveQuestData// 아이템 리스트 인벤토리및 상점 아이템 , 히스토리내 기록 프로퍼티 저장 필요 추가로 로드 기능 추가 필요
+    {
+        public List<QuestData> questDataList { get; set; }
+
+
+        public SaveQuestData() { }//로드시 매개변수 없는 객체 생성을 위해 오버로드
+
+        public SaveQuestData(Quest quest)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
+        {
+            
+            questDataList = quest.questDataList;
+            
         }
 
 
