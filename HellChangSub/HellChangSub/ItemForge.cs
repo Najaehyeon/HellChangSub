@@ -131,6 +131,7 @@ namespace HellChangSub
                 case 0:
                     successThreshold = 70;
                     failureThreshold = 0;
+                    break;
                 case >= 1 and <= 3:
                     successThreshold = 70;
                     failureThreshold = 80;
