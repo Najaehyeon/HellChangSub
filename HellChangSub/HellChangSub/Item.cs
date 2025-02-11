@@ -42,13 +42,13 @@ namespace HellChangSub
         public string EquipInvenStatus()
         {
             string equipStr = isEquip ? "[E]" : "";
-            string str = string.Format("{0,-15}  | {1,-4}  | {2,-4}  | {3,-15}",equipStr + ItemName, GetItemType(), Value, Description);
+            string str = $"{Utility.FixWidth(equipStr + ItemName,20)} | {Utility.FixWidth(GetItemType(),6)} | {Utility.FixWidth((Value).ToString(),5)} | {Utility.FixWidth(Description,25)}";
             return str;
         }
 
         public string EquipItemStatus()
         {
-            string str = string.Format("{0,-15}  | {1,-4}  | {2,-4}  | {3,-15}  | {4}",ItemName, GetItemType(), Value, Description, IsPurchased());
+            string str = $"{Utility.FixWidth(ItemName, 20)} | {Utility.FixWidth(GetItemType(), 6)} | {Utility.FixWidth((Value).ToString(), 5)} | {Utility.FixWidth(Description, 25)}  | {Utility.FixWidth(IsPurchased(),10)}";
             return str;
         }
 
@@ -96,13 +96,13 @@ namespace HellChangSub
         }
         public string UseItemStatus()
         {
-            string str = string.Format("{0,-15}  | {1,-4}  | {2,-4}  | {3,-15}  | {4}개 보유", ItemName, GetItemType(), Value, Description, Count);
+            string str = $"{Utility.FixWidth(ItemName,20)} | {Utility.FixWidth(GetItemType(),6)} | {Utility.FixWidth(Value.ToString(),5)} | {Utility.FixWidth(Description,25)} | {Utility.FixWidth(Count.ToString(),10)}";
             return str;
         }
 
         public string UseShopStatus()
         {
-            string str = string.Format("{0,-15}  | {1,-4}  | {2,-4}  | {3,-15}  | {4} G", ItemName, GetItemType(), Value, Description, Price);
+            string str = $"{Utility.FixWidth(ItemName, 20)} | {Utility.FixWidth(GetItemType(), 6)} | {Utility.FixWidth(Value.ToString(), 5)} | {Utility.FixWidth(Description, 25)} | {Utility.FixWidth(Price.ToString(), 10)}";
             return str;
         }
 
