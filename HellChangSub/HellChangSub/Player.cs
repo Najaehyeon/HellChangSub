@@ -251,6 +251,7 @@ namespace HellChangSub
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
                 GameManager.Instance.quest.questDataList[2].Progressed = Level;
+                GameManager.Instance.quest.questDataList[2].JudgeState();
                 Console.WriteLine($"레벨이 상승했습니다. 현재 레벨: {Level}");
                 Utility.PressAnyKey();
                 StatUp();
