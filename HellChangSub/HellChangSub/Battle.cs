@@ -501,7 +501,7 @@ namespace HellChangSub
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
-            int[] amountPowerStone = { 0, 0 };
+            int[] amountPowerStone = { 0, 0 };      // 강화석
             for (int i = 0; i < monstersDefeated; i++)
             {
                 int randomFactor = rand.Next(1, 101);
@@ -534,6 +534,4 @@ namespace HellChangSub
             return;
         }
     }
-
-    
 }
