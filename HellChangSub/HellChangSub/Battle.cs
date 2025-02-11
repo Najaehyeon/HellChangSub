@@ -16,7 +16,7 @@ namespace HellChangSub
         private List<Monster> monsters;
         private int initialPlayerHealth;
         private int initialPlayerExp;
-        int turnCount = 0;
+        public int turnCount = 0;
 
         public Battle(Player player, List<Monster> monsters)
         {
@@ -148,7 +148,8 @@ namespace HellChangSub
 
                     Console.WriteLine($"Lv.{target.Level} {target.Name}");
                     Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
-
+                    if (target.IsDead)
+                        GetKillData(target.Name);
                     if (monsters.All(m => m.IsDead))
                         Victory();
                 }
@@ -260,6 +261,38 @@ namespace HellChangSub
         }
 
         private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // 확률 발동여부 판정
+
+        private void GetKillData(String Name)
+        {
+            if (Name == "슬라임")
+                History.Instance.SlimeKillCount1++;
+            else if (Name == "검은 슬라임")
+                History.Instance.SlimeKillCount2++;
+            else if (Name == "황금 슬라임")
+                History.Instance.SlimeKillCount3++;
+            else if (Name == "스켈레톤")
+                History.Instance.SkeletonKillCount1++;
+            else if (Name == "검은 스켈레톤")
+                History.Instance.SkeletonKillCount2++;
+            else if (Name == "황금 스켈레톤")
+                History.Instance.SkeletonKillCount3++;
+            else if (Name == "오우거")
+                History.Instance.OgreKillCount1++;
+            else if (Name == "검은 오우거")
+                History.Instance.OgreKillCount2++;
+            else if (Name == "황금 오우거")
+                History.Instance.OgreKillCount3++;
+            else if (Name == "드래곤")
+                History.Instance.DragonKillCount1++;
+            else if (Name == "암흑 드래곤")
+                History.Instance.DragonKillCount2++;
+            else if (Name == "황금 드래곤")
+                History.Instance.DragonKillCount3++;
+            else if (Name == "헬창 Sup")
+                History.Instance.NormalKillCount++;
+            else
+                return;
+        }
 
         private void GameOver()
         {
