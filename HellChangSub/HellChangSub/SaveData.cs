@@ -32,12 +32,13 @@ namespace HellChangSub
         public List<EquipItem> equipItems { get; set; }
         public List<EquipItem> equipInventory { get; set; }
         public List<UseItem> useItems;
+        public List<PowerStone> powerStones;
         public int stageLvl;
 
 
         public SaveData() { }//로드시 매개변수 없는 객체 생성을 위해 오버로드
         
-        public SaveData(Player player,ItemManager itemManager)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
+        public SaveData(Player player,ItemManager itemManager,ItemForge itemForge)//저장시 플레이어 객체의 프로퍼티를 받아옴 향후 히스토리의 값을 받아와야함 히스토리는 싱글톤
         {
             Name = player.Name;
             JobCode = player.JobCode;
@@ -57,11 +58,13 @@ namespace HellChangSub
             Crit = player.Crit;
             CritDamage = player.CritDamage;
             Evasion = player.Evasion;
+            Skills = player.Skills;
             equipItems = itemManager.equipItems;
             equipInventory = itemManager.equipInventory;
             useItems = itemManager.useItems;//itemamanager 생성자 신규생성필요
             stageLvl = History.Instance.StageLvl;
-            Skills = player.Skills;
+            powerStones = itemForge.powerStones;
+            
         }
 
 

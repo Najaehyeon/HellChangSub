@@ -19,6 +19,7 @@ namespace HellChangSub
         public Player player;
         public ItemManager itemManager;
         public Quest quest;
+        public ItemForge itemForge;
         private bool isLoaded = false;
 
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
@@ -51,6 +52,7 @@ namespace HellChangSub
                 itemManager = new ItemManager(loadedData,player);
                 SaveQuestData loadedQuestData = SaveSystem.LoadGameQuest();//퀘스트데이터 객체생성시 player의 프로퍼티값 참조필요 플레이어 객체 생성시점 뒤로 이동
                 quest = new Quest(loadedQuestData);
+                itemForge = new ItemForge(loadedData);
                 History.Instance.SetHistory(loadedData);
             }
             else
@@ -63,6 +65,7 @@ namespace HellChangSub
                 player = new Player(playerName, playerJob); //
                 itemManager = new ItemManager(player);
                 quest = new Quest();
+                itemForge = new ItemForge();
             }
 
             ShowMainScreen();
@@ -175,7 +178,7 @@ namespace HellChangSub
                     itemManager.ShopScene();
                     break;
                 case 5:
-                    Console.WriteLine("ItPowerUp.BlacksmithScreen();");
+                    itemForge.BlacksmithScreen();
                     break;
                 case 6:
                     quest.ShowQuestList();
@@ -184,7 +187,7 @@ namespace HellChangSub
                     Rest();
                     break;
                 case 8:
-                    SaveData saveData = new SaveData(player, itemManager);
+                    SaveData saveData = new SaveData(player, itemManager, itemForge);
                     SaveQuestData saveQuestData = new SaveQuestData(quest);
                     SaveSystem.SaveGame(saveData,saveQuestData);//저장기능
                     break;
