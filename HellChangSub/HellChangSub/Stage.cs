@@ -37,13 +37,13 @@ namespace HellChangSub
         public void ShowStage(int stageLvl)
         {
             Console.Clear();
-            Console.WriteLine($"[스테이지 : {stageLvl}]\n몬스터가 등장했습니다.\n\n");
+            Console.WriteLine($"[스테이지 : {stageLvl}]\n몬스터가 등장했습니다.\n\n[몬스터]");
             for(int i = 0;i < monsters.Count;i++) 
             {
-                Console.WriteLine($"{$"{i+1}. ",-3}{$"{monsters[i].Level}",-5} {$"{monsters[i].Name}",-12} HP {$"{monsters[i].MaximumHealth}",-12}");
+                Console.WriteLine($"{Utility.FixWidth($"{i + 1}",3)}{Utility.FixWidth($"Lv {monsters[i].Level}",5)} {Utility.FixWidth($"{monsters[i].Name}", 12)} HP {Utility.FixWidth($"{monsters[i].MaximumHealth}", 12)}");
             }
-            Console.WriteLine("[내정보]");
-            Console.WriteLine($"Lv. {player.Level} {player.Name} {player.JobName}");
+            Console.WriteLine("\n[내정보]");
+            Console.WriteLine($"Lv {player.Level} {player.Name} {player.JobName}");
             Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
             Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}");
             Console.WriteLine("\n1. 전투시작\n0. 나가기");
