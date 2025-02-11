@@ -12,6 +12,11 @@ namespace HellChangSub
         ItemManager itemManager;
         Random random = new Random();
 
+        public ItemForge(SaveData saveData)
+        {
+            this.itemManager = GameManager.Instance.itemManager;
+            powerStones = saveData.powerStones;
+        }
         public ItemForge()
         {
             this.itemManager = GameManager.Instance.itemManager;
@@ -62,16 +67,16 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine("어떤 강화석을 사용하고 싶나?");
 
-            Console.Clear();
+            Console.WriteLine();
             Console.WriteLine("[장비 목록]");
             for (int i = 0; i < itemManager.equipInventory.Count; i++)
             {
                 Console.WriteLine($"{Utility.FixWidth($"{i + 1}", 3)}. {itemManager.equipInventory[i].EquipInvenStatus()}");
             }
 
-            Console.Clear();
+            Console.WriteLine();
             Console.WriteLine("0. 돌아가기");
-            Console.Clear();
+            Console.WriteLine();
 
 
             int input = Utility.Select(0, itemManager.equipInventory.Count);
