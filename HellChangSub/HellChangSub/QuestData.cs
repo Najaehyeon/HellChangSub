@@ -232,6 +232,7 @@ namespace HellChangSub
         public override void GiveRewards()
         {
             GameManager.Instance.player.Exp += 50;
+            GameManager.Instance.player.LevelUp();
             GameManager.Instance.player.Gold += 200;
         }
     }
@@ -265,6 +266,7 @@ namespace HellChangSub
         public override void GiveRewards()
         {
             GameManager.Instance.player.Exp += 80;
+            GameManager.Instance.player.LevelUp();
             GameManager.Instance.player.Gold += 1000;
         }
     }
