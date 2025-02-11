@@ -159,6 +159,7 @@ namespace HellChangSub
             {
                 Console.WriteLine("이미 죽은 대상입니다.");
                 NormalAttack();
+                return;
             }
         }
 
@@ -262,8 +263,6 @@ namespace HellChangSub
 
             // 사용한 아이템 선택 (입력 번호는 1부터 시작하므로 인덱스는 choice - 1)
             UseItem selectedItem = availableItems[choice - 1];
-
-
             int useItemIndex = itemManager.useItems.IndexOf(selectedItem);
             if (useItemIndex < 0)      // 예외
             {
@@ -274,7 +273,14 @@ namespace HellChangSub
             }
 
             // ItemUtil의 UsePotion 메서드를 호출하여 아이템 효과 적용
-            itemManager.itemUtil.UsePotion(player, useItemIndex + 1);
+            // bool applied = itemManager.itemUtil.UsePotion(player, useItemIndex + 1);
+            /* if (!applied)
+            {
+                Console.WriteLine("해당 포션의 효과는 이미 적용중입니다.");
+                Utility.PressAnyKey();
+                UseItem();
+                return;
+            }*/
 
             // 사용 후 남은 개수 출력
             Console.WriteLine($"{selectedItem.ItemName}을 사용했습니다. 남은 개수: {selectedItem.Count}");
