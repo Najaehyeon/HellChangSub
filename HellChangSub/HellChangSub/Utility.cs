@@ -30,5 +30,28 @@ namespace HellChangSub
             Console.WriteLine("진행하려면 아무 키나 눌러주세요.");
             Console.ReadKey();
         }
+
+        public static int GetWidth(string input)
+        {
+            int width = 0;
+            foreach (char c in input)
+            {
+                if(c > '가' && c < '힣')
+                {
+                    width += 2;
+                }
+                else
+                    width += 1;
+            }
+            return width;
+        }
+
+        public static string FixWidth(string input, int width)
+        {
+            int realWidth = GetWidth(input);
+            int pad = width - realWidth;
+
+            return input.PadRight(input.Length + pad);
+        }
     }
 }
