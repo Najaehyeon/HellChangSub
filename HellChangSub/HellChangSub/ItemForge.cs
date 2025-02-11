@@ -20,15 +20,16 @@ namespace HellChangSub
         public ItemForge()
         {
             this.itemManager = GameManager.Instance.itemManager;
+            powerStones = new List<PowerStone>
+        {
+            new PowerStone("무기강화석","무기를 강화할 수 있습니다.",5,StoneType.WeaponPowerStone,5),
+            new PowerStone("방어구강화석","방어구를 강화할 수 있습니다.",5,StoneType.ArmorPowerStone,5)
+        };
         }
 
 
         //string name, string description, int value, StoneType stoneType,int count
-        public List<PowerStone> powerStones = new List<PowerStone>
-        {
-            new PowerStone("무기강화석","무기를 강화할 수 있습니다.",5,StoneType.WeaponPowerStone,0),
-            new PowerStone("방어구강화석","방어구를 강화할 수 있습니다.",5,StoneType.ArmorPowerStone,0)
-        };
+        public List<PowerStone> powerStones;
         public void BlacksmithScreen()
         {
             Console.Clear();
@@ -42,7 +43,7 @@ namespace HellChangSub
             {
                 Console.WriteLine($"- {itemManager.equipInventory[i].EquipInvenStatus()}");
             }
-
+            PrintPowerStone();
             Console.WriteLine();
             Console.WriteLine("1. 강화하기");
 
@@ -65,7 +66,7 @@ namespace HellChangSub
         public void ReinforceScreen()
         {
             Console.Clear();
-            Console.WriteLine("어떤 강화석을 사용하고 싶나?");
+            Console.WriteLine("어떤 장비를 강화하고 싶나?");
 
             Console.WriteLine();
             Console.WriteLine("[장비 목록]");
@@ -73,7 +74,7 @@ namespace HellChangSub
             {
                 Console.WriteLine($"{Utility.FixWidth($"{i + 1}", 3)}. {itemManager.equipInventory[i].EquipInvenStatus()}");
             }
-
+            PrintPowerStone();
             Console.WriteLine();
             Console.WriteLine("0. 돌아가기");
             Console.WriteLine();
@@ -106,7 +107,7 @@ namespace HellChangSub
         public void Enhance(EquipItem item, int i)
         {
 
-            if (powerStones.Count <= 0)
+            if (powerStones[i].Count <= 0)
             {
                 Console.WriteLine("강화석이 부족하여 강화를 할 수 없습니다.");
                 Utility.PressAnyKey();
@@ -179,8 +180,20 @@ namespace HellChangSub
             }
             // 강화석을 한 개 소모
             powerStones[0].Count--;
+            Utility.PressAnyKey();
+            ReinforceScreen();
+            
         }
 
+        public void PrintPowerStone()
+        {
+            Console.WriteLine();
+            Console.WriteLine("[강화석]");
+            for (int i = 0; i < powerStones.Count; i++)
+            {
+                Console.WriteLine($"{Utility.FixWidth($"{i + 1}", 3)}. {Utility.FixWidth($"{powerStones[i].Name}", 15)} | {Utility.FixWidth($"{powerStones[i].Count}", 8)} 개");
+            }
+        }
 
 
     }

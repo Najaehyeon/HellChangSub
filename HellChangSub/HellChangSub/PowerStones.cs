@@ -13,7 +13,7 @@ namespace HellChangSub
     }
     public class PowerStone
     {
-        public string Name { get; }
+        public string Name { get; set; }
         public string Description { get; }
         public int Value { get; set; }
         public StoneType StoneType { get; }
