@@ -332,7 +332,7 @@ namespace HellChangSub
 
         private void GetKillData(String Name)
         {
-            if (Name == "오우거")
+            if (Name == "슬라임")
                 GameManager.Instance.quest.questDataList[0].Progressed++;
             else
                 return;
