@@ -10,9 +10,9 @@ namespace HellChangSub
     {
         public List<QuestData> questDataList;
 
-        public Quest(SaveData saveData)
+        public Quest(SaveQuestData saveQuestData)
         {
-            questDataList = saveData.questDataList;
+            questDataList = saveQuestData.questDataList;
         }
 
         public Quest()
