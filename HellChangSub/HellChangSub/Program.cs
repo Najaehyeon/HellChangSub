@@ -23,8 +23,8 @@ namespace HellChangSub
         public Quest quest;
         public ItemForge itemForge;
         private bool isLoaded = false;
-        static WaveOutEvent outputDevice;
-        static AudioFileReader audioFile;
+        static WaveOutEvent outputDevice;//읽은 오디오파일을 출력하는 장치 Init으로 연결후 Play가능
+        static AudioFileReader audioFile;//오디오파일 읽는 장치
 
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
 
@@ -269,6 +269,8 @@ namespace HellChangSub
             Thread.Sleep(800);
             Console.WriteLine();
             Console.WriteLine("──────────────────────────────────────");
+            Thread.Sleep(500);
+            Console.WriteLine();
             Console.WriteLine("  새로운 시대가 시작되려 하고 있다...");
             Thread.Sleep(800);
             Console.WriteLine();
@@ -286,17 +288,14 @@ namespace HellChangSub
 
         public void ShowCredits()
         {
-            string musicPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bgm.wav");
-            outputDevice = new WaveOutEvent(); // 오디오 장치 초기화
-            audioFile = new AudioFileReader(musicPath); // 파일 로드
-            outputDevice.Init(audioFile); // 오디오 출력 장치에 파일 연결
-            outputDevice.Play(); // 음악 재생
+            string musicPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bgm.wav");//현재위치.bin폴더의 debug폴더위치+브금파일이름
+            StartMusic(musicPath);
 
             Console.Clear();
             int screenHeight = Console.WindowHeight; // 콘솔 창 높이
             int screenWidth = Console.WindowWidth;   // 콘솔 창 너비
-            Encoding originalEncoding = Console.OutputEncoding;
-            Console.OutputEncoding = Encoding.UTF8;
+            Encoding originalEncoding = Console.OutputEncoding;//기존 코딩스타일 저장
+            Console.OutputEncoding = Encoding.UTF8;//utf8로 변경
 
             List<string> credits = new List<string>
         {
@@ -375,6 +374,14 @@ namespace HellChangSub
             Console.Write("  『 게임을 종료하려면 아무 키나 누르세요 』");
             Console.ReadKey(); // 종료 대기
             ShowMainScreen();
+        }
+
+        static void StartMusic(string musicPath)
+        {
+            outputDevice = new WaveOutEvent(); // 오디오 장치 초기화
+            audioFile = new AudioFileReader(musicPath); // 파일 로드
+            outputDevice.Init(audioFile); // 오디오 출력 장치에 파일 연결
+            outputDevice.Play(); // 음악 재생
         }
 
         static void StopMusic()
