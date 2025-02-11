@@ -111,6 +111,7 @@ namespace HellChangSub
             Console.WriteLine();
             Console.WriteLine("=================프로틴 마을의 비밀=================");
             Console.ResetColor();
+            Console.WriteLine();
             Utility.PressAnyKey();
             Console.Clear();
             Console.WriteLine();
