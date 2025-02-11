@@ -264,7 +264,7 @@ namespace HellChangSub
                     UseSkill();
                     return;
                 }
-                Monster target = monsters[targetIndex];
+                Monster target = monsters[targetIndex - 1];
 
                 if (target.IsDead)
                 {
