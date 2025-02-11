@@ -25,6 +25,9 @@ namespace HellChangSub
             else
             {
                 Console.WriteLine("이미 완료한 퀘스트입니다.");
+                Utility.PressAnyKey();
+                Console.Clear();
+                GameManager.Instance.quest.ShowQuestList();
             }
         }
         
