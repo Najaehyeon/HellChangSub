@@ -109,7 +109,8 @@ namespace HellChangSub
             Console.WriteLine(asciiArt);
             Console.OutputEncoding = originalEncoding;
             Console.ResetColor();
-            Console.WriteLine("헬창섭의 저주");
+            Console.WriteLine();
+            Console.WriteLine("=================프로틴 마을의 비밀=================");
             Utility.PressAnyKey();
             Console.Clear();
             Console.WriteLine("저장된 게임을 불러오시겠습니까?");
