@@ -271,16 +271,20 @@ namespace HellChangSub
                 PlayerTurn();
                 return;
             }
+            
+            int previousCount = selectedItem.Count;     // 포션 사용 전, 해당 아이템의 현재 Count를 저장
+            itemManager.itemUtil.UsePotion(player, useItemIndex + 1);       // ItemUtil의 UsePotion 메서드를 호출하여 아이템 효과 적용
+            if (selectedItem.Count == previousCount)        // 해당 포션이 이미 사용중인 경우 포션 선택 화면으로 돌아갑니다.
+            {
+                
+                UseItem();
+                return;
+            }
 
-            // ItemUtil의 UsePotion 메서드를 호출하여 아이템 효과 적용
-            itemManager.itemUtil.UsePotion(player, useItemIndex + 1);
-
-            // 사용 후 남은 개수 출력
-            Console.WriteLine($"{selectedItem.ItemName}을 사용했습니다. 남은 개수: {selectedItem.Count}");
-
+            
+            Console.WriteLine($"{selectedItem.ItemName}을 사용했습니다. 남은 개수: {selectedItem.Count}");     // 사용 후 남은 개수 출력
             Utility.PressAnyKey();
-            // 아이템 사용 후 플레이어 턴으로 복귀
-            PlayerTurn();
+            PlayerTurn();       // 아이템 사용 후 플레이어 턴으로 복귀
             return;
         }
 
