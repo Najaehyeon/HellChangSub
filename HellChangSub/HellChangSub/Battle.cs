@@ -415,6 +415,7 @@ namespace HellChangSub
             Console.WriteLine($"HP {initialPlayerHealth} -> 0\n");
             //player.ClearAllBuffs();     // 전투 종료시 모든 버프 제거
             Utility.PressAnyKey();
+            player.CurrentHealth = 1;
             GameManager.Instance.ShowMainScreen();
             return;
         }
@@ -423,6 +424,7 @@ namespace HellChangSub
         {
             int monstersDefeated = monsters.Count;
             int expGained = monsters.Where(m => m.IsDead).Sum(m => m.Level);    //where를 사용해야 Sum으로 monster의 Level값 총합을 가져와 Exp를 계산 가능
+            Random rand = new Random();
             player.Exp += expGained;
             player.Gold += expGained * 100;     // 임시로 골드획득량 경험치의 100배로 해둠, 추후 골드를 많이 주는 몬스터, 덜 주는 몬스터 등이 생길 경우 수정
             
@@ -441,6 +443,24 @@ namespace HellChangSub
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
+            for( int i = 0; i < monstersDefeated;)
+            {
+                int randomFactor = rand.Next(1, 101);
+                int getPowerStoneType = rand.Next(0,2);
+                if (randomFactor > 50)
+                {
+                    if (getPowerStoneType == 0)
+                    {
+                        GameManager.Instance.itemForge.powerStones[getPowerStoneType].Count++;
+                        Console.WriteLine($"{GameManager.Instance.itemForge.powerStones[getPowerStoneType].Name}");
+                    }
+                    else
+                    {
+                        GameManager.Instance.itemForge.powerStones[getPowerStoneType].Count++;
+                        Console.WriteLine($"{GameManager.Instance.itemForge.powerStones[getPowerStoneType].Name}");
+                    }
+                }
+            }
             if (History.Instance.StageLvl == History.Instance.ChallengeLvl)     // 승리시 스테이지 Lv 상승
             {
                 History.Instance.StageLvl++;
