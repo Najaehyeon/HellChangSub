@@ -443,24 +443,28 @@ namespace HellChangSub
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
+            int[] amountPowerStone = { 0, 0 };
             for (int i = 0; i < monstersDefeated; i++)
             {
                 int randomFactor = rand.Next(1, 101);
-                int getPowerStoneType = rand.Next(0,2);
+                int getPowerStoneType = rand.Next(0, 2);
                 if (randomFactor > 50)
                 {
                     if (getPowerStoneType == 0)
                     {
                         GameManager.Instance.itemForge.powerStones[getPowerStoneType].Count++;
-                        Console.WriteLine($"{GameManager.Instance.itemForge.powerStones[getPowerStoneType].Name}");
+                        amountPowerStone[0]++;
                     }
                     else
                     {
                         GameManager.Instance.itemForge.powerStones[getPowerStoneType].Count++;
-                        Console.WriteLine($"{GameManager.Instance.itemForge.powerStones[getPowerStoneType].Name}");
+                        amountPowerStone[1]++;
                     }
                 }
             }
+
+            for (int i = 0; i < amountPowerStone.Length; i++) if (amountPowerStone[i] != 0) Console.WriteLine($"{GameManager.Instance.itemForge.powerStones[i].Name} x {amountPowerStone[i]}");
+
             if (History.Instance.StageLvl == History.Instance.ChallengeLvl)     // 승리시 스테이지 Lv 상승
             {
                 History.Instance.StageLvl++;
