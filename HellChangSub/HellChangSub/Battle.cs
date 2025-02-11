@@ -43,7 +43,7 @@ namespace HellChangSub
             {
                 PlayerTurn();
                 MonsterTurn();
-                turnCount++;        // 지속 턴수가 있는 효과들 턴수 체크용
+                player.UpdateBuffs();
             }
         }
 
@@ -345,8 +345,10 @@ namespace HellChangSub
             Console.WriteLine("You Lose\n");
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP {initialPlayerHealth} -> 0\n");
+            player.ClearAllBuffs();     // 전투 종료시 모든 버프 제거
             Utility.PressAnyKey();
             GameManager.Instance.ShowMainScreen();
+            return;
         }
 
         private void Victory()
@@ -367,6 +369,7 @@ namespace HellChangSub
             int mpmax = player.MaximumMana;
             Recover("MP", ref mp, ref mpmax, 10);       // 도전 기능 요구사항 - 전투 승리 시 MP 10 회복
             player.CurrentMana = mp;
+            player.ClearAllBuffs();     // 전투 종료시 모든 버프 제거
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
@@ -377,6 +380,7 @@ namespace HellChangSub
             Utility.PressAnyKey();
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             GameManager.Instance.ShowMainScreen();
+            return;
         }
     }
 
