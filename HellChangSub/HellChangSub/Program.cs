@@ -158,7 +158,7 @@ namespace HellChangSub
             Console.WriteLine();
             Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 퀘스트\n6. 휴식하기\n7. 저장하기");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            int choice = Utility.Select(1, 7);
+            int choice = Utility.Select(1, 8);
             switch (choice)
             {
                 case 1:
@@ -182,6 +182,9 @@ namespace HellChangSub
                 case 7:
                     SaveData saveData = new SaveData(player, itemManager, quest);
                     SaveSystem.SaveGame(saveData);//저장기능
+                    break;
+                case 8:
+                    ItPowerUp.BlacksmithScreen();
                     break;
             }
         }

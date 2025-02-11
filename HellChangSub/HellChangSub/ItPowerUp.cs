@@ -29,7 +29,7 @@ namespace HellChangSub
 
         }
         
-        public void BlacksmithScreen() //대장간
+        public static void BlacksmithScreen() //대장간
         {
             Console.Clear();
             Console.WriteLine("대장간에 온것을 환영하네!");
@@ -37,32 +37,26 @@ namespace HellChangSub
             Console.WriteLine("장비를 강화해볼텐가?");
             Console.WriteLine();
 
-            while (true)
-            {
+            
 
                 Console.WriteLine("1. 강화하기");
-                Console.WriteLine("2. 나가기");
+                Console.WriteLine("0. 나가기");
 
-                string input = Console.ReadLine();
+                int input = Utility.Select(0, 1);
                 switch (input)
                 {
-                    case "1":
+                    case 1:
                         Console.Clear();
                         //강화 씬
 
                         break;
 
-                    case "2":
+                    case 0:
                         Console.Clear();
-                        //돌아가기
+                    GameManager.Instance.ShowMainScreen();
                         break;
-
-                    default:
-                        Console.WriteLine("잘못된 입력입니다 올바른 숫자를 입력해 주세요.");
-                        continue;
-
                 }
-            }
+            
         }
         //대장간 스크립트
         //강화 스크립트
