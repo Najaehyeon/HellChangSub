@@ -172,7 +172,10 @@ namespace HellChangSub
                 Console.WriteLine($"{i + 1}. {skill.Name} - MP {skill.ManaCost}\n   {skill.Text}");
             }
 
-            int skillChoice = Utility.Select(1, player.Skills.Count) - 1;
+            int skillChoice = Utility.Select(0, player.Skills.Count) - 1;
+            if (skillChoice == 0)
+                PlayerTurn();
+
             Skill selectedSkill = player.Skills[skillChoice];
 
             if (player.CurrentMana < selectedSkill.ManaCost)    // MP가 부족할 경우 사용 불가
