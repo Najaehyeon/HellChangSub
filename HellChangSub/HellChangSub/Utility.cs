@@ -31,6 +31,7 @@ namespace HellChangSub
             Console.ReadKey();
         }
 
+        //실제 길이 계산기 (한글이면 +2 나머지 +1)
         public static int GetWidth(string input)
         {
             int width = 0;
@@ -46,6 +47,7 @@ namespace HellChangSub
             return width;
         }
 
+        //오른쪽 pad랑 글자길이 합해서 원하는 width 나오게끔하기
         public static string FixWidth(string input, int width)
         {
             int realWidth = GetWidth(input);
