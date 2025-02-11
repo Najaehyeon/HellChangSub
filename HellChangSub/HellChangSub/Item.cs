@@ -42,7 +42,7 @@ namespace HellChangSub
             ItemType = itemtype;
             EnhanceLvl = enhanceLvl;
             EnhanceValue = 0;
-            TotalValue = 0;
+            TotalValue = Value + EnhanceValue;
         }  
 
         public string EquipInvenStatus() //소지아이템목록
