@@ -243,7 +243,7 @@ namespace HellChangSub
 
         public void LevelUp()
         {
-            if (Exp >= NeedExp)
+            while (Exp >= NeedExp)
             {
                 Level++;
                 NeedExp = CalculateExpRequirement(Level);
