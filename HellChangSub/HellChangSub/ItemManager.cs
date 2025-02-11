@@ -18,6 +18,7 @@ namespace HellChangSub
         public ItemManager(SaveData saveData,Player player)
         {
             this.player = player;
+            itemUtil = new ItemUtil(this);
             equipItems = saveData.equipItems;
             equipInventory = saveData.equipInventory;
             useItems = saveData.useItems;

@@ -35,7 +35,7 @@ namespace HellChangSub
                 {
                     randomMonster = 0;
                 }
-                switch (randomMonster)
+                switch (Math.Min(stageLvl-1,randomMonster))//1스테이지에선 슬라임만 등장 2 스켈레톤 3 오우거 4 드래곤까지 등장
                 {
                     case 0:
                         return new Slime(stageLvl);
