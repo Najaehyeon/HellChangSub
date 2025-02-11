@@ -52,10 +52,23 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine("Battle!!\n");
 
-            for (int i = 0; i < monsters.Count; i++)        // 몬스터들의 정보를 가져오고 이를 화면에 출력
+            for (int i = 0; i < monsters.Count; i++)
             {
-                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";    // 몬스터의 현재 체력이 0 이하이면 Dead 상태로 표시, 그렇지 않다면 HP {현재체력}으로 표시하도록
+                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";
+
+                if (monsters[i].IsDead)
+                {
+                    // 몬스터가 죽은 경우, 어두운 색으로 출력
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
+
                 Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+
+                // 색상을 기본 값으로 복원
+                if (monsters[i].IsDead)
+                {
+                    Console.ResetColor();
+                }
             }
 
             Console.WriteLine("\n[내정보]");
@@ -122,10 +135,23 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine("Battle!!\n");
 
-            for (int i = 0; i < monsters.Count; i++)        // 몬스터들의 정보를 가져오고 이를 화면에 출력
+            for (int i = 0; i < monsters.Count; i++)
             {
-                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";    // 몬스터의 현재 체력이 0 이하이면 Dead 상태로 표시, 그렇지 않다면 HP {현재체력}으로 표시하도록
+                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";
+
+                if (monsters[i].IsDead)
+                {
+                    // 몬스터가 죽은 경우, 어두운 색으로 출력
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
+
                 Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+
+                // 색상을 기본 값으로 복원
+                if (monsters[i].IsDead)
+                {
+                    Console.ResetColor();
+                }
             }
 
             Console.WriteLine("\n[내정보]");
@@ -181,10 +207,23 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine("Battle!!\n");
 
-            for (int i = 0; i < monsters.Count; i++)        // 몬스터들의 정보를 가져오고 이를 화면에 출력
+            for (int i = 0; i < monsters.Count; i++)
             {
-                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";    // 몬스터의 현재 체력이 0 이하이면 Dead 상태로 표시, 그렇지 않다면 HP {현재체력}으로 표시하도록
+                string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";
+
+                if (monsters[i].IsDead)
+                {
+                    // 몬스터가 죽은 경우, 어두운 색으로 출력
+                    Console.ForegroundColor = ConsoleColor.DarkGray;
+                }
+
                 Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+
+                // 색상을 기본 값으로 복원
+                if (monsters[i].IsDead)
+                {
+                    Console.ResetColor();
+                }
             }
 
             Console.WriteLine("\n[내정보]");
@@ -245,10 +284,23 @@ namespace HellChangSub
             {
                 Console.Clear();
                 Console.WriteLine("Battle!!\n");
-                for (int i = 0; i < monsters.Count; i++)        // 몬스터들의 정보를 가져오고 이를 화면에 출력
+                for (int i = 0; i < monsters.Count; i++)
                 {
-                    string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";    // 몬스터의 현재 체력이 0 이하이면 Dead 상태로 표시, 그렇지 않다면 HP {현재체력}으로 표시하도록
-                    Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+                    string status = monsters[i].IsDead ? "Dead" : $"HP {monsters[i].CurrentHealth}";
+
+                    if (monsters[i].IsDead)
+                    {
+                        // 몬스터가 죽은 경우, 어두운 색으로 출력 (예: DarkGray)
+                        Console.ForegroundColor = ConsoleColor.DarkGray;
+                    }
+
+                    Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+
+                    // 색상을 기본 값으로 복원
+                    if (monsters[i].IsDead)
+                    {
+                        Console.ResetColor();
+                    }
                 }
 
                 Console.WriteLine("\n[내정보]");
@@ -371,7 +423,7 @@ namespace HellChangSub
                 player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
                 Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
+                Console.WriteLine(player.CurrentHealth < beforeHP? $"HP {beforeHP} -> {player.CurrentHealth}" : $"{player.Name}은(는) 공격을 완벽하게 막아내었다.");
             }
         }
 
@@ -388,7 +440,7 @@ namespace HellChangSub
             player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
-            Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
+            Console.WriteLine(player.CurrentHealth < beforeHP ? $"HP {beforeHP} -> {player.CurrentHealth}" : $"{player.Name}은(는) 공격을 완벽하게 막아내었다.");
         }
 
 
@@ -449,7 +501,7 @@ namespace HellChangSub
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
-            int[] amountPowerStone = { 0, 0 };
+            int[] amountPowerStone = { 0, 0 };      // 강화석
             for (int i = 0; i < monstersDefeated; i++)
             {
                 int randomFactor = rand.Next(1, 101);
@@ -482,6 +534,4 @@ namespace HellChangSub
             return;
         }
     }
-
-    
 }
