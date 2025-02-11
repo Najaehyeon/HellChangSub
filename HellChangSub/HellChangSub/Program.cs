@@ -48,9 +48,10 @@ namespace HellChangSub
             {
                 SaveData loadedData = SaveSystem.LoadGame();//로드 메서드를 통해 saveData객체생성
                 player = new Player(loadedData);//saveData를 받는 플레이어 객체 생성
-                itemManager = new ItemManager(loadedData);
+                itemManager = new ItemManager(loadedData,player);
                 SaveQuestData loadedQuestData = SaveSystem.LoadGameQuest();//퀘스트데이터 객체생성시 player의 프로퍼티값 참조필요 플레이어 객체 생성시점 뒤로 이동
                 quest = new Quest(loadedQuestData);
+                History.Instance.SetHistory(loadedData);
             }
             else
             {
@@ -174,7 +175,7 @@ namespace HellChangSub
                     itemManager.ShopScene();
                     break;
                 case 5:
-                    ItPowerUp.BlacksmithScreen();
+                    Console.WriteLine("ItPowerUp.BlacksmithScreen();");
                     break;
                 case 6:
                     quest.ShowQuestList();

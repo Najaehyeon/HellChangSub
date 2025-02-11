@@ -41,7 +41,6 @@ namespace HellChangSub
                 Console.WriteLine(reward);
             }
             Console.WriteLine();
-            JudgeState();
             if (QuestState == QuestState.NotStarted) // 수행한 적이 없을 때, 보여줄 내용
             {
                 Console.WriteLine("1. 수락\n2. 거절");
@@ -62,7 +61,7 @@ namespace HellChangSub
             else if (QuestState == QuestState.InProgress) // 미션을 수행 중일 때, 보여줄 내용
             {
                 Console.WriteLine("- 진척도 -");
-                Console.WriteLine($"{Progressed} / {Goal}\n");
+                Console.WriteLine($" {Progressed} / {Goal}\n");
                 Console.WriteLine("1. 미션포기\n0. 나가기");
 
                 int choice = Utility.Select(0, 1);
@@ -109,6 +108,7 @@ namespace HellChangSub
         public void AcceptQuest ()
         {
             QuestState = QuestState.InProgress;
+            JudgeState();
             Console.WriteLine($"\"{Title}\" 퀘스트를 수락했습니다!");
             Console.WriteLine("\n0. 나가기");
             Console.WriteLine("다음 행동을 선택해주세요.");
@@ -143,20 +143,7 @@ namespace HellChangSub
         // 수행한 게 목표와 같을 때, 상태 변경
         public void JudgeState()
         {
-            if (Progressed is int progressInt && Goal is int goalInt)
-            {
-                if (progressInt >= goalInt) // 정수형일 경우, 크거나 같을 때 완료
-                {
-                    QuestState = QuestState.Completed;
-                }
-            }
-            else if (Progressed is int progressStr && Goal is int goalStr)
-            {
-                if (progressStr >= goalStr) // 문자열일 경우, 동일할 때 완료
-                {
-                    QuestState = QuestState.Completed;
-                }
-            }
+            if (Progressed >= Goal) QuestState = QuestState.Completed;
         }
 
         // 퀘스트를 포기했을 때, 수행한 미션 초기화
@@ -170,10 +157,10 @@ namespace HellChangSub
     // "마을을 위협하는 미니언 처치" 퀘스트 데이터
     public class KillMinionQuest : QuestData
     {
-        public override string Title { get; } = "마을을 위협하는 오우거 처치!";
-        public override string Mission { get; } = "미니언 10마리 처치!";
+        public override string Title { get; } = "마을을 위협하는 슬라임 처치!";
+        public override string Mission { get; } = "슬라임 10마리 처치!";
         public override string[] Rewards { get; } = new string[] { "쓸만한 방패", "500 Gold" };
-        public override int Goal { get; } = 10;
+        public override int Goal { get; } = 3;
 
 
         private int progressed = 0;
@@ -224,7 +211,7 @@ namespace HellChangSub
             get { return progressed; }
             set
             {
-                if (QuestState == QuestState.InProgress) // 퀘스트가 진행중일 때만 수정 가능
+                if (QuestState == QuestState.InProgress || QuestState == QuestState.Completed) // 퀘스트가 진행중일 때만 수정 가능
                 {
                     progressed = value;
                 }
@@ -254,25 +241,17 @@ namespace HellChangSub
     public class StrongMoreQuest : QuestData
     {
         public override string Title { get; } = "더욱 더 강해지기!";
-        public override string Mission { get; } = "10레벨 달성하기";
+        public override string Mission { get; } = "3레벨 달성하기";
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
-        public override int Goal { get; } = 10;
+        public override int Goal { get; } = 3;
 
-
-        private int progressed = GameManager.Instance.player.Level; 
+        private int progressed = GameManager.Instance.player.Level;
         public override int Progressed
         {
             get { return progressed; }
             set
             {
-                if (QuestState == QuestState.InProgress) // 퀘스트가 진행중일 때만 수정 가능
-                {
-                    progressed = value;
-                }
-                else
-                {
-                    return;
-                }
+                progressed = value;
             }
         }
 

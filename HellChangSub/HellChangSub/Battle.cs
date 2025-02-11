@@ -43,7 +43,7 @@ namespace HellChangSub
             {
                 PlayerTurn();
                 MonsterTurn();
-                player.UpdateBuffs();
+                GameManager.Instance.itemManager.itemUtil.CoolDownCheck();
             }
         }
 
@@ -159,6 +159,7 @@ namespace HellChangSub
             {
                 Console.WriteLine("이미 죽은 대상입니다.");
                 NormalAttack();
+                return;
             }
         }
 
@@ -186,6 +187,7 @@ namespace HellChangSub
                 Console.WriteLine("마나가 부족합니다!\n");
                 Utility.PressAnyKey();
                 UseSkill();
+                return;
             }
 
             Console.WriteLine("공격할 대상을 선택하세요.");
@@ -196,6 +198,7 @@ namespace HellChangSub
                 Console.WriteLine("이미 죽은 대상입니다.");
                 Utility.PressAnyKey();
                 UseSkill();
+                return;
             }
             else if (!target.IsDead)
             {
@@ -260,10 +263,8 @@ namespace HellChangSub
 
             // 사용한 아이템 선택 (입력 번호는 1부터 시작하므로 인덱스는 choice - 1)
             UseItem selectedItem = availableItems[choice - 1];
-
-
-            int originalIndex = itemManager.useItems.IndexOf(selectedItem);
-            if (originalIndex < 0)      // 예외
+            int useItemIndex = itemManager.useItems.IndexOf(selectedItem);
+            if (useItemIndex < 0)      // 예외
             {
                 Console.WriteLine("오류: 선택한 아이템을 찾을 수 없습니다.");
                 Utility.PressAnyKey();
@@ -272,14 +273,22 @@ namespace HellChangSub
             }
 
             // ItemUtil의 UsePotion 메서드를 호출하여 아이템 효과 적용
-            itemManager.itemUtil.UsePotion(player, originalIndex + 1);
+            // bool applied = itemManager.itemUtil.UsePotion(player, useItemIndex + 1);
+            /* if (!applied)
+            {
+                Console.WriteLine("해당 포션의 효과는 이미 적용중입니다.");
+                Utility.PressAnyKey();
+                UseItem();
+                return;
+            }*/
 
             // 사용 후 남은 개수 출력
-            Console.WriteLine($"{selectedItem.ItemName} 사용 완료. 남은 개수: {selectedItem.Count}");
+            Console.WriteLine($"{selectedItem.ItemName}을 사용했습니다. 남은 개수: {selectedItem.Count}");
 
             Utility.PressAnyKey();
             // 아이템 사용 후 플레이어 턴으로 복귀
             PlayerTurn();
+            return;
         }
 
         private void NormalMonsterAttack(Monster monster)       // 몬스터 기본 공격
@@ -332,8 +341,11 @@ namespace HellChangSub
 
         private void GetKillData(String Name)
         {
-            if (Name == "오우거")
+            if (Name == "슬라임")
+            {
                 GameManager.Instance.quest.questDataList[0].Progressed++;
+                GameManager.Instance.quest.questDataList[0].JudgeState();
+            }
             else
                 return;
         }
@@ -345,7 +357,7 @@ namespace HellChangSub
             Console.WriteLine("You Lose\n");
             Console.WriteLine($"Lv.{player.Level} {player.Name}");
             Console.WriteLine($"HP {initialPlayerHealth} -> 0\n");
-            player.ClearAllBuffs();     // 전투 종료시 모든 버프 제거
+            //player.ClearAllBuffs();     // 전투 종료시 모든 버프 제거
             Utility.PressAnyKey();
             GameManager.Instance.ShowMainScreen();
             return;
@@ -369,7 +381,7 @@ namespace HellChangSub
             int mpmax = player.MaximumMana;
             Recover("MP", ref mp, ref mpmax, 10);       // 도전 기능 요구사항 - 전투 승리 시 MP 10 회복
             player.CurrentMana = mp;
-            player.ClearAllBuffs();     // 전투 종료시 모든 버프 제거
+            //player.ClearAllBuffs();     // 전투 종료시 모든 버프 제거
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");

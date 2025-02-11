@@ -31,7 +31,7 @@ namespace HellChangSub
         public string JobName { get; set; }
         public int Level { get; set; }
         public int Exp { get; set; }
-        public int NeedExp { get; set; } = 10;
+        public int NeedExp { get; set; } = 5;
         public int Gold { get; set; }
         public int CurrentHealth { get; set; }
         public int MaximumHealth { get; set; }
@@ -56,6 +56,7 @@ namespace HellChangSub
             JobName = saveData.JobName;
             Level = saveData.Level;
             Exp = saveData.Exp;
+            NeedExp = saveData.NeedExp;
             CurrentHealth = saveData.CurrentHealth;
             MaximumHealth = saveData.MaximumHealth;
             CurrentMana = saveData.CurrentMana;
@@ -75,14 +76,16 @@ namespace HellChangSub
 
         }
 
-        public Player(string name, int Job)
+        public Player(string name, int jobCode)
         {
             Name = name;
-            JobCode = Job;
+            JobCode = jobCode;
+            Level = 1;
             Exp = 0;
             Gold = 1000000000;
             EquipAtk = 0;
             EquipDef = 0;
+            NeedExp = 5;
             switch (JobCode)
             {
                 case 1:         // 전사 - 방어력 체력이 높음
@@ -142,7 +145,7 @@ namespace HellChangSub
             }
         }
 
-        public class Buff       // 버프 관리 클래스 - 현재는 공격포션, 방어포션뿐
+        /*public class Buff       // 버프 관리 클래스 - 현재는 공격포션, 방어포션뿐
         {
             public ItemType BuffType { get; set; }   // 예: AtkPotion 또는 DefPotion
             public int Value { get; set; }           // 증가한 능력치 수치
@@ -189,7 +192,7 @@ namespace HellChangSub
                     EquipDef -= buff.Value;
             }
             ActiveBuffs.Clear();
-        }
+        }*/
 
         /*public void LevelUp2()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
@@ -240,13 +243,15 @@ namespace HellChangSub
 
         public void LevelUp()
         {
-            if (Exp >= NeedExp)
+            while (Exp >= NeedExp)
             {
                 Level++;
                 NeedExp = CalculateExpRequirement(Level);
                 LearnSkill(Level);
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
+                GameManager.Instance.quest.questDataList[2].Progressed = Level;
+                GameManager.Instance.quest.questDataList[2].JudgeState();
                 Console.WriteLine($"레벨이 상승했습니다. 현재 레벨: {Level}");
                 Utility.PressAnyKey();
                 StatUp();
@@ -255,7 +260,7 @@ namespace HellChangSub
         }
         private int CalculateExpRequirement(int level)
         {
-            int baseExp = 10;  // 최초 레벨업 필요 경험치
+            int baseExp = 5;  // 최초 레벨업 필요 경험치
             double growthFactor = 1.5;  // 경험치 증가율  필요 경험치 = 10*레벨^1.5
             return (int)(baseExp * Math.Pow(level, growthFactor));
         }
@@ -397,7 +402,8 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine($"{"Name",-12} {Name}");
             Console.WriteLine($"{"Level",-12} {Level}");
-            Console.WriteLine($"{"Exp",-12} {Exp}");
+            Console.Write($"{"Exp",-12} {Exp}");
+            Console.WriteLine($"            {"Next",-12} {NeedExp}");
             Console.WriteLine($"{"Gold",-12} {Gold}");
             Console.WriteLine($"{"HP",-12} {CurrentHealth}/{MaximumHealth}");
             Console.WriteLine($"{"MP",-12} {CurrentMana}/{MaximumMana}");
