@@ -221,7 +221,7 @@ namespace HellChangSub
         {
             Console.Clear();
             Console.WriteLine("──────────────────────────────────────");
-            Console.WriteLine("        ⚔️  최후의 일격  ⚔️");
+            Console.WriteLine("             최후의 일격  ");
             Console.WriteLine("──────────────────────────────────────");
             Thread.Sleep(500);
             Console.WriteLine();
