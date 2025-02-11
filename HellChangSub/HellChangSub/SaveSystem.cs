@@ -7,7 +7,7 @@ namespace HellChangSub
     public static class SaveSystem
     {
         private static string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "savegame.json");
-        private static string filePath2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "savegamequest.json");
+        private static string questfilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "savegamequest.json");
         public static void SaveGame(SaveData data,SaveQuestData questData)
         {
             string json = JsonConvert.SerializeObject(data, Formatting.Indented,
@@ -23,7 +23,7 @@ namespace HellChangSub
                     TypeNameHandling = TypeNameHandling.All  // 클래스 타입 정보를 포함하여 저장
                 });
 
-            File.WriteAllText(filePath2, questjson);
+            File.WriteAllText(questfilePath, questjson);
             Console.WriteLine("저장되었습니다.");
             Utility.PressAnyKey();
             GameManager.Instance.ShowMainScreen();
@@ -51,7 +51,7 @@ namespace HellChangSub
         {
             if (File.Exists(filePath))
             {
-                string json = File.ReadAllText(filePath2);
+                string json = File.ReadAllText(questfilePath);
                 return JsonConvert.DeserializeObject<SaveQuestData>(json,
                     new JsonSerializerSettings
                     {
