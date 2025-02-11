@@ -123,7 +123,7 @@ namespace HellChangSub
 
                     Skills = new List<Skill>
                     {
-                        new Skill("칼날 부채", 1.0f, 15, "적 전체에게 공격력만큼의 피해를 입힙니다.", true),
+                        new Skill("칼날 부채", 1.0f, 10, "적 전체에게 공격력만큼의 피해를 입힙니다.", true),
                         new Skill("절개", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다.")
                     };
                     break;
