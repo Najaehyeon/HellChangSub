@@ -76,14 +76,16 @@ namespace HellChangSub
 
         }
 
-        public Player(string name, int Job)
+        public Player(string name, int jobCode)
         {
             Name = name;
-            JobCode = Job;
+            JobCode = jobCode;
+            Level = 1;
             Exp = 0;
             Gold = 1000000000;
             EquipAtk = 0;
             EquipDef = 0;
+            NeedExp = 5;
             switch (JobCode)
             {
                 case 1:         // 전사 - 방어력 체력이 높음
@@ -143,7 +145,7 @@ namespace HellChangSub
             }
         }
 
-        public class Buff       // 버프 관리 클래스 - 현재는 공격포션, 방어포션뿐
+        /*public class Buff       // 버프 관리 클래스 - 현재는 공격포션, 방어포션뿐
         {
             public ItemType BuffType { get; set; }   // 예: AtkPotion 또는 DefPotion
             public int Value { get; set; }           // 증가한 능력치 수치
@@ -190,7 +192,7 @@ namespace HellChangSub
                     EquipDef -= buff.Value;
             }
             ActiveBuffs.Clear();
-        }
+        }*/
 
         /*public void LevelUp2()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
@@ -249,6 +251,7 @@ namespace HellChangSub
                 CurrentHealth = MaximumHealth;
                 CurrentMana = MaximumMana;
                 GameManager.Instance.quest.questDataList[2].Progressed = Level;
+                GameManager.Instance.quest.questDataList[2].JudgeState();
                 Console.WriteLine($"레벨이 상승했습니다. 현재 레벨: {Level}");
                 Utility.PressAnyKey();
                 StatUp();
@@ -399,7 +402,8 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine($"{"Name",-12} {Name}");
             Console.WriteLine($"{"Level",-12} {Level}");
-            Console.WriteLine($"{"Exp",-12} {Exp}");
+            Console.Write($"{"Exp",-12} {Exp}");
+            Console.WriteLine($"            {"Next",-12} {NeedExp}");
             Console.WriteLine($"{"Gold",-12} {Gold}");
             Console.WriteLine($"{"HP",-12} {CurrentHealth}/{MaximumHealth}");
             Console.WriteLine($"{"MP",-12} {CurrentMana}/{MaximumMana}");
