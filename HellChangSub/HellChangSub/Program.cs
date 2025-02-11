@@ -202,7 +202,9 @@ namespace HellChangSub
                 {
                     int maxHP = player.MaximumHealth;
                     player.CurrentHealth = maxHP;
-                    Console.WriteLine("체력을 회복했습니다.");
+                    int maxMP = player.MaximumMana;
+                    player.CurrentMana = maxMP;
+                    Console.WriteLine("HP,MP를 전부 회복했습니다.");
                     Utility.PressAnyKey();
                     ShowMainScreen();
                 }
