@@ -62,7 +62,7 @@ namespace HellChangSub
             else if (QuestState == QuestState.InProgress) // 미션을 수행 중일 때, 보여줄 내용
             {
                 Console.WriteLine("- 진척도 -");
-                Console.WriteLine($"{Progressed} / {Goal}\n");
+                Console.WriteLine($" {Progressed} / {Goal}\n");
                 Console.WriteLine("1. 미션포기\n0. 나가기");
 
                 int choice = Utility.Select(0, 1);
