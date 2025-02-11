@@ -12,8 +12,8 @@ namespace HellChangSub
         public abstract string Title { get; }
         public abstract string Mission { get;  }
         public abstract string[] Rewards { get; }
-        public abstract string Goal { get; }
-        public abstract string Progressed { get; set; }
+        public abstract int Goal { get; }
+        public abstract int Progressed { get; set; }
         public abstract QuestState QuestState { get; set; }
 
         public void PickQuest()
@@ -41,7 +41,7 @@ namespace HellChangSub
                 Console.WriteLine(reward);
             }
             Console.WriteLine();
-
+            JudgeState();
             if (QuestState == QuestState.NotStarted) // 수행한 적이 없을 때, 보여줄 내용
             {
                 Console.WriteLine("1. 수락\n2. 거절");
@@ -140,10 +140,29 @@ namespace HellChangSub
             }
         }
 
+        // 수행한 게 목표와 같을 때, 상태 변경
+        public void JudgeState()
+        {
+            if (Progressed is int progressInt && Goal is int goalInt)
+            {
+                if (progressInt >= goalInt) // 정수형일 경우, 크거나 같을 때 완료
+                {
+                    QuestState = QuestState.Completed;
+                }
+            }
+            else if (Progressed is int progressStr && Goal is int goalStr)
+            {
+                if (progressStr >= goalStr) // 문자열일 경우, 동일할 때 완료
+                {
+                    QuestState = QuestState.Completed;
+                }
+            }
+        }
+
         // 퀘스트를 포기했을 때, 수행한 미션 초기화
         public abstract void FormatMission();
 
-        //
+        // 보상 받기를 선택했을 때, 보상 주는 메서드
         public abstract void GiveRewards();
     }
 
@@ -151,27 +170,14 @@ namespace HellChangSub
     // "마을을 위협하는 미니언 처치" 퀘스트 데이터
     public class KillMinionQuest : QuestData
     {
-        private static KillMinionQuest _instance;
-        public static KillMinionQuest Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new KillMinionQuest();
-                }
-                return _instance;
-            }
-        }
-
         public override string Title { get; } = "마을을 위협하는 미니언 처치!";
         public override string Mission { get; } = "미니언 10마리 처치!";
         public override string[] Rewards { get; } = new string[] { "쓸만한 방패", "500 Gold" };
-        public override string Goal { get; } = "10";
+        public override int Goal { get; } = 10;
 
 
-        private string progressed = "0";
-        public override string Progressed
+        private int progressed = 0;
+        public override int Progressed
         {
             get { return progressed; }
             set
@@ -186,17 +192,19 @@ namespace HellChangSub
                 }
             }
         }
+
         public override QuestState QuestState { get; set; } = QuestState.NotStarted;
 
         public override void FormatMission()
         {
-            progressed = "0";
+            progressed = 0;
         }
 
         public override void GiveRewards()
         {
             EquipItem item = GameManager.Instance.itemManager.equipItems[2];
             GameManager.Instance.itemManager.itemUtil.QuestEquip(item);
+            GameManager.Instance.player.Gold += 500;
         }
     }
 
@@ -204,26 +212,14 @@ namespace HellChangSub
     // "장비 장착하기" 퀘스트 데이터
     public class EquipShieldQuest : QuestData
     {
-        private static EquipShieldQuest _instance;
-        public static EquipShieldQuest Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new EquipShieldQuest();
-                }
-                return _instance;
-            }
-        }
         public override string Title { get; } = "장비를 장착해보자.";
         public override string Mission { get; } = "쓸만한 방패 장착하기";
         public override string[] Rewards { get; } = new string[] { "EXP +50", "200 Gold" };
-        public override string Goal { get; } = "쓸만한 방패 장착하기";
+        public override int Goal { get; } = 1;
 
 
-        private string progressed = "장착 안됨";
-        public override string Progressed
+        private int progressed = 0;
+        public override int Progressed
         {
             get { return progressed; }
             set
@@ -243,12 +239,13 @@ namespace HellChangSub
 
         public override void FormatMission()
         {
-            progressed = "장착 안됨";
+            progressed = 0;
         }
 
         public override void GiveRewards()
         {
-
+            GameManager.Instance.player.Exp += 50;
+            GameManager.Instance.player.Gold += 200;
         }
     }
 
@@ -256,26 +253,14 @@ namespace HellChangSub
     // "더욱 더 강해지기" 퀘스트 데이터
     public class StrongMoreQuest : QuestData
     {
-        private static StrongMoreQuest _instance;
-        public static StrongMoreQuest Instance
-        {
-            get
-            {
-                if (_instance == null)
-                {
-                    _instance = new StrongMoreQuest();
-                }
-                return _instance;
-            }
-        }
         public override string Title { get; } = "더욱 더 강해지기!";
         public override string Mission { get; } = "10레벨 달성하기";
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
-        public override string Goal { get; } = "Lv.10";
+        public override int Goal { get; } = 10;
 
 
-        private string progressed = $"Lv.{GameManager.Instance.player.Level}"; 
-        public override string Progressed
+        private int progressed = GameManager.Instance.player.Level; 
+        public override int Progressed
         {
             get { return progressed; }
             set
@@ -295,12 +280,13 @@ namespace HellChangSub
 
         public override void FormatMission()
         {
-            progressed = $"Lv.{GameManager.Instance.player.Level}";
+            progressed = GameManager.Instance.player.Level;
         }
 
         public override void GiveRewards()
         {
-
+            GameManager.Instance.player.Exp += 80;
+            GameManager.Instance.player.Gold += 1000;
         }
     }
 
