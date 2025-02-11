@@ -31,12 +31,12 @@ namespace HellChangSub
         //string name, int value, string description, int price, ItemType itemtype
         public List<EquipItem> equipItems = new List<EquipItem>
         {
-            new EquipItem("낣은 검", 5, "쉽게 볼 수 있는 낡은 검 입니다. ", 600, ItemType.Weapon,0),
-            new EquipItem("청동 도끼", 10, "어디선가 사용됐던거 같은 도끼입니다. ", 1500, ItemType.Weapon, 0),
-            new EquipItem("스파르타의 창", 20, "스파르타의 전사들이 사용했다는 전설의 창입니다. ", 2500, ItemType.Weapon, 0),
-            new EquipItem("수련자의 갑옷", 4, "수련에 도움을 주는 갑옷입니다. ", 1000, ItemType.Armor, 0),
-            new EquipItem("무쇠갑옷", 9, "무쇠로 만들어져 튼튼한 갑옷입니다. ", 2000, ItemType.Armor, 0),
-            new EquipItem("스파르타의 갑옷", 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다. ", 3500, ItemType.Armor, 0)
+            new EquipItem("낡은 덤벨", 10, "쉽게 볼 수 있는 낡은 덤벨이다. 과거 헬창들의 흔적이 남아 있다. ", 600, ItemType.Weapon,0),
+            new EquipItem("청동 바벨", 30, "어디선가 사용됐던 것 같은 바벨. 묵직한 무게감이 손맛을 살린다. ", 1500, ItemType.Weapon, 0),
+            new EquipItem("스파르타의 케틀벨", 50, "전설의 스파르타 헬창들이 사용했던 케틀벨. 한 손으로 돌리면 관절이 나간다. ", 2500, ItemType.Weapon, 0),
+            new EquipItem("수련자의 조끼", 5, "초보 헬창을 위한 조끼. 땀을 흘릴수록 더 강해진다 ", 1000, ItemType.Armor, 0),
+            new EquipItem("언더아머 압박 조끼", 10, "강철로 만들어진 보호 장구. 근력 운동 중 부상을 막아준다. ", 2000, ItemType.Armor, 0),
+            new EquipItem("스파르타의 중량 조끼", 20, "전설의 스파르타 전사들이 착용했던 조끼. 입고 훈련하면 자연스럽게 벌크업이 된다. ", 3500, ItemType.Armor, 0)
         };
         public List<EquipItem> equipInventory = new List<EquipItem>();
         //string itemname, int value, string description, int price, ItemType itemType
@@ -44,8 +44,8 @@ namespace HellChangSub
         {
             new UseItem("체력포션", 50, "체력 회복", 50, ItemType.HpPotion,0),
             new UseItem("마나포션", 50, "마나 회복", 50, ItemType.MpPotion, 0),
-            new UseItem("힘포션", 20, "공격력 상승", 50, ItemType.AtkPotion, 0),
-            new UseItem("방어포션", 20, "방어력 상승", 50, ItemType.DefPotion, 0)
+            new UseItem("단백질 쉐이크", 20, "공격력 상승", 50, ItemType.AtkPotion, 0),
+            new UseItem("관절 보호제", 20, "방어력 상승", 50, ItemType.DefPotion, 0)
         };
 
         //인벤토리
