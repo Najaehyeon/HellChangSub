@@ -19,11 +19,11 @@ namespace HellChangSub
         {
             // GameManager.Instance를 이용해 각 퀘스트의 인스턴스를 리스트에 추가
             questDataList = new List<QuestData>
-        {
-            new KillMinionQuest(),
-            new EquipShieldQuest(),
-            new StrongMoreQuest()
-        };
+            {
+                new KillMinionQuest(),
+                new EquipShieldQuest(),
+                new StrongMoreQuest()
+            };
         }
 
         public void ShowQuestList() // 퀘스트 목록 씬을 보여주는 메서드

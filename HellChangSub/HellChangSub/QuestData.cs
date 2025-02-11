@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace HellChangSub
 {
-    public abstract class QuestData<T>
+    public abstract class QuestData
     {
         public abstract string Title { get; }
         public abstract string Mission { get;  }
         public abstract string[] Rewards { get; }
-        public abstract T Goal { get; }
-        public abstract T Progressed { get; set; }
+        public abstract int Goal { get; }
+        public abstract int Progressed { get; set; }
         public abstract QuestState QuestState { get; set; }
 
         public void PickQuest()
@@ -150,9 +150,9 @@ namespace HellChangSub
                     QuestState = QuestState.Completed;
                 }
             }
-            else if (Progressed is string progressStr && Goal is string goalStr)
+            else if (Progressed is int progressStr && Goal is int goalStr)
             {
-                if (progressStr == goalStr) // 문자열일 경우, 동일할 때 완료
+                if (progressStr >= goalStr) // 문자열일 경우, 동일할 때 완료
                 {
                     QuestState = QuestState.Completed;
                 }
@@ -168,7 +168,7 @@ namespace HellChangSub
 
 
     // "마을을 위협하는 미니언 처치" 퀘스트 데이터
-    public class KillMinionQuest : QuestData<int>
+    public class KillMinionQuest : QuestData
     {
         public override string Title { get; } = "마을을 위협하는 미니언 처치!";
         public override string Mission { get; } = "미니언 10마리 처치!";
@@ -209,16 +209,16 @@ namespace HellChangSub
 
 
     // "장비 장착하기" 퀘스트 데이터
-    public class EquipShieldQuest : QuestData<string>
+    public class EquipShieldQuest : QuestData
     {
         public override string Title { get; } = "장비를 장착해보자.";
         public override string Mission { get; } = "쓸만한 방패 장착하기";
         public override string[] Rewards { get; } = new string[] { "EXP +50", "200 Gold" };
-        public override string Goal { get; } = "쓸만한 방패 장착하기";
+        public override int Goal { get; } = 1;
 
 
-        private string progressed = "장착 안됨";
-        public override string Progressed
+        private int progressed = 0;
+        public override int Progressed
         {
             get { return progressed; }
             set
@@ -238,7 +238,7 @@ namespace HellChangSub
 
         public override void FormatMission()
         {
-            progressed = "장착 안됨";
+            progressed = 0;
         }
 
         public override void GiveRewards()
@@ -250,16 +250,16 @@ namespace HellChangSub
 
 
     // "더욱 더 강해지기" 퀘스트 데이터
-    public class StrongMoreQuest : QuestData<string>
+    public class StrongMoreQuest : QuestData
     {
         public override string Title { get; } = "더욱 더 강해지기!";
         public override string Mission { get; } = "10레벨 달성하기";
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
-        public override string Goal { get; } = "Lv.10";
+        public override int Goal { get; } = 10;
 
 
-        private string progressed = $"Lv.{GameManager.Instance.player.Level}"; 
-        public override string Progressed
+        private int progressed = GameManager.Instance.player.Level; 
+        public override int Progressed
         {
             get { return progressed; }
             set
@@ -279,7 +279,7 @@ namespace HellChangSub
 
         public override void FormatMission()
         {
-            progressed = $"Lv.{GameManager.Instance.player.Level}";
+            progressed = GameManager.Instance.player.Level;
         }
 
         public override void GiveRewards()
