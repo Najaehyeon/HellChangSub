@@ -157,9 +157,9 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine("프로틴 헬창 마을에 오신 것을 환영합니다.");
             Console.WriteLine();
-            Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 퀘스트\n6. 저장하기");
+            Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 퀘스트\n6. 휴식하기\n7. 저장하기");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            int choice = Utility.Select(1, 6);
+            int choice = Utility.Select(1, 7);
             switch (choice)
             {
                 case 1:
@@ -178,9 +178,33 @@ namespace HellChangSub
                     quest.ShowQuestList();
                     break;
                 case 6:
-                    SaveData saveData = new SaveData(player,itemManager,quest);
+                    Rest();
+                    break;
+                case 7:
+                    SaveData saveData = new SaveData(player, itemManager, quest);
                     SaveSystem.SaveGame(saveData);//저장기능
                     break;
+            }
+        }
+
+        public void Rest()
+        {
+            while (true)
+            {
+                if (player.Gold >= 100)
+                {
+                    int maxHP = player.MaximumHealth;
+                    player.CurrentHealth = maxHP;
+                    Console.WriteLine("체력을 회복했습니다.");
+                    Utility.PressAnyKey();
+                    ShowMainScreen();
+                }
+                else
+                {
+                    Console.WriteLine("골드가 부족합니다.");
+                    Utility.PressAnyKey();
+                    ShowMainScreen();
+                }
             }
         }
     }
