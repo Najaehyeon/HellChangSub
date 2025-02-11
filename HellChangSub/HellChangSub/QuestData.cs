@@ -162,7 +162,7 @@ namespace HellChangSub
         // 퀘스트를 포기했을 때, 수행한 미션 초기화
         public abstract void FormatMission();
 
-        //
+        // 보상 받기를 선택했을 때, 보상 주는 메서드
         public abstract void GiveRewards();
     }
 
