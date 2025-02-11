@@ -174,7 +174,7 @@ namespace HellChangSub
                     itemManager.ShopScene();
                     break;
                 case 5:
-                    ItPowerUp.BlacksmithScreen();
+                    ShowMainScreen();
                     break;
                 case 6:
                     quest.ShowQuestList();

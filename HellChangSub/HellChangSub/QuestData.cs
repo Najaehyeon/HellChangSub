@@ -41,7 +41,6 @@ namespace HellChangSub
                 Console.WriteLine(reward);
             }
             Console.WriteLine();
-            JudgeState();
             if (QuestState == QuestState.NotStarted) // 수행한 적이 없을 때, 보여줄 내용
             {
                 Console.WriteLine("1. 수락\n2. 거절");
@@ -109,6 +108,7 @@ namespace HellChangSub
         public void AcceptQuest ()
         {
             QuestState = QuestState.InProgress;
+            JudgeState();
             Console.WriteLine($"\"{Title}\" 퀘스트를 수락했습니다!");
             Console.WriteLine("\n0. 나가기");
             Console.WriteLine("다음 행동을 선택해주세요.");
@@ -258,12 +258,14 @@ namespace HellChangSub
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
         public override int Goal { get; } = 3;
 
-
-        private int progressed = GameManager.Instance.player.Level; 
+        private int progressed = GameManager.Instance.player.Level;
         public override int Progressed
         {
             get { return progressed; }
-            set { progressed = value; }
+            set
+            {
+                progressed = value;
+            }
         }
 
         public override QuestState QuestState { get; set; } = QuestState.NotStarted;
