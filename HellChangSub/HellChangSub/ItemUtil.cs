@@ -209,27 +209,63 @@ namespace HellChangSub
                     item.Count--;
                     break;
                 case ItemType.AtkPotion:
-                    player.EquipAtk += item.Value;
-                    item.Count--;
-                    //EndPotion(player, item);
+                    if(item.ItemBuff)
+                    {
+                        Console.WriteLine("이미 사용중입니다");
+                        //다시 선택창으로
+                    }
+                    else
+                    {
+                        player.EquipAtk += item.Value; //포션 공격력으로 바꿔야함
+                        item.Count--;
+                        item.PotionDuration = 4;
+                        item.ItemBuff = true;
+                    }
                     break;
                 case ItemType.DefPotion:
-                    player.EquipDef += item.Value;
-                    item.Count--;
-                    //EndPotion(player, item);
+                    if (item.ItemBuff)
+                    {
+                        Console.WriteLine("이미 사용중입니다");
+                        //다시 선택창으로
+                    }
+                    else
+                    {
+                        player.EquipDef += item.Value; //포션 방어력으로 바꿔야함
+                        item.Count--;
+                        item.PotionDuration = 4; //쿨타임 +1
+                        item.ItemBuff = true;
+                    }
                     break;
             }
         }
 
-        public void EndPotion(Player player, UseItem item) //History 또는 Battle에서 쿨타임 설정
+        public void CoolDownCheck() // (PotionDuration -1)이 지속시간 
+        {
+            for (int i = 2; i < ItemManager.useItems.Count; i++)
+            {
+                UseItem item = ItemManager.useItems[i];
+                if (item.ItemBuff)
+                {
+                    item.PotionDuration--;
+
+                    if (item.PotionDuration == 0)
+                    {
+                        EndPotion(GameManager.Instance.player, item);
+                    }
+                }
+            }
+        }
+        public void EndPotion(Player player, UseItem item)
         {
             switch (item.ItemType)
             {
                 case ItemType.AtkPotion:
                     player.EquipAtk -= item.Value;
+                    item.ItemBuff = false;
                     break;
                 case ItemType.DefPotion:
                     player.EquipDef -= item.Value;
+                    item.ItemBuff = false;
                     break;
             }
         }

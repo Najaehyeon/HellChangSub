@@ -31,6 +31,7 @@ namespace HellChangSub
         public string JobName { get; set; }
         public int Level { get; set; }
         public int Exp { get; set; }
+        public int NeedExp { get; set; } = 10;
         public int Gold { get; set; }
         public int CurrentHealth { get; set; }
         public int MaximumHealth { get; set; }
@@ -141,7 +142,7 @@ namespace HellChangSub
             }
         }
 
-        public void LevelUp()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
+        public void LevelUp2()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
             int oldLevel = Level;
 
@@ -188,8 +189,29 @@ namespace HellChangSub
                 Console.WriteLine($"레벨이 상승했습니다. 현재 레벨: {Level}");
             }
         }
-
-        public void StatUp()
+        
+        public void LevelUp()
+        {
+            if (Exp >= NeedExp)
+            {
+                Level++;
+                NeedExp = CalculateExpRequirement(Level);
+                LearnSkill(Level);
+                CurrentHealth = MaximumHealth;
+                CurrentMana = MaximumMana;
+                Console.WriteLine($"레벨이 상승했습니다. 현재 레벨: {Level}");
+                Utility.PressAnyKey();
+                StatUp();
+                StatUp();
+            }
+        }
+        private int CalculateExpRequirement(int level)
+        {
+            int baseExp = 10;  // 최초 레벨업 필요 경험치
+            double growthFactor = 1.5;  // 경험치 증가율  필요 경험치 = 10*레벨^1.5
+            return (int)(baseExp * Math.Pow(level, growthFactor));
+        }
+        public void StatUp2()
         {
             switch (JobCode)        // 직업별 레벨업시 스탯증가 - 추후 다른방식으로 스탯이 오르게 할지도
             {
@@ -212,6 +234,40 @@ namespace HellChangSub
                     Def += 0;
                     break;
             }
+        }
+
+        public void StatUp()
+        {
+            Console.Clear();
+            Console.WriteLine("상승 시킬 스탯을 선택해주세요.");
+            Console.WriteLine($"1. HP : {MaximumHealth} (+100)");
+            Console.WriteLine($"2. MP : {MaximumMana} (+30)");
+            Console.WriteLine($"3. Atk : {Atk} (+10)");
+            Console.WriteLine($"4. Def : {Def} (+5)");
+            switch(Utility.Select(1,4))
+            {
+                case 1:
+                    MaximumHealth += 100;
+                    Console.WriteLine("HP가 상승했습니다.");
+                    Utility.PressAnyKey();
+                    break;
+                case 2:
+                    MaximumMana += 30;
+                    Console.WriteLine("MP가 상승했습니다.");
+                    Utility.PressAnyKey();
+                    break;
+                case 3:
+                    Atk += 10;
+                    Console.WriteLine("Atk가 상승했습니다.");
+                    Utility.PressAnyKey();
+                    break;
+                case 4:
+                    Def += 5;
+                    Console.WriteLine("Def가 상승했습니다.");
+                    Utility.PressAnyKey();
+                    break;
+            }
+
         }
 
         private void InitializeSkills()
