@@ -226,13 +226,13 @@ namespace HellChangSub
             Thread.Sleep(500);
             Console.WriteLine();
             Console.WriteLine("  『 으아아아아아아!! 』");
-            Thread.Sleep(800);
+            Thread.Sleep(1000);
             Console.WriteLine();
             Console.WriteLine("  정상화의 신 '헬창섭'이 거대한 근육의 파도를 일으키며 쓰러진다...");
             Thread.Sleep(500);
             Console.WriteLine();
             Console.WriteLine("  『 이건... 정상화가 아니다...!!! 』");
-            Thread.Sleep(800);
+            Thread.Sleep(1000);
             Console.WriteLine();
             Console.WriteLine("  헬창섭의 몸이 금빛으로 빛나며 사라져 간다.");
             Thread.Sleep(500);
@@ -244,7 +244,7 @@ namespace HellChangSub
             char[] chars = line.ToCharArray();
             foreach (char c in chars) { Console.Write(c); Thread.Sleep(150); }
             Console.WriteLine();
-            Thread.Sleep(800);
+            Thread.Sleep(1000);
             Console.WriteLine();
             Console.WriteLine("──────────────────────────────────────");
             Console.WriteLine();
@@ -252,7 +252,7 @@ namespace HellChangSub
             Thread.Sleep(800);
             Console.WriteLine();
             Console.Write("  그러나"); Thread.Sleep(500); Console.Write("."); Thread.Sleep(500); Console.Write("."); Thread.Sleep(500); Console.Write("."); Thread.Sleep(500); Console.WriteLine(".");
-            Thread.Sleep(500);
+            Thread.Sleep(1000);
             Console.WriteLine();
             Console.WriteLine("  플레이어는 공허한 마음으로 폐허가 된 세계를 바라본다.");
             Thread.Sleep(800);
@@ -270,6 +270,7 @@ namespace HellChangSub
             Console.WriteLine("──────────────────────────────────────");
             Console.WriteLine();
             Console.WriteLine("  [ 엔딩 크레딧이 시작됩니다... ]");
+            Console.WriteLine();
             Utility.PressAnyKey();            
             ShowCredits();
         }
