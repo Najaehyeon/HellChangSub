@@ -190,39 +190,60 @@ namespace HellChangSub
                 return;
             }
 
-            Console.WriteLine("공격할 대상을 선택하세요.");
-            int targetIndex = Utility.Select(1, monsters.Count) - 1;
-            Monster target = monsters[targetIndex];
-            if (target.IsDead)
+            player.CurrentMana -= (int)selectedSkill.ManaCost; // MP 소모 - int? 형이라 (int) 추가로 오류해결
+
+            Random rand = new Random();
+            float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
+
+            Console.Clear();
+            Console.WriteLine("Battle!!\n");
+
+            if (selectedSkill.IsAoE)
             {
-                Console.WriteLine("이미 죽은 대상입니다.");
-                Utility.PressAnyKey();
-                UseSkill();
-                return;
+                // AoE 스킬인 경우, 모든 살아있는 몬스터에게 피해 적용
+                Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용! (모든 적 공격)");
+                foreach (var target in monsters.Where(m => !m.IsDead))
+                {
+                    int beforeHP = target.CurrentHealth;
+                    int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit),
+                                                 randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
+                    target.CurrentHealth -= damage;
+                    target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
+                    Console.WriteLine($"Lv.{target.Level} {target.Name} - HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}");
+                    if (target.IsDead)
+                        GetKillData(target.Name);
+                }
             }
-            else if (!target.IsDead)
+
+            else
             {
+                // 단일 대상 공격의 경우 대상 선택
+                Console.WriteLine("공격할 대상을 선택하세요.");
+                int targetIndex = Utility.Select(1, monsters.Count) - 1;
+                Monster target = monsters[targetIndex];
+
+                if (target.IsDead)
+                {
+                    Console.WriteLine("이미 죽은 대상입니다.");
+                    Utility.PressAnyKey();
+                    UseSkill();
+                    return;
+                }
+
                 int beforeHP = target.CurrentHealth;
-                player.CurrentMana -= (int)selectedSkill.ManaCost; // MP 소모 - int? 형이라 (int) 추가로 오류해결
-                Random rand = new Random();
-                float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
-                Console.Clear();
-                Console.WriteLine("Battle!!\n");
-                Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
-                int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit), randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
-                
+                int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit),
+                                             randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
                 target.CurrentHealth -= damage;
                 target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
-
-                Console.WriteLine($"Lv.{target.Level} {target.Name}");
-                Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
+                Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
+                Console.WriteLine($"Lv.{target.Level} {target.Name} - HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}");
                 if (target.IsDead)
                     GetKillData(target.Name);
-                if (monsters.All(m => m.IsDead))
+            }
+            if (monsters.All(m => m.IsDead))
                     Victory();
 
-                Utility.PressAnyKey();
-            }
+            Utility.PressAnyKey();
         }
 
         private void UseItem()
