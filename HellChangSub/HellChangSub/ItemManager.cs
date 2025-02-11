@@ -17,7 +17,7 @@ namespace HellChangSub
         public bool equiptedItem = false;
         public ItemManager(SaveData saveData,Player player)
         {
-            this.player;
+            this.player = player;
             equipItems = saveData.equipItems;
             equipInventory = saveData.equipInventory;
             useItems = saveData.useItems;
