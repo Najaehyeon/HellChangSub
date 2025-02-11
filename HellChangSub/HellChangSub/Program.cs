@@ -46,10 +46,11 @@ namespace HellChangSub
         {
             if (isLoaded)
             {
-                SaveData saveData = SaveSystem.LoadGame();//로드 메서드를 통해 saveData객체생성
-                player = new Player(saveData);//saveData를 받는 플레이어 객체 생성
-                itemManager = new ItemManager(saveData);
-                quest = new Quest(saveData);
+                SaveData loadedData = SaveSystem.LoadGame();//로드 메서드를 통해 saveData객체생성
+                player = new Player(loadedData);//saveData를 받는 플레이어 객체 생성
+                itemManager = new ItemManager(loadedData);
+                SaveQuestData loadedQuestData = SaveSystem.LoadGameQuest();//퀘스트데이터 객체생성시 player의 프로퍼티값 참조필요 플레이어 객체 생성시점 뒤로 이동
+                quest = new Quest(loadedQuestData);
             }
             else
             {
@@ -156,10 +157,9 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine("프로틴 헬창 마을에 오신 것을 환영합니다.");
             Console.WriteLine();
-            Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 퀘스트\n6. 휴식하기\n7. 저장하기");
+            Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 대장간\n6. 퀘스트\n7. 휴식하기\n8. 저장하기");
             Console.WriteLine("원하시는 행동을 입력해주세요.");
-            int choice = Utility.Select(1, 8);
-            switch (choice)
+            switch (Utility.Select(1, 8))
             {
                 case 1:
                     player.ShowStatus();
@@ -174,17 +174,18 @@ namespace HellChangSub
                     itemManager.ShopScene();
                     break;
                 case 5:
-                    quest.ShowQuestList();
+                    ItPowerUp.BlacksmithScreen();
                     break;
                 case 6:
-                    Rest();
+                    quest.ShowQuestList();
                     break;
                 case 7:
-                    SaveData saveData = new SaveData(player, itemManager, quest);
-                    SaveSystem.SaveGame(saveData);//저장기능
+                    Rest();
                     break;
                 case 8:
-                    ItPowerUp.BlacksmithScreen();
+                    SaveData saveData = new SaveData(player, itemManager);
+                    SaveQuestData saveQuestData = new SaveQuestData(quest);
+                    SaveSystem.SaveGame(saveData,saveQuestData);//저장기능
                     break;
             }
         }

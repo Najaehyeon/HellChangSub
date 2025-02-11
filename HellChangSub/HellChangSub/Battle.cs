@@ -82,7 +82,7 @@ namespace HellChangSub
                     UseSkill();
                     break;
                 case 3:
-                    UseItem();    // 스킬작업 다 끝나고 추가
+                    Console.WriteLine("보유중인 소모품 이름 - 효과 - 갯수 보여주기");    // 스킬작업 다 끝나고 추가
                     break;
 
             }
@@ -172,10 +172,13 @@ namespace HellChangSub
                 Console.WriteLine($"{i + 1}. {skill.Name} - MP {skill.ManaCost}\n   {skill.Text}");
             }
             Console.WriteLine("0. 뒤로가기");
+
             int skillChoice = Utility.Select(0, player.Skills.Count);
             if (skillChoice == 0)
+            {
                 PlayerTurn();
-
+                return;
+            }
             Skill selectedSkill = player.Skills[skillChoice - 1];
 
             if (player.CurrentMana < selectedSkill.ManaCost)    // MP가 부족할 경우 사용 불가
@@ -257,6 +260,7 @@ namespace HellChangSub
             Console.WriteLine($"HP {beforeHP} -> {player.CurrentHealth}\n");
         }
 
+
         public void Recover(string statname, ref int stat, ref int statmax, int heal)   //statname : HP, MP, stat : 회복할 프로퍼티, statmax : 프로퍼티 최댓값, heal : 회복 수단별로 정해진 값 
         {
             int finalStat = Math.Min(stat + heal, statmax); // 최대값을 초과하지 않도록 제한
@@ -264,95 +268,12 @@ namespace HellChangSub
             stat = finalStat; 
         }
 
-        private void UseItem()
-        {
-            // CS1061오류 - 대소문자 실수였음
-            ItemManager itemManager = GameManager.Instance.itemManager;
-
-            // 소비 아이템 중 Count가 0보다 큰 항목만 필터링
-            List<UseItem> availableItems = itemManager.useItems.Where(item => item.Count > 0).ToList();
-
-            if (availableItems.Count == 0)      // 보유중인 소비 아이템이 아무것도 없을경우
-            {
-                Console.WriteLine("사용할 아이템이 없습니다.");
-                Utility.PressAnyKey();
-                // 다시 플레이어 턴으로 복귀
-                PlayerTurn();
-                return;
-            }
-
-            // 사용 가능한 아이템 목록 출력
-            Console.Clear();
-            Console.WriteLine("[사용 가능한 소비 아이템]");
-            for (int i = 0; i < availableItems.Count; i++)
-            {
-                UseItem item = availableItems[i];
-                Console.WriteLine($"{i + 1}. {item.UseItemStatus()}");
-            }
-            Console.WriteLine("0. 뒤로가기");
-            Console.WriteLine("사용할 아이템을 선택하세요.");
-
-            int choice = Utility.Select(0, availableItems.Count);
-            if (choice == 0)
-            {
-                // 뒤로가기 선택 시 다시 플레이어 턴으로 복귀
-                PlayerTurn();
-                return;
-            }
-
-            // 사용한 아이템 선택 (입력 번호는 1부터 시작하므로 인덱스는 choice - 1)
-            UseItem selectedItem = availableItems[choice - 1];
-
-            
-            int originalIndex = itemManager.useItems.IndexOf(selectedItem);
-            if (originalIndex < 0)      // 예외
-            {
-                Console.WriteLine("오류: 선택한 아이템을 찾을 수 없습니다.");
-                Utility.PressAnyKey();
-                PlayerTurn();
-                return;
-            }
-
-            // ItemUtil의 UsePotion 메서드를 호출하여 아이템 효과 적용
-            itemManager.itemUtil.UsePotion(player, originalIndex + 1);
-
-            // 사용 후 남은 개수 출력
-            Console.WriteLine($"{selectedItem.ItemName} 사용 완료. 남은 개수: {selectedItem.Count}");
-
-            Utility.PressAnyKey();
-            // 아이템 사용 후 플레이어 턴으로 복귀
-            PlayerTurn();
-        }
         private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // 확률 발동여부 판정
 
         private void GetKillData(String Name)
         {
-            if (Name == "슬라임")
-                History.Instance.SlimeKillCount1++;
-            else if (Name == "검은 슬라임")
-                History.Instance.SlimeKillCount2++;
-            else if (Name == "황금 슬라임")
-                History.Instance.SlimeKillCount3++;
-            else if (Name == "스켈레톤")
-                History.Instance.SkeletonKillCount1++;
-            else if (Name == "검은 스켈레톤")
-                History.Instance.SkeletonKillCount2++;
-            else if (Name == "황금 스켈레톤")
-                History.Instance.SkeletonKillCount3++;
-            else if (Name == "오우거")
-                History.Instance.OgreKillCount1++;
-            else if (Name == "검은 오우거")
-                History.Instance.OgreKillCount2++;
-            else if (Name == "황금 오우거")
-                History.Instance.OgreKillCount3++;
-            else if (Name == "드래곤")
-                History.Instance.DragonKillCount1++;
-            else if (Name == "암흑 드래곤")
-                History.Instance.DragonKillCount2++;
-            else if (Name == "황금 드래곤")
-                History.Instance.DragonKillCount3++;
-            else if (Name == "헬창 Sup")
-                History.Instance.NormalKillCount++;
+            if (Name == "오우거")
+                GameManager.Instance.quest.questDataList[0].Progressed++;
             else
                 return;
         }
@@ -387,7 +308,6 @@ namespace HellChangSub
             Recover("MP", ref mp, ref mpmax, 10);       // 도전 기능 요구사항 - 전투 승리 시 MP 10 회복
             player.CurrentMana = mp;
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
-            player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
             if (History.Instance.StageLvl == History.Instance.ChallengeLvl)     // 승리시 스테이지 Lv 상승
@@ -395,6 +315,7 @@ namespace HellChangSub
                 History.Instance.StageLvl++;
             }
             Utility.PressAnyKey();
+            player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             GameManager.Instance.ShowMainScreen();
         }
     }

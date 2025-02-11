@@ -8,7 +8,7 @@ namespace HellChangSub
 {
     class Utility
     {
-        public static int Select(int min, int max)
+        public static int Select(int min, int max)//숫자 선택시 사용 예시 
         {
             while (true)
             {
@@ -47,7 +47,7 @@ namespace HellChangSub
             return width;
         }
 
-        //오른쪽 pad랑 글자길이 합해서 원하는 width 나오게끔하기
+        //오른쪽 pad랑 글자길이 합해서 원하는 width 나오게끔하기 예시)13칸을 차지하는 string을 출력할 경우 Console.WriteLine("FixWidth("원하는 내용을 입력하세요", 13)");
         public static string FixWidth(string input, int width)
         {
             int realWidth = GetWidth(input);
