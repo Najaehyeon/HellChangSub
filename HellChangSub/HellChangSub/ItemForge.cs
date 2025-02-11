@@ -173,7 +173,7 @@ namespace HellChangSub
                     { "아이쿠 손이 미끄러 졌네.", "누구나 실수는 하는 법이지!", "평소에 장비관리를 열심히 하지 않았군!" };
                 string failureMessage = failureMessages[random.Next(failureMessages.Length)];
 
-                Console.WriteLine($"{failureMessage} {item.ItemName}의 능력이 {powerStones[i].Value}만큼 감소하였습니다.");
+                Console.WriteLine($"{failureMessage}\n강화에 실패했습니다! {item.ItemName}의 능력이 {powerStones[i].Value}만큼 감소하였습니다.");
             }
             else
             {
