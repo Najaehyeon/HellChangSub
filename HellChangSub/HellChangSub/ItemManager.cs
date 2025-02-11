@@ -67,7 +67,7 @@ namespace HellChangSub
             {
                 if (useItems[i].Count == 0)
                     continue;
-                Console.WriteLine($"- {useItems[i].ItemName, -10}  | {useItems[i].Count} 개");
+                Console.WriteLine($"- {Utility.FixWidth(useItems[i].ItemName, 10)}  | {Utility.FixWidth(useItems[i].Count.ToString(), 5)} 개");
             }
 
             Console.WriteLine("1. 장착 관리");
@@ -98,7 +98,7 @@ namespace HellChangSub
             Console.WriteLine("[장비 목록]");
             for (int i = 0; i < equipInventory.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {equipInventory[i].EquipInvenStatus()}");
+                Console.WriteLine($"{Utility.FixWidth($"{i+1}",3)}. {equipInventory[i].EquipInvenStatus()}");
             }
 
             Console.WriteLine("0. 나가기");
@@ -174,7 +174,7 @@ namespace HellChangSub
             Console.WriteLine("[장비 아이템]");
             for (int i = 0; i < equipItems.Count; i++)
             {
-                Console.WriteLine($"{i+1} {equipItems[i].EquipItemStatus()}");
+                Console.WriteLine($"{Utility.FixWidth($"{i+1}", 3)} {equipItems[i].EquipItemStatus()}");
             }
 
             Console.WriteLine();
@@ -210,7 +210,7 @@ namespace HellChangSub
             Console.WriteLine("[장비 아이템]");
             for (int i = 0; i < equipInventory.Count; i++)
             {
-                Console.WriteLine($"{i + 1} {equipInventory[i].EquipInvenStatus()}");
+                Console.WriteLine($"{Utility.FixWidth($"{i+1}", 3)} {equipInventory[i].EquipInvenStatus()}");
             }
 
             Console.WriteLine();
@@ -247,7 +247,7 @@ namespace HellChangSub
             Console.WriteLine("[소비 아이템]");
             for (int i = 0; i < useItems.Count; i++)
             {
-                Console.WriteLine($"{i + 1} {useItems[i].UseShopStatus()}");
+                Console.WriteLine($"{Utility.FixWidth($"{i+1}", 3)} {useItems[i].UseShopStatus()}");
             }
 
             Console.WriteLine();
@@ -282,7 +282,7 @@ namespace HellChangSub
             Console.WriteLine("[소비 아이템]");
             for (int i = 0; i < useItems.Count; i++)
             {
-                Console.WriteLine($"{i + 1} {useItems[i].UseShopStatus()}");
+                Console.WriteLine($"{Utility.FixWidth($"{i+1}", 3)} {useItems[i].UseShopStatus()}");
             }
 
             Console.WriteLine();
