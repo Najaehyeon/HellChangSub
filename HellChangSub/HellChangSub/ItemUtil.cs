@@ -217,7 +217,7 @@ namespace HellChangSub
                     {
                         Console.WriteLine("이미 사용중입니다");
                         Utility.PressAnyKey();
-                        //다시 선택창으로
+                        return;
                     }
                     else
                     {
@@ -232,7 +232,7 @@ namespace HellChangSub
                     {
                         Console.WriteLine("이미 사용중입니다");
                         Utility.PressAnyKey();
-                        //다시 선택창으로
+                        return;
                     }
                     else
                     {
