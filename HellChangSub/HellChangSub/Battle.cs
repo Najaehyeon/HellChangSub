@@ -173,11 +173,11 @@ namespace HellChangSub
             }
             Console.WriteLine("0. 뒤로가기");
 
-            int skillChoice = Utility.Select(0, player.Skills.Count) - 1;
+            int skillChoice = Utility.Select(0, player.Skills.Count);
             if (skillChoice == 0)
                 PlayerTurn();
             
-            Skill selectedSkill = player.Skills[skillChoice];
+            Skill selectedSkill = player.Skills[skillChoice - 1];
 
             if (player.CurrentMana < selectedSkill.ManaCost)    // MP가 부족할 경우 사용 불가
             {
