@@ -170,10 +170,10 @@ namespace HellChangSub
     // "마을을 위협하는 미니언 처치" 퀘스트 데이터
     public class KillMinionQuest : QuestData
     {
-        public override string Title { get; } = "마을을 위협하는 오우거 처치!";
-        public override string Mission { get; } = "미니언 10마리 처치!";
+        public override string Title { get; } = "마을을 위협하는 슬라임 처치!";
+        public override string Mission { get; } = "슬라임 10마리 처치!";
         public override string[] Rewards { get; } = new string[] { "쓸만한 방패", "500 Gold" };
-        public override int Goal { get; } = 10;
+        public override int Goal { get; } = 3;
 
 
         private int progressed = 0;
@@ -254,26 +254,16 @@ namespace HellChangSub
     public class StrongMoreQuest : QuestData
     {
         public override string Title { get; } = "더욱 더 강해지기!";
-        public override string Mission { get; } = "10레벨 달성하기";
+        public override string Mission { get; } = "3레벨 달성하기";
         public override string[] Rewards { get; } = new string[] { "AK-47", "EXP + 80", "1000 Gold" };
-        public override int Goal { get; } = 10;
+        public override int Goal { get; } = 3;
 
 
         private int progressed = GameManager.Instance.player.Level; 
         public override int Progressed
         {
             get { return progressed; }
-            set
-            {
-                if (QuestState == QuestState.InProgress) // 퀘스트가 진행중일 때만 수정 가능
-                {
-                    progressed = value;
-                }
-                else
-                {
-                    return;
-                }
-            }
+            set { progressed = value; }
         }
 
         public override QuestState QuestState { get; set; } = QuestState.NotStarted;
