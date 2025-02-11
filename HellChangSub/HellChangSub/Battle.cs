@@ -82,7 +82,7 @@ namespace HellChangSub
                     UseSkill();
                     break;
                 case 3:
-                    Console.WriteLine("보유중인 소모품 이름 - 효과 - 갯수 보여주기");    // 스킬작업 다 끝나고 추가
+                    UseItem();    // 스킬작업 다 끝나고 추가
                     break;
 
             }
@@ -220,6 +220,66 @@ namespace HellChangSub
 
                 Utility.PressAnyKey();
             }
+        }
+
+        private void UseItem()
+        {
+            // CS1061오류 - 대소문자 실수였음
+            ItemManager itemManager = GameManager.Instance.itemManager;
+
+            // 소비 아이템 중 Count가 0보다 큰 항목만 필터링
+            List<UseItem> availableItems = itemManager.useItems.Where(item => item.Count > 0).ToList();
+
+            if (availableItems.Count == 0)      // 보유중인 소비 아이템이 아무것도 없을경우
+            {
+                Console.WriteLine("사용할 아이템이 없습니다.");
+                Utility.PressAnyKey();
+                // 다시 플레이어 턴으로 복귀
+                PlayerTurn();
+                return;
+            }
+
+            // 사용 가능한 아이템 목록 출력
+            Console.Clear();
+            Console.WriteLine("[사용 가능한 소비 아이템]");
+            for (int i = 0; i < availableItems.Count; i++)
+            {
+                UseItem item = availableItems[i];
+                Console.WriteLine($"{i + 1}. {item.UseItemStatus()}");
+            }
+            Console.WriteLine("0. 뒤로가기");
+            Console.WriteLine("사용할 아이템을 선택하세요.");
+
+            int choice = Utility.Select(0, availableItems.Count);
+            if (choice == 0)
+            {
+                // 뒤로가기 선택 시 다시 플레이어 턴으로 복귀
+                PlayerTurn();
+                return;
+            }
+
+            // 사용한 아이템 선택 (입력 번호는 1부터 시작하므로 인덱스는 choice - 1)
+            UseItem selectedItem = availableItems[choice - 1];
+
+
+            int originalIndex = itemManager.useItems.IndexOf(selectedItem);
+            if (originalIndex < 0)      // 예외
+            {
+                Console.WriteLine("오류: 선택한 아이템을 찾을 수 없습니다.");
+                Utility.PressAnyKey();
+                PlayerTurn();
+                return;
+            }
+
+            // ItemUtil의 UsePotion 메서드를 호출하여 아이템 효과 적용
+            itemManager.itemUtil.UsePotion(player, originalIndex + 1);
+
+            // 사용 후 남은 개수 출력
+            Console.WriteLine($"{selectedItem.ItemName} 사용 완료. 남은 개수: {selectedItem.Count}");
+
+            Utility.PressAnyKey();
+            // 아이템 사용 후 플레이어 턴으로 복귀
+            PlayerTurn();
         }
 
         private void NormalMonsterAttack(Monster monster)       // 몬스터 기본 공격
