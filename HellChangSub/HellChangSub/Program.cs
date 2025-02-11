@@ -107,12 +107,13 @@ namespace HellChangSub
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Clear();
             Console.WriteLine(asciiArt);
-            Console.OutputEncoding = originalEncoding;
-            Console.ResetColor();
+            Console.OutputEncoding = originalEncoding;            
             Console.WriteLine();
             Console.WriteLine("=================프로틴 마을의 비밀=================");
+            Console.ResetColor();
             Utility.PressAnyKey();
             Console.Clear();
+            Console.WriteLine();
             Console.WriteLine("저장된 게임을 불러오시겠습니까?");
             Console.WriteLine("\n1. 예\n2. 아니오");
             int choice = Utility.Select(1, 2);
