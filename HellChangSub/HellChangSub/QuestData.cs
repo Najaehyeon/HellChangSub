@@ -143,20 +143,7 @@ namespace HellChangSub
         // 수행한 게 목표와 같을 때, 상태 변경
         public void JudgeState()
         {
-            if (Progressed is int progressInt && Goal is int goalInt)
-            {
-                if (progressInt >= goalInt) // 정수형일 경우, 크거나 같을 때 완료
-                {
-                    QuestState = QuestState.Completed;
-                }
-            }
-            else if (Progressed is int progressStr && Goal is int goalStr)
-            {
-                if (progressStr >= goalStr) // 문자열일 경우, 동일할 때 완료
-                {
-                    QuestState = QuestState.Completed;
-                }
-            }
+            if (Progressed >= Goal) QuestState = QuestState.Completed;
         }
 
         // 퀘스트를 포기했을 때, 수행한 미션 초기화
@@ -224,7 +211,7 @@ namespace HellChangSub
             get { return progressed; }
             set
             {
-                if (QuestState == QuestState.InProgress) // 퀘스트가 진행중일 때만 수정 가능
+                if (QuestState == QuestState.InProgress || QuestState == QuestState.Completed) // 퀘스트가 진행중일 때만 수정 가능
                 {
                     progressed = value;
                 }

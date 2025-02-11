@@ -124,11 +124,12 @@ namespace HellChangSub
                 }
             }
             Equip(player, item);
-
             ItemManager.EquipScene();
         }
         public void Equip(Player player, EquipItem item)
         {
+            GameManager.Instance.quest.questDataList[1].Progressed++;
+            GameManager.Instance.quest.questDataList[1].JudgeState();
             if (!item.isEquip)
             {
                 item.isEquip = true;
@@ -147,6 +148,8 @@ namespace HellChangSub
 
         public void UnEquip(Player player, EquipItem item)
         {
+            GameManager.Instance.quest.questDataList[1].Progressed--;
+            GameManager.Instance.quest.questDataList[1].JudgeState();
             if (item.isEquip)
             {
                 item.isEquip = false;
