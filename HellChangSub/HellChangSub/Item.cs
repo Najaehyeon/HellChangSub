@@ -21,14 +21,15 @@ namespace HellChangSub
         public string ItemName { get; }
         public string Description { get; }
 
-        public int Value { get; }
+        public int Value { get; set; }
         public int Price { get; }
         public bool isPurchase { get; set; }
         public bool isEquip {  get; set; }
         public ItemType ItemType { get; }
+        public int EnhanceLvl { get; set; }
 
 
-        public EquipItem(string itemname, int value, string description, int price, ItemType itemtype)
+        public EquipItem(string itemname, int value, string description, int price, ItemType itemtype, int enhanceLvl)
         {
             ItemName = itemname;
             Description = description;
@@ -37,6 +38,7 @@ namespace HellChangSub
             isPurchase = false;
             isEquip = false;
             ItemType = itemtype;
+            EnhanceLvl = enhanceLvl;
         }  
 
         public string EquipInvenStatus()
