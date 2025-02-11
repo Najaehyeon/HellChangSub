@@ -207,6 +207,8 @@ namespace HellChangSub
 
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
                 Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
+                if (target.IsDead)
+                    GetKillData(target.Name);
                 if (monsters.All(m => m.IsDead))
                     Victory();
 
