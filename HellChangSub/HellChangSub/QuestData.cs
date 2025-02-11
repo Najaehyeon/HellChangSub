@@ -183,7 +183,23 @@ namespace HellChangSub
             }
         }
 
-        public override QuestState QuestState { get; set; } = QuestState.NotStarted;
+
+        private QuestState questState = QuestState.NotStarted;
+        public override QuestState QuestState
+        {
+            get { return questState; }
+            set
+            {
+                if (QuestState == QuestState.RewardClaimed)
+                {
+                    return;
+                }
+                else
+                {
+                    questState = value;
+                }
+            }
+        }
 
         public override void FormatMission()
         {
@@ -225,7 +241,22 @@ namespace HellChangSub
             }
         }
 
-        public override QuestState QuestState { get; set; } = QuestState.NotStarted;
+        private QuestState questState = QuestState.NotStarted;
+        public override QuestState QuestState
+        {
+            get { return questState; }
+            set
+            {
+                if (QuestState == QuestState.RewardClaimed)
+                {
+                    return;
+                }
+                else
+                {
+                    questState = value;
+                }
+            }
+        }
 
         public override void FormatMission()
         {
@@ -259,7 +290,22 @@ namespace HellChangSub
             }
         }
 
-        public override QuestState QuestState { get; set; } = QuestState.NotStarted;
+        private QuestState questState = QuestState.NotStarted;
+        public override QuestState QuestState
+        {
+            get { return questState; }
+            set
+            {
+                if (QuestState == QuestState.RewardClaimed)
+                {
+                    return;
+                }
+                else
+                {
+                    questState = value;
+                }
+            }
+        }
 
         public override void FormatMission()
         {
