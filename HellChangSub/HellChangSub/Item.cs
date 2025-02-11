@@ -84,6 +84,9 @@ namespace HellChangSub
         public int Value { get; }
         public ItemType ItemType { get; }
         public int Count { get; set; }
+        public int PotionDuration {  get; set; }
+
+        public bool ItemBuff {  get; set; }
 
         public UseItem(string itemname, int value, string description, int price, ItemType itemType, int count)
         {
@@ -93,6 +96,8 @@ namespace HellChangSub
             Value = value;
             ItemType = itemType;
             Count = count;
+            PotionDuration = 0;
+            ItemBuff = false;
         }
         public string UseItemStatus()
         {
