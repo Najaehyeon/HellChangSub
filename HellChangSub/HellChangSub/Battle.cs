@@ -308,7 +308,6 @@ namespace HellChangSub
             Recover("MP", ref mp, ref mpmax, 10);       // 도전 기능 요구사항 - 전투 승리 시 MP 10 회복
             player.CurrentMana = mp;
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
-            player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
             if (History.Instance.StageLvl == History.Instance.ChallengeLvl)     // 승리시 스테이지 Lv 상승
@@ -316,6 +315,7 @@ namespace HellChangSub
                 History.Instance.StageLvl++;
             }
             Utility.PressAnyKey();
+            player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             GameManager.Instance.ShowMainScreen();
         }
     }

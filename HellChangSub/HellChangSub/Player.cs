@@ -142,7 +142,7 @@ namespace HellChangSub
             }
         }
 
-        public void LevelUp2()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
+        /*public void LevelUp2()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
             int oldLevel = Level;
 
@@ -187,7 +187,7 @@ namespace HellChangSub
                 CurrentMana = MaximumMana;
                 Console.WriteLine($"레벨이 상승했습니다. 현재 레벨: {Level}");
             }
-        }
+        }*/
         
         public void LevelUp()
         {
@@ -210,7 +210,7 @@ namespace HellChangSub
             double growthFactor = 1.5;  // 경험치 증가율  필요 경험치 = 10*레벨^1.5
             return (int)(baseExp * Math.Pow(level, growthFactor));
         }
-        public void StatUp2()
+        /*public void StatUp2()
         {
             switch (JobCode)        // 직업별 레벨업시 스탯증가 - 추후 다른방식으로 스탯이 오르게 할지도
             {
@@ -233,7 +233,7 @@ namespace HellChangSub
                     Def += 0;
                     break;
             }
-        }
+        }*/
 
         public void StatUp()
         {
