@@ -161,8 +161,8 @@ namespace HellChangSub
             Console.Clear();
             Console.WriteLine("프로틴 헬창 마을에 오신 것을 환영합니다.");
             Console.WriteLine();
-            Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 대장간\n6. 퀘스트\n7. 휴식하기\n8. 저장하기");
-            Console.WriteLine("원하시는 행동을 입력해주세요.");
+            Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 대장간\n6. 퀘스트\n7. 휴식하기 (100 G)\n8. 저장하기");
+            Console.WriteLine("\n원하시는 행동을 입력해주세요.");
             switch (Utility.Select(1, 8))
             {
                 case 1:
@@ -204,7 +204,7 @@ namespace HellChangSub
                     player.CurrentHealth = maxHP;
                     int maxMP = player.MaximumMana;
                     player.CurrentMana = maxMP;
-                    Console.WriteLine("HP,MP를 전부 회복했습니다.");
+                    Console.WriteLine("HP,MP를 전부 회복했습니다.\n100 G 지불했습니다.");
                     Utility.PressAnyKey();
                     ShowMainScreen();
                 }

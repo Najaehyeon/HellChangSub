@@ -404,18 +404,19 @@ namespace HellChangSub
         public void ShowStatus()
         {
             Console.Clear();
-            Console.WriteLine($"{"Name",-12} {Name}");
-            Console.WriteLine($"{"Level",-12} {Level}");
-            Console.Write($"{"Exp",-12} {Exp}");
+            Console.WriteLine("[플레이어 정보]");
+            Console.WriteLine($"{"Name",-12} | {Name}");
+            Console.WriteLine($"{"Level",-12} | {Level}");
+            Console.Write($"{"Exp",-12} | {Exp}");
             Console.WriteLine($"            {"Next",-12} {NeedExp}");
-            Console.WriteLine($"{"Gold",-12} {Gold}");
-            Console.WriteLine($"{"HP",-12} {CurrentHealth}/{MaximumHealth}");
-            Console.WriteLine($"{"MP",-12} {CurrentMana}/{MaximumMana}");
-            Console.WriteLine($"{"Atk",-12} {Atk} {(EquipAtk == 0 ? "" : $"(+ {EquipAtk})")}");
-            Console.WriteLine($"{"Def",-12} {Def} {(EquipDef == 0 ? "" : $"(+ {EquipDef})")}");
-            Console.WriteLine($"{"Crit",-12} {Crit}");
-            Console.WriteLine($"{"CritDmg",-12} {CritDamage}");
-            Console.WriteLine($"{"Evasion",-12} {Evasion}");
+            Console.WriteLine($"{"Gold",-12} | {Gold}");
+            Console.WriteLine($"{"HP",-12} | {CurrentHealth}/{MaximumHealth}");
+            Console.WriteLine($"{"MP",-12} | {CurrentMana}/{MaximumMana}");
+            Console.WriteLine($"{"Atk",-12} | {Atk} {(EquipAtk == 0 ? "" : $"(+ {EquipAtk})")}");
+            Console.WriteLine($"{"Def",-12} | {Def} {(EquipDef == 0 ? "" : $"(+ {EquipDef})")}");
+            Console.WriteLine($"{"Crit",-12} | {Crit}");
+            Console.WriteLine($"{"CritDmg",-12} | {CritDamage}");
+            Console.WriteLine($"{"Evasion",-12} | {Evasion}");
 
             Console.WriteLine("\n[보유 스킬]");
             if (Skills.Count == 0)
@@ -424,12 +425,12 @@ namespace HellChangSub
             }
             else
             {
-                Console.WriteLine($"{"Name",-18} {"Text",-40} {"ManaCost",-10}");
-                Console.WriteLine(new string('-', 70)); // 구분선
+                Console.WriteLine($"{"Name",-18} {"Text",-60} {"ManaCost",-10}");
+                Console.WriteLine(new string('-', 90)); // 구분선
 
                 foreach (var skill in Skills)
                 {
-                    Console.WriteLine($"{skill.Name,-18} {skill.Text,-40} {skill.ManaCost,-10}");
+                    Console.WriteLine($"{Utility.FixWidth($"{skill.Name}",18)} {Utility.FixWidth($"{skill.Text}", 60)} {Utility.FixWidth($"{skill.ManaCost}", 10)}");
                 }
             }
             Console.WriteLine("\n0. 나가기");

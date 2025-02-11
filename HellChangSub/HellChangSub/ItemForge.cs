@@ -76,6 +76,7 @@ namespace HellChangSub
             }
             PrintPowerStone();
             Console.WriteLine();
+            Console.WriteLine("강화를 원하는 장비를 선택해주세요.");
             Console.WriteLine("0. 돌아가기");
             Console.WriteLine();
 
