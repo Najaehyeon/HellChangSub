@@ -212,7 +212,7 @@ namespace HellChangSub
             Console.WriteLine("[장비 아이템]");
             for (int i = 0; i < equipInventory.Count; i++)
             {
-                Console.WriteLine($"{Utility.FixWidth($"{i+1}", 3)} {equipInventory[i].EquipInvenStatus()}");
+                Console.WriteLine($"{Utility.FixWidth($"{i+1}", 3)} {equipInventory[i].EquipSellStatus()}");
             }
 
             Console.WriteLine();

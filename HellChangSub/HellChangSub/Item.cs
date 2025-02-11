@@ -27,7 +27,9 @@ namespace HellChangSub
         public bool isEquip {  get; set; }
         public ItemType ItemType { get; }
         public int EnhanceLvl { get; set; }
+        public int EnhanceValue { get; set; }
 
+        public int TotalValue { get; set; }
 
         public EquipItem(string itemname, int value, string description, int price, ItemType itemtype, int enhanceLvl)
         {
@@ -39,19 +41,29 @@ namespace HellChangSub
             isEquip = false;
             ItemType = itemtype;
             EnhanceLvl = enhanceLvl;
+            EnhanceValue = 0;
+            TotalValue = 0;
         }  
 
         public string EquipInvenStatus() //소지아이템목록
         {
             string enhanceStr = EnhanceLvl > 0 ? $"+ {EnhanceLvl.ToString()}" : ""; 
             string equipStr = isEquip ? "[E]" : "";
-            string str = $"{Utility.FixWidth(equipStr + ItemName + enhanceStr,20)} | {Utility.FixWidth(GetItemType(),6)} | {Utility.FixWidth((Value).ToString(),5)} | {Utility.FixWidth(Description,25)}";
+            string str = $"{Utility.FixWidth(equipStr + ItemName + enhanceStr,20)} | {Utility.FixWidth(GetItemType(),6)} | {Utility.FixWidth((TotalValue).ToString(),5)} | {Utility.FixWidth(Description,25)}";
             return str;
         }
 
         public string EquipItemStatus() //아이템목록
         {
             string str = $"{Utility.FixWidth(ItemName, 20)} | {Utility.FixWidth(GetItemType(), 6)} | {Utility.FixWidth((Value).ToString(), 5)} | {Utility.FixWidth(Description, 25)}  | {Utility.FixWidth(IsPurchased(),10)}";
+            return str;
+        }
+
+        public string EquipSellStatus() //아이템목록
+        {
+            string enhanceStr = EnhanceLvl > 0 ? $"+ {EnhanceLvl.ToString()}" : "";
+            string equipStr = isEquip ? "[E]" : "";
+            string str = $"{Utility.FixWidth(equipStr + ItemName + enhanceStr, 20)} | {Utility.FixWidth(GetItemType(), 6)} | {Utility.FixWidth((Value).ToString(), 5)} | {Utility.FixWidth(Description, 25)}";
             return str;
         }
 
