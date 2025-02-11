@@ -171,12 +171,12 @@ namespace HellChangSub
                 Skill skill = player.Skills[i];     // 스킬 목록 추가해야 빨간줄 사라질거임 - 사라졌음
                 Console.WriteLine($"{i + 1}. {skill.Name} - MP {skill.ManaCost}\n   {skill.Text}");
             }
-
-            int skillChoice = Utility.Select(0, player.Skills.Count) - 1;
+            Console.WriteLine("0. 뒤로가기");
+            int skillChoice = Utility.Select(0, player.Skills.Count);
             if (skillChoice == 0)
                 PlayerTurn();
 
-            Skill selectedSkill = player.Skills[skillChoice];
+            Skill selectedSkill = player.Skills[skillChoice - 1];
 
             if (player.CurrentMana < selectedSkill.ManaCost)    // MP가 부족할 경우 사용 불가
             {
@@ -266,8 +266,8 @@ namespace HellChangSub
 
         private void UseItem()
         {
-            // ItemManager를 관리하는 방식에 따라 수정
-            ItemManager itemManager = GameManager.Instance.ItemManager;
+            // CS1061오류 - 대소문자 실수였음
+            ItemManager itemManager = GameManager.Instance.itemManager;
 
             // 소비 아이템 중 Count가 0보다 큰 항목만 필터링
             List<UseItem> availableItems = itemManager.useItems.Where(item => item.Count > 0).ToList();
@@ -305,7 +305,7 @@ namespace HellChangSub
 
             
             int originalIndex = itemManager.useItems.IndexOf(selectedItem);
-            if (originalIndex < 0)
+            if (originalIndex < 0)      // 예외
             {
                 Console.WriteLine("오류: 선택한 아이템을 찾을 수 없습니다.");
                 Utility.PressAnyKey();
