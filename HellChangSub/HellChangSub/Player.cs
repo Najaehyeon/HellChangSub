@@ -145,7 +145,7 @@ namespace HellChangSub
             }
         }
 
-        public class Buff       // 버프 관리 클래스 - 현재는 공격포션, 방어포션뿐
+        /*public class Buff       // 버프 관리 클래스 - 현재는 공격포션, 방어포션뿐
         {
             public ItemType BuffType { get; set; }   // 예: AtkPotion 또는 DefPotion
             public int Value { get; set; }           // 증가한 능력치 수치
@@ -192,7 +192,7 @@ namespace HellChangSub
                     EquipDef -= buff.Value;
             }
             ActiveBuffs.Clear();
-        }
+        }*/
 
         /*public void LevelUp2()       //도전기능에서 요구하는 경험치량 10, 35, 65, 100
         {
