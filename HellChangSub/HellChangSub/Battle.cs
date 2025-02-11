@@ -477,6 +477,7 @@ namespace HellChangSub
             }
             Utility.PressAnyKey();
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
+            if (monsters[0].Name == "헬창 Sup") GameManager.Instance.EndingScene();
             GameManager.Instance.ShowMainScreen();
             return;
         }
