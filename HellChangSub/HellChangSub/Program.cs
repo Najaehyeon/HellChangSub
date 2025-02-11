@@ -1,5 +1,7 @@
 ﻿using System.Text.Json;
 using System.Text;
+using System.Media;
+using NAudio.Wave;
 
 namespace HellChangSub
 {
@@ -21,6 +23,8 @@ namespace HellChangSub
         public Quest quest;
         public ItemForge itemForge;
         private bool isLoaded = false;
+        static WaveOutEvent outputDevice;
+        static AudioFileReader audioFile;
 
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
 
@@ -277,6 +281,12 @@ namespace HellChangSub
 
         public void ShowCredits()
         {
+            string musicPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bgm.wav");
+            outputDevice = new WaveOutEvent(); // 오디오 장치 초기화
+            audioFile = new AudioFileReader(musicPath); // 파일 로드
+            outputDevice.Init(audioFile); // 오디오 출력 장치에 파일 연결
+            outputDevice.Play(); // 음악 재생
+
             Console.Clear();
             int screenHeight = Console.WindowHeight; // 콘솔 창 높이
             int screenWidth = Console.WindowWidth;   // 콘솔 창 너비
@@ -353,9 +363,24 @@ namespace HellChangSub
             }
             Console.OutputEncoding = originalEncoding;
             Console.SetCursorPosition(0, screenHeight - 1);
+            StopMusic();
             Console.Write("  『 게임을 종료하려면 아무 키나 누르세요 』");
             Console.ReadKey(); // 종료 대기
             ShowMainScreen();
+        }
+
+        static void StopMusic()
+        {
+            if (outputDevice != null)
+            {
+                outputDevice.Stop(); // 재생 중지
+                outputDevice.Dispose(); // 리소스 해제
+            }
+
+            if (audioFile != null)
+            {
+                audioFile.Dispose(); // 파일 리소스 해제
+            }
         }
     }
 }
