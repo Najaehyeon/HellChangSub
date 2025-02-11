@@ -257,7 +257,13 @@ namespace HellChangSub
                 Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
                 // 단일 대상 공격의 경우 대상 선택
                 Console.WriteLine("공격할 대상을 선택하세요.");
-                int targetIndex = Utility.Select(1, monsters.Count) - 1;
+                Console.WriteLine("0. 취소하기");
+                int targetIndex = Utility.Select(0, monsters.Count);
+                if (targetIndex == 0)
+                {
+                    UseSkill();
+                    return;
+                }
                 Monster target = monsters[targetIndex];
 
                 if (target.IsDead)
