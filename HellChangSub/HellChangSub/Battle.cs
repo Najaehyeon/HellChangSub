@@ -16,6 +16,7 @@ namespace HellChangSub
         private List<Monster> monsters;
         private int initialPlayerHealth;
         private int initialPlayerExp;
+        public int turnCount = 0;
 
         public Battle(Player player, List<Monster> monsters)
         {
@@ -42,6 +43,7 @@ namespace HellChangSub
             {
                 PlayerTurn();
                 MonsterTurn();
+                turnCount++;        // 지속 턴수가 있는 효과들 턴수 체크용
             }
         }
 
@@ -86,7 +88,7 @@ namespace HellChangSub
             }
         }
 
-        private void MonsterTurn()
+        private void MonsterTurn()      // 몬스터 턴
         {
             Console.Clear();
             Console.WriteLine("Battle!!\n");
@@ -115,7 +117,7 @@ namespace HellChangSub
         Utility.PressAnyKey();
         }
 
-        private void NormalAttack()      // 선택지에서 기본 공격 선택시
+        private void NormalAttack()      // 플레이어 기본 공격
         {
             Console.WriteLine("공격할 대상을 선택하세요.");
             int targetIndex = Utility.Select(1, monsters.Count) - 1;
@@ -139,15 +141,15 @@ namespace HellChangSub
                     Random rand = new Random();
                     float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
 
-                    int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit),
-                                                 randomMultiplier, 1.0f, target.Def, 0);
+                    int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit), randomMultiplier, 1.0f, target.Def, 0);
 
                     target.CurrentHealth -= damage;
                     target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
 
                     Console.WriteLine($"Lv.{target.Level} {target.Name}");
                     Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
-
+                    if (target.IsDead)
+                        GetKillData(target.Name);
                     if (monsters.All(m => m.IsDead))
                         Victory();
                 }
@@ -198,13 +200,15 @@ namespace HellChangSub
                 Console.Clear();
                 Console.WriteLine("Battle!!\n");
                 Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
-                int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit),
-                             randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
+                int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit), randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
+                
                 target.CurrentHealth -= damage;
                 target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
 
                 Console.WriteLine($"Lv.{target.Level} {target.Name}");
                 Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
+                if (target.IsDead)
+                    GetKillData(target.Name);
                 if (monsters.All(m => m.IsDead))
                     Victory();
 
@@ -224,8 +228,7 @@ namespace HellChangSub
                 Random rand = new Random();
                 float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
 
-                int damage = CalculateDamage(monster.Atk, 0, 1.6f, IsOccur(monster.Crit),
-                                             randomMultiplier, 1.0f, player.Def, player.EquipDef);
+                int damage = CalculateDamage(monster.Atk, 0, 1.6f, IsOccur(monster.Crit), randomMultiplier, 1.0f, player.Def, player.EquipDef);
 
                 player.CurrentHealth -= damage;
                 player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
@@ -242,8 +245,8 @@ namespace HellChangSub
             Random rand = new Random();
             float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
             Console.WriteLine($"{monster.Name} 이(가) {selectedSkill.Name} 을(를) 사용했다!");
-            int damage = CalculateDamage(monster.Atk, 0, 1.6f, IsOccur(monster.Crit),
-                             randomMultiplier, selectedSkill.DamageMultiplier, player.Def, 0);
+            int damage = CalculateDamage(monster.Atk, 0, 1.6f, IsOccur(monster.Crit), randomMultiplier, selectedSkill.DamageMultiplier, player.Def, 0);
+
             player.CurrentHealth -= damage;
             player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
@@ -259,7 +262,15 @@ namespace HellChangSub
             stat = finalStat; 
         }
 
-        private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // return 같은걸 써줄 필요가 전혀 없었음
+        private static bool IsOccur(float prob) => new Random().Next(0, 100) < prob;        // 확률 발동여부 판정
+
+        private void GetKillData(String Name)
+        {
+            if (Name == "오우거")
+                GameManager.Instance.quest.questDataList[0].Progressed++;
+            else
+                return;
+        }
 
         private void GameOver()
         {
@@ -288,13 +299,13 @@ namespace HellChangSub
             Console.WriteLine($"HP {initialPlayerHealth} -> {player.CurrentHealth}");
             int mp = player.CurrentMana;
             int mpmax = player.MaximumMana;
-            Recover("MP", ref mp, ref mpmax, 10);
+            Recover("MP", ref mp, ref mpmax, 10);       // 도전 기능 요구사항 - 전투 승리 시 MP 10 회복
             player.CurrentMana = mp;
             Console.WriteLine($"Exp {initialPlayerExp} -> {player.Exp}\n");
             player.LevelUp();   //경험치 얻은 뒤에는 항상 레벨업 가능 여부 확인해줘야 함
             Console.WriteLine("[획득 아이템]");
             Console.WriteLine($"{expGained * 100} Gold");
-            if (History.Instance.StageLvl == History.Instance.ChallengeLvl)
+            if (History.Instance.StageLvl == History.Instance.ChallengeLvl)     // 승리시 스테이지 Lv 상승
             {
                 History.Instance.StageLvl++;
             }

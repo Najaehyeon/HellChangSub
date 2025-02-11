@@ -1,27 +1,62 @@
 ﻿using System;
-using System.Text.Json;
+using System.IO;
+using Newtonsoft.Json;  // Newtonsoft.Json 사용
+
 namespace HellChangSub
 {
     public static class SaveSystem
     {
-        private static string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "savegame.json");// filePath는 패스콤바인(기본디렉토리,저장할 파일명)
-
-        public static void SaveGame(SaveData data)//SaveData의 객체를 받아온다
+        private static string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "savegame.json");
+        private static string filePath2 = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "savegamequest.json");
+        public static void SaveGame(SaveData data,SaveQuestData questData)
         {
-            string json = JsonSerializer.Serialize(data, new JsonSerializerOptions { WriteIndented = true }); //System.Text.Json에 있는 메서드를 활용 Serialize() → 객체 → JSON 문자열 변환 (직렬화) Deserialize() → JSON 문자열 → 객체 변환(역직렬화)
-            File.WriteAllText(filePath, json);//(경로,데이터) 경로에 있는 파일에 데이터를 저장한다.
+            string json = JsonConvert.SerializeObject(data, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All  // 클래스 타입 정보를 포함하여 저장
+                });
+
+            File.WriteAllText(filePath, json);
+            string questjson = JsonConvert.SerializeObject(questData, Formatting.Indented,
+                new JsonSerializerSettings
+                {
+                    TypeNameHandling = TypeNameHandling.All  // 클래스 타입 정보를 포함하여 저장
+                });
+
+            File.WriteAllText(filePath2, questjson);
             Console.WriteLine("저장되었습니다.");
             Utility.PressAnyKey();
             GameManager.Instance.ShowMainScreen();
         }
 
-
-        public static SaveData LoadGame()//SaveData 객체를 반환하는 로드게임 메서드
+        public static SaveData LoadGame()
         {
             if (File.Exists(filePath))
             {
                 string json = File.ReadAllText(filePath);
-                return JsonSerializer.Deserialize<SaveData>(json);//경로에있는 파일을 읽어온뒤 역정렬화 해주고 이를 Plyaer객체로 반환한다.
+                return JsonConvert.DeserializeObject<SaveData>(json,
+                    new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All  // 저장된 타입 정보를 사용하여 객체 생성
+                    });
+            }
+
+            Console.WriteLine("세이브 파일이 없습니다. 새로운 게임이 시작됩니다.");
+            Utility.PressAnyKey();
+            GameManager.Instance.ShowMainScreen();
+            return null;
+        }
+
+        public static SaveQuestData LoadGameQuest()
+        {
+            if (File.Exists(filePath))
+            {
+                string json = File.ReadAllText(filePath2);
+                return JsonConvert.DeserializeObject<SaveQuestData>(json,
+                    new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.All  // 저장된 타입 정보를 사용하여 객체 생성
+                    });
             }
 
             Console.WriteLine("세이브 파일이 없습니다. 새로운 게임이 시작됩니다.");

@@ -170,7 +170,7 @@ namespace HellChangSub
     // "마을을 위협하는 미니언 처치" 퀘스트 데이터
     public class KillMinionQuest : QuestData
     {
-        public override string Title { get; } = "마을을 위협하는 미니언 처치!";
+        public override string Title { get; } = "마을을 위협하는 오우거 처치!";
         public override string Mission { get; } = "미니언 10마리 처치!";
         public override string[] Rewards { get; } = new string[] { "쓸만한 방패", "500 Gold" };
         public override int Goal { get; } = 10;
