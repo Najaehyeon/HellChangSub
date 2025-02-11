@@ -277,7 +277,86 @@ namespace HellChangSub
 
         public void ShowCredits()
         {
+            Console.Clear();
+            int screenHeight = Console.WindowHeight; // 콘솔 창 높이
+            int screenWidth = Console.WindowWidth;   // 콘솔 창 너비
+            Encoding originalEncoding = Console.OutputEncoding;
+            Console.OutputEncoding = Encoding.UTF8;
+
+            List<string> credits = new List<string>
+        {
+            "──────────────────────────────────────",
+            "            🎬 엔딩 크레딧 🎬",
+            "──────────────────────────────────────",
+            "",
+            "✨ 기획 및 제작 ✨",
+            "고생한 우리 팀원 모두",
+            "",
+            "",
+            "❤나재현❤",
+            "든든한 팀장, 퀘스트 기능 담당",
+            "",
+            "",
+            "❤유준영❤",
+            "발표 담당, 장비강화, 대장간 구현",
+            "부족한 실력이지만 팀원분들이 많이 도와주셔서 잘 진행할 수 있었습니다.",
+            "",
+            "❤류석민❤",
+            "Item,ItemManager,ItemUtil 파트 담당",
+            "버스 달달했습니다",
+            "",
+            "❤양훈모❤",
+            "Player, Battle 파트 담당 ",
+            "머지할때 너무 무섭습니다...",
+            "",
+            "❤황희돈❤",
+            "게임매니저, 몬스터, 저장기능 담당",
+            "다같이 끝까지 화이팅!",
+            "",
+            "🎮 주요 등장인물 🎮",
+            "정상화의 신 헬창섭",
+            "전설의 용사 (당신)",
+            "수많은 몬스터들과 NPC들",
+            "",
+            "🎙️ 명대사 🎙️",
+            "'이건... 정상화가 아니다!' - 헬창섭",
+            "'나는... 정말 옳은 길을 걸은 것일까?' - 플레이어",
+            "정상화의 신 '헬창섭'이 거대한 근육의 파도를 일으키며 쓰러진다...",
+            "",
+            "🎮 플레이해 주셔서 감사합니다! 🎮",
+            "",
+            "──────────────────────────────────────",
+            "",
+            "  『 게임을 종료하려면 아무 키나 누르세요 』"
+        };
+
+            int totalLines = credits.Count;  // 크레딧 전체 줄 개수
+            int startLine = screenHeight;    // 크레딧이 시작할 위치 (화면 아래쪽에서 시작)
+
+            // 크레딧을 화면 아래에서부터 위로 스크롤
+            for (int i = 0; i < totalLines + screenHeight; i++)
+            {
+                Console.Clear();
+
+                // 크레딧이 화면 위로 올라가는 연출
+                for (int j = 0; j < totalLines; j++)
+                {
+                    int currentLine = startLine - i + j; // 현재 출력할 줄 위치 계산
+                    if (currentLine >= 0 && currentLine < screenHeight)
+                    {
+                        Console.SetCursorPosition((screenWidth - credits[j].Length) / 2, currentLine);
+                        Console.Write(credits[j]);
+                    }
+                }
+
+                Thread.Sleep(200); // 크레딧 속도 조절 (더 빠르게 하고 싶으면 숫자를 줄임)
+            }
+            Console.OutputEncoding = originalEncoding;
+            Console.SetCursorPosition(0, screenHeight - 1);
+            Console.Write("  『 게임을 종료하려면 아무 키나 누르세요 』");
+            Console.ReadKey(); // 종료 대기
             ShowMainScreen();
         }
     }
 }
+
