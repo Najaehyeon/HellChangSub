@@ -171,8 +171,12 @@ namespace HellChangSub
                 Skill skill = player.Skills[i];     // 스킬 목록 추가해야 빨간줄 사라질거임 - 사라졌음
                 Console.WriteLine($"{i + 1}. {skill.Name} - MP {skill.ManaCost}\n   {skill.Text}");
             }
+            Console.WriteLine("0. 뒤로가기");
 
-            int skillChoice = Utility.Select(1, player.Skills.Count) - 1;
+            int skillChoice = Utility.Select(0, player.Skills.Count) - 1;
+            if (skillChoice == 0)
+                PlayerTurn();
+            
             Skill selectedSkill = player.Skills[skillChoice];
 
             if (player.CurrentMana < selectedSkill.ManaCost)    // MP가 부족할 경우 사용 불가
