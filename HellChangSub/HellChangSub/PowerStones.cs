@@ -16,7 +16,7 @@ namespace HellChangSub
         public string Name { get; set; }
         public string Description { get; }
         public int Value { get; set; }
-        public StoneType StoneType { get; }
+        public StoneType StoneType { get; set; }
         public int Count { get; set; }
 
         public PowerStone() { }

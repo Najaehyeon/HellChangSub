@@ -128,17 +128,20 @@ namespace HellChangSub
 
             switch (item.EnhanceLvl)  // 강화 확률 설정
             {
-                case >= 0 and <= 3:
+                case 0:
                     successThreshold = 70;
-                    failureThreshold = 100;
+                    failureThreshold = 0;
+                case >= 1 and <= 3:
+                    successThreshold = 70;
+                    failureThreshold = 80;
                     break;
                 case >= 4 and <= 7:
                     successThreshold = 50;
-                    failureThreshold = 60;
+                    failureThreshold = 65;
                     break;
                 case >= 8 and <= 10:
                     successThreshold = 30;
-                    failureThreshold = 60;
+                    failureThreshold = 50;
                     break;
             }
 
@@ -179,7 +182,7 @@ namespace HellChangSub
                 Console.WriteLine("강화에 실패했습니다. 다시 시도하세요.");
             }
             // 강화석을 한 개 소모
-            powerStones[0].Count--;
+            powerStones[i].Count--;
             Utility.PressAnyKey();
             ReinforceScreen();
             
