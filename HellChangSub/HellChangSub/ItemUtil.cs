@@ -109,6 +109,7 @@ namespace HellChangSub
                 ItemManager.equipInventory.Remove(item);
                 item.isPurchase = false;
                 item.EnhanceLvl = 0;
+                item.EnhanceValue = 0;
             }
             ItemManager.EquipSellScene();
         }
@@ -136,11 +137,11 @@ namespace HellChangSub
                 item.isEquip = true;
                 if (item.ItemType == ItemType.Weapon)
                 {
-                    player.EquipAtk += item.Value;
+                    player.EquipAtk += item.TotalValue;
                 }
                 else
                 {
-                    player.EquipDef += item.Value;
+                    player.EquipDef += item.TotalValue;
                 }
             }
             else
@@ -156,11 +157,11 @@ namespace HellChangSub
                 item.isEquip = false;
                 if (item.ItemType == ItemType.Weapon)
                 {
-                    player.EquipAtk -= item.Value;
+                    player.EquipAtk -= item.TotalValue;
                 }
                 else
                 {
-                    player.EquipDef -= item.Value;
+                    player.EquipDef -= item.TotalValue;
                 }
             }
         }

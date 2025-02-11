@@ -145,7 +145,8 @@ namespace HellChangSub
             // 강화 성공
             if (successChance <= successThreshold)
             {
-                item.Value += powerStones[i].Value;
+                item.EnhanceValue += powerStones[i].Value;
+                item.TotalValue = item.EnhanceValue + item.Value;
                 item.EnhanceLvl++; // 강화 단계 증가
 
                 // 성공 메시지 배열
@@ -161,7 +162,8 @@ namespace HellChangSub
             // 강화 실패
             else if (successChance <= failureThreshold)
             {
-                item.Value -= powerStones[i].Value;
+                item.EnhanceValue -= powerStones[i].Value;
+                item.TotalValue = item.EnhanceValue + item.Value;
                 item.EnhanceLvl--;
 
 
