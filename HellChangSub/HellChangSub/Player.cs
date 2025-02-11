@@ -56,6 +56,7 @@ namespace HellChangSub
             JobName = saveData.JobName;
             Level = saveData.Level;
             Exp = saveData.Exp;
+            NeedExp = saveData.NeedExp;
             CurrentHealth = saveData.CurrentHealth;
             MaximumHealth = saveData.MaximumHealth;
             CurrentMana = saveData.CurrentMana;

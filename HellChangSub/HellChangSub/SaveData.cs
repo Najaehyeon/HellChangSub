@@ -14,6 +14,7 @@ namespace HellChangSub
         public string JobName { get; set; }
         public int Level { get; set; }
         public int Exp { get; set; }
+        public int NeedExp { get; set; }
         public int CurrentHealth { get; set; }
         public int MaximumHealth { get; set; }
         public int CurrentMana { get; set; }
@@ -43,6 +44,7 @@ namespace HellChangSub
             JobName = player.JobName;
             Level = player.Level;
             Exp = player.Exp;
+            NeedExp = player.NeedExp;
             CurrentHealth = player.CurrentHealth;
             MaximumHealth = player.MaximumHealth;
             MaximumMana = player.MaximumMana;
