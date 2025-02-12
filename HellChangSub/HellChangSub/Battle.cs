@@ -145,7 +145,7 @@ namespace HellChangSub
                     Console.ForegroundColor = ConsoleColor.DarkGray;
                 }
 
-                Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+                Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} {status}");
 
                 // 색상을 기본 값으로 복원
                 if (monsters[i].IsDead)
@@ -294,7 +294,7 @@ namespace HellChangSub
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                     }
 
-                    Console.WriteLine($"Lv.{monsters[i].Level} {monsters[i].Name} {status}");
+                    Console.WriteLine($"{i + 1} Lv.{monsters[i].Level} {monsters[i].Name} {status}");
 
                     // 색상을 기본 값으로 복원
                     if (monsters[i].IsDead)
