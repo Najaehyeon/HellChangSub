@@ -69,7 +69,7 @@ namespace HellChangSub
             {
                 if (useItems[i].Count == 0)
                     continue;
-                Console.WriteLine($"- {Utility.FixWidth(useItems[i].ItemName, 10)}  | {Utility.FixWidth(useItems[i].Count.ToString(), 5)} 개");
+                Console.WriteLine($"- {Utility.FixWidth(useItems[i].ItemName, 15)}  | {Utility.FixWidth(useItems[i].Count.ToString(), 5)} 개");
             }
             Console.WriteLine();
             Console.WriteLine("1. 장착 관리");
