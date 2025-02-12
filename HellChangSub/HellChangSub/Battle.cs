@@ -285,7 +285,7 @@ namespace HellChangSub
                     target.CurrentHealth -= damage;
                     target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
 
-                    Console.WriteLine($"Lv.{Utility.FixWidth($"{target.Level}", 4)} {Utility.FixWidth($"{target.Name}", 16)} - HP {Utility.FixWidth($"{beforeHP}", 4)} -> {Utility.FixWidth(target.IsDead ? "Dead" : target.CurrentHealth.ToString(), 4)}     [데미지 : {Utility.FixWidth($"{damage}", 5)}]{(Crit ? "" : " - 치명타 공격!!")}");
+                    Console.WriteLine($"Lv.{Utility.FixWidth($"{target.Level}", 4)} {Utility.FixWidth($"{target.Name}", 20)} - HP {Utility.FixWidth($"{beforeHP}", 4)} -> {Utility.FixWidth(target.IsDead ? "Dead" : target.CurrentHealth.ToString(), 4)}     [데미지 : {Utility.FixWidth($"{damage}", 5)}]{(Crit ? "" : " - 치명타 공격!!")}");
                     if (target.IsDead)
                         GetKillData(target.Name);
                 }
