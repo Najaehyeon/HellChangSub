@@ -14,7 +14,7 @@ namespace HellChangSub
         public bool purchased = false;
         public bool goldRequired = false;
         public bool noItem = false;
-        public bool equiptedItem = false;
+        public bool equippedItem = false;
         public ItemManager(SaveData saveData,Player player)
         {
             this.player = player;
@@ -220,7 +220,7 @@ namespace HellChangSub
             Console.WriteLine();
 
             itemUtil.CantSell(noItem);
-            itemUtil.EquiptedItem(equiptedItem);
+            itemUtil.EquippedItem(equippedItem);
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             int input = Utility.Select(0, equipInventory.Count);
             switch (input)
