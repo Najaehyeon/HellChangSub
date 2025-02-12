@@ -35,7 +35,10 @@ namespace HellChangSub
         public void ShowQuest()
         {
             Console.Clear();
-            ShowDialogue();
+            if (QuestState == QuestState.NotStarted)
+            {
+                ShowDialogue();
+            }
             Console.WriteLine(Title);
             Console.WriteLine("\n- 미션 -");
             Console.WriteLine(Mission);
