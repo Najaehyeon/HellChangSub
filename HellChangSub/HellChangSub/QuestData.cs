@@ -188,7 +188,7 @@ namespace HellChangSub
     {
         public override string Title { get; } = "마을을 위협하는 슬라임 처치!";
         public override string Mission { get; } = "슬라임 10마리 처치!";
-        public override string[] Rewards { get; } = new string[] { "스파르타의 창", "500 Gold" };
+        public override string[] Rewards { get; } = new string[] { "스파르타의 케틀벨", "500 Gold" };
         public override int Goal { get; } = 3;
 
 
