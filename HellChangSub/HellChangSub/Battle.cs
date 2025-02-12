@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace HellChangSub
             this.player = player;
             this.monsters = monsters;
             this.initialPlayerHealth = player.CurrentHealth;        // 결과 화면에서 체력 변화량을 보여주기 위해 전투 시작시의 체력 저장
-            this.initialPlayerExp = player.Exp;     // 윗줄가 마찬가지의 이유로 전투 시작시의 경험치 저장
+            this.initialPlayerExp = player.Exp;                     // 윗줄과 마찬가지의 이유로 전투 시작시의 경험치 저장
             
         }
 
@@ -184,10 +185,13 @@ namespace HellChangSub
                     Random rand = new Random();
                     float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
 
-                    int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit), randomMultiplier, 1.0f, target.Def, 0);
+                    bool Crit = IsOccur(player.Crit);
+                    int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, Crit, randomMultiplier, 1.0f, target.Def, 0);
 
                     target.CurrentHealth -= damage;
                     target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
+
+                    Console.WriteLine($"Lv.{target.Level} {target.Name} 을(를) 맞췄습니다. [데미지 : {damage}]{(Crit? "" : " - 치명타 공격!!")}");
 
                     Console.WriteLine($"Lv.{target.Level} {target.Name}");
                     Console.WriteLine($"HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}\n");
@@ -275,12 +279,14 @@ namespace HellChangSub
                 Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
                 foreach (var target in monsters.Where(m => !m.IsDead))
                 {
+                    bool Crit = IsOccur(player.Crit);
                     int beforeHP = target.CurrentHealth;
-                    int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit),
+                    int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, Crit,
                                                  randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
                     target.CurrentHealth -= damage;
                     target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
-                    Console.WriteLine($"Lv.{target.Level} {target.Name} - HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}");
+
+                    Console.WriteLine($"Lv.{Utility.FixWidth($"{target.Level}", 4)} {Utility.FixWidth($"{target.Name}", 16)} - HP {Utility.FixWidth($"{beforeHP}", 4)} -> {Utility.FixWidth(target.IsDead ? "Dead" : target.CurrentHealth.ToString(), 4)}     [데미지 : {Utility.FixWidth($"{damage}", 5)}]{(Crit ? "" : " - 치명타 공격!!")}");
                     if (target.IsDead)
                         GetKillData(target.Name);
                 }
@@ -335,12 +341,13 @@ namespace HellChangSub
                 }
 
                 int beforeHP = target.CurrentHealth;
-                int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, IsOccur(player.Crit),
+                bool Crit = IsOccur(player.Crit);
+                int damage = CalculateDamage(player.Atk, player.EquipAtk, player.CritDamage, Crit,
                                              randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
                 target.CurrentHealth -= damage;
                 target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
-                Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용!");
-                Console.WriteLine($"Lv.{target.Level} {target.Name} - HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}");
+                Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용! [데미지 : {damage}]{(Crit ? "" : " - 치명타 공격!!")}");
+                Console.Write($"Lv.{target.Level} {target.Name} - HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}");
                 if (target.IsDead)
                     GetKillData(target.Name);
             }
