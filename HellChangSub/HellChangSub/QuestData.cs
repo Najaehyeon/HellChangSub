@@ -190,9 +190,9 @@ namespace HellChangSub
     public class KillMinionQuest : QuestData
     {
         public override string Title { get; } = "마을을 위협하는 슬라임 처치!";
-        public override string Mission { get; } = "슬라임 3마리 처치!";
+        public override string Mission { get; } = "슬라임 10마리 처치!";
         public override string[] Rewards { get; } = new string[] { "스파르타의 케틀벨", "500 Gold", "EXP +20" };
-        public override int Goal { get; } = 3;
+        public override int Goal { get; } = 10;
 
 
         private int progressed = 0;
@@ -246,7 +246,7 @@ namespace HellChangSub
 
         public override void ShowDialogue()
         {
-            Console.WriteLine("마을을 지나 서쪽으로 가면 ‘헬스 던전’이 있어.\r\n그곳에는… 기괴한 슬라임들이 우글거리지.\n");
+            Console.WriteLine("마을을 지나 서쪽으로 가면 ‘헬스 던전’이 있어.\n그곳에는… 기괴한 슬라임들이 우글거리지.\n");
             Utility.PressAnyKey();
             Console.Clear();
             Console.WriteLine("평범한 슬라임이 아니라, 근육이 불룩불룩한 괴물들이야!\n맨날 던전 안에서 덤벨을 들고 으르렁거리면서 운동을 한다고.\n처음엔 그냥 신기한 구경거리였는데…\n");
@@ -255,7 +255,7 @@ namespace HellChangSub
             Console.WriteLine("문제는 요즘 그놈들이 던전 밖으로 나오기 시작했다는 거야.\n마을 주민들을 붙잡고 “운동했냐?”, “가슴 운동은 했냐?” 같은 말을 해댄다고…\n심지어 지나가는 사람한테 단백질 쉐이크를 억지로 먹이려는 놈들도 있대!\n");
             Utility.PressAnyKey();
             Console.Clear();
-            Console.WriteLine("이러다간 마을 전체가 근육 슬라임들에게 점령당할지도 몰라…\n부탁이야! 헬스 던전에 들어가서 근육 슬라임 10마리를 처치해줘!\n");
+            Console.WriteLine("이러다간 마을 전체가 근육 슬라임들에게 점령당할지도 몰라…\n부탁이야! 헬스 던전에 들어가서 슬라임 10마리를 처치해줘!\n");
             Utility.PressAnyKey();
             Console.Clear();
         }
