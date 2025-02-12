@@ -111,7 +111,6 @@ namespace HellChangSub
 
             foreach (var monster in monsters.Where(m => !m.IsDead))
             {
-                Console.WriteLine($"Lv.{monster.Level} {monster.Name} 의 공격!");
 
                 bool useSkill = IsOccur(30); // 30% 확률로 스킬 사용
                 if (useSkill && monster.Skills.Count > 0)
@@ -346,6 +345,8 @@ namespace HellChangSub
                                              randomMultiplier, selectedSkill.DamageMultiplier, target.Def, 0);
                 target.CurrentHealth -= damage;
                 target.CurrentHealth = Math.Max(target.CurrentHealth, 0);
+                Console.Clear();
+                Console.WriteLine("Battle!!\n");
                 Console.WriteLine($"{player.Name}의 {selectedSkill.Name} 사용! [데미지 : {damage}]{(Crit ? "" : " - 치명타 공격!!")}");
                 Console.Write($"Lv.{target.Level} {target.Name} - HP {beforeHP} -> {(target.IsDead ? "Dead" : target.CurrentHealth.ToString())}");
                 if (target.IsDead)
@@ -431,14 +432,17 @@ namespace HellChangSub
                 int beforeHP = player.CurrentHealth;
                 Random rand = new Random();
                 float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
-
-                int damage = CalculateDamage(monster.Atk, 0, 1.6f, IsOccur(monster.Crit), randomMultiplier, 1.0f, player.Def, player.EquipDef);
+                bool Crit = IsOccur(monster.Crit);
+                int damage = CalculateDamage(monster.Atk, 0, 1.6f, Crit, randomMultiplier, 1.0f, player.Def, player.EquipDef);
 
                 player.CurrentHealth -= damage;
                 player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
-                Console.WriteLine($"Lv.{player.Level} {player.Name}");
-                Console.WriteLine(player.CurrentHealth < beforeHP? $"HP {beforeHP} -> {player.CurrentHealth}" : $"{player.Name}은(는) 공격을 완벽하게 막아내었다.");
+                Console.Write($"Lv.{monster.Level} {monster.Name} 의 공격!");
+                if (player.CurrentHealth < beforeHP)
+                    Console.Write($"[데미지 : {damage}]{(Crit ? "" : " - 치명타 공격!!")}");
+                Console.WriteLine($"\nLv.{player.Level} {player.Name}");
+                Console.WriteLine(player.CurrentHealth < beforeHP? $"HP {beforeHP} -> {player.CurrentHealth}" : $"{player.Name}은(는) 공격을 완벽하게 막아내었다.\n");
             }
         }
 
@@ -448,13 +452,16 @@ namespace HellChangSub
             int beforeHP = player.CurrentHealth;
             Random rand = new Random();
             float randomMultiplier = (float)(rand.NextDouble() * 0.2 + 0.9); // 0.9 ~ 1.1 랜덤 보정값
-            Console.WriteLine($"{monster.Name} 이(가) {selectedSkill.Name} 을(를) 사용했다!");
-            int damage = CalculateDamage(monster.Atk, 0, 1.6f, IsOccur(monster.Crit), randomMultiplier, selectedSkill.DamageMultiplier, player.Def, 0);
+            Console.Write($"{monster.Name} 이(가) {selectedSkill.Name} 을(를) 사용했다! ");
+            bool Crit = IsOccur(monster.Crit);
+            int damage = CalculateDamage(monster.Atk, 0, 1.6f, Crit, randomMultiplier, selectedSkill.DamageMultiplier, player.Def, 0);
 
             player.CurrentHealth -= damage;
             player.CurrentHealth = Math.Max(player.CurrentHealth, 0);
 
-            Console.WriteLine($"Lv.{player.Level} {player.Name}");
+            if (player.CurrentHealth < beforeHP)
+                Console.Write($"[데미지 : {damage}]{(Crit ? "" : " - 치명타 공격!!")}");
+            Console.WriteLine($"\nLv.{player.Level} {player.Name}");
             Console.WriteLine(player.CurrentHealth < beforeHP ? $"HP {beforeHP} -> {player.CurrentHealth}" : $"{player.Name}은(는) 공격을 완벽하게 막아내었다.");
         }
 
