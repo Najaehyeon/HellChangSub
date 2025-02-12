@@ -37,7 +37,7 @@ namespace HellChangSub
             int width = 0;
             foreach (char c in input)
             {
-                if(c > '가' && c < '힣')
+                if(c >= '가' && c <= '힣')
                 {
                     width += 2;
                 }
