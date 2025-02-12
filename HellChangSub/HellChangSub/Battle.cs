@@ -74,7 +74,9 @@ namespace HellChangSub
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
             Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
-            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
+            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}");
+            Console.WriteLine($"ATK {player.Atk} {(player.EquipAtk == 0 ? "" : $"(+ {player.EquipAtk})")}");
+            Console.WriteLine($"DEF {player.Def} {(player.EquipDef == 0 ? "" : $"(+ {player.EquipDef})")}\n");
 
             Console.WriteLine("1. 공격");
             Console.WriteLine("2. 스킬");
@@ -157,7 +159,9 @@ namespace HellChangSub
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
             Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
-            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
+            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}");
+            Console.WriteLine($"ATK {player.Atk} {(player.EquipAtk == 0 ? "" : $"(+ {player.EquipAtk})")}");
+            Console.WriteLine($"DEF {player.Def} {(player.EquipDef == 0 ? "" : $"(+ {player.EquipDef})")}\n");
             Console.WriteLine("공격할 대상을 선택하세요.");
             int targetIndex = Utility.Select(1, monsters.Count) - 1;
             Monster target = monsters[targetIndex];
@@ -229,7 +233,9 @@ namespace HellChangSub
             Console.WriteLine("\n[내정보]");
             Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
             Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
-            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
+            Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}");
+            Console.WriteLine($"ATK {player.Atk} {(player.EquipAtk == 0 ? "" : $"(+ {player.EquipAtk})")}");
+            Console.WriteLine($"DEF {player.Def} {(player.EquipDef == 0 ? "" : $"(+ {player.EquipDef})")}\n");
             Console.WriteLine("사용할 스킬을 선택하세요.");
 
             for (int i = 0; i < player.Skills.Count; i++)
@@ -306,7 +312,9 @@ namespace HellChangSub
                 Console.WriteLine("\n[내정보]");
                 Console.WriteLine($"Lv.{player.Level} {player.Name} ({player.JobName})");
                 Console.WriteLine($"HP {player.CurrentHealth}/{player.MaximumHealth}");
-                Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}\n");
+                Console.WriteLine($"MP {player.CurrentMana}/{player.MaximumMana}");
+                Console.WriteLine($"ATK {player.Atk} {(player.EquipAtk == 0 ? "" : $"(+ {player.EquipAtk})")}");
+                Console.WriteLine($"DEF {player.Def} {(player.EquipDef == 0 ? "" : $"(+ {player.EquipDef})")}\n");
                 // 단일 대상 공격의 경우 대상 선택
                 Console.WriteLine("공격할 대상을 선택하세요.");
                 Console.WriteLine("0. 취소하기");
