@@ -387,9 +387,9 @@ namespace HellChangSub
             Console.WriteLine($"{"MP",-12} | {CurrentMana}/{MaximumMana}");
             Console.WriteLine($"{"Atk",-12} | {Atk} {(EquipAtk == 0 ? "" : $"(+ {EquipAtk})")}");
             Console.WriteLine($"{"Def",-12} | {Def} {(EquipDef == 0 ? "" : $"(+ {EquipDef})")}");
-            Console.WriteLine($"{"Crit",-12} | {Crit}");
+            Console.WriteLine($"{"Crit",-12} | {Crit}%");
             Console.WriteLine($"{"CritDmg",-12} | {CritDamage}");
-            Console.WriteLine($"{"Evasion",-12} | {Evasion}");
+            Console.WriteLine($"{"Evasion",-12} | {Evasion}%");
 
             Console.WriteLine("\n[보유 스킬]");
             if (Skills.Count == 0)
