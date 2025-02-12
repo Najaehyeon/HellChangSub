@@ -377,7 +377,7 @@ namespace HellChangSub
         public void ShowStatus()
         {
             Console.Clear();
-            Console.WriteLine("[플레이어 정보]");
+            Console.WriteLine("\n[플레이어 정보]\n");
             Console.WriteLine($"{"Name",-12} | {Name}");
             Console.WriteLine($"{"Level",-12} | {Level}");
             Console.Write($"{"Exp",-12} | {Exp}");
@@ -391,7 +391,7 @@ namespace HellChangSub
             Console.WriteLine($"{"CritDmg",-12} | {CritDamage}");
             Console.WriteLine($"{"Evasion",-12} | {Evasion}%");
 
-            Console.WriteLine("\n[보유 스킬]");
+            Console.WriteLine("\n\n[보유 스킬]\n");
             if (Skills.Count == 0)
             {
                 Console.WriteLine(" - 없음");

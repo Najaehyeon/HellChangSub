@@ -156,7 +156,7 @@ namespace HellChangSub
                 Console.Write(">>");
                 string playerName = Console.ReadLine();
                 Console.Clear();
-                Console.WriteLine("\n직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
+                Console.WriteLine("\n직업을 정해주세요.\n\n1. 전사\n2. 도적\n3. 마법사");
                 int playerJob = Utility.Select(1, 3);
                 player = new Player(playerName, playerJob); //
                 itemManager = new ItemManager(player);
