@@ -290,7 +290,7 @@ namespace HellChangSub
 
                     if (monsters[i].IsDead)
                     {
-                        // 몬스터가 죽은 경우, 어두운 색으로 출력 (예: DarkGray)
+                        // 몬스터가 죽은 경우, 어두운 색으로 출력
                         Console.ForegroundColor = ConsoleColor.DarkGray;
                     }
 
