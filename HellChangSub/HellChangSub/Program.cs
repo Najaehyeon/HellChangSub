@@ -5,7 +5,6 @@ using NAudio.Wave;
 
 namespace HellChangSub
 {
-    public delegate void Delegate();
     internal class Program
     {
         static void Main(string[] args)
