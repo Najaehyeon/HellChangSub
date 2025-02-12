@@ -187,8 +187,8 @@ namespace HellChangSub
     public class KillMinionQuest : QuestData
     {
         public override string Title { get; } = "마을을 위협하는 슬라임 처치!";
-        public override string Mission { get; } = "슬라임 10마리 처치!";
-        public override string[] Rewards { get; } = new string[] { "스파르타의 케틀벨", "500 Gold" };
+        public override string Mission { get; } = "슬라임 3마리 처치!";
+        public override string[] Rewards { get; } = new string[] { "스파르타의 케틀벨", "500 Gold", "EXP +20" };
         public override int Goal { get; } = 3;
 
 
@@ -237,6 +237,8 @@ namespace HellChangSub
             EquipItem item = GameManager.Instance.itemManager.equipItems[2];
             GameManager.Instance.itemManager.itemUtil.QuestEquip(item);
             GameManager.Instance.player.Gold += 500;
+            GameManager.Instance.player.Exp += 20;
+            GameManager.Instance.player.LevelUp();
         }
     }
 
@@ -246,7 +248,7 @@ namespace HellChangSub
     {
         public override string Title { get; } = "장비를 구매하여 장착해보자.";
         public override string Mission { get; } = "장비 장착하기";
-        public override string[] Rewards { get; } = new string[] { "EXP +50", "200 Gold" };
+        public override string[] Rewards { get; } = new string[] { "EXP +10", "200 Gold" };
         public override int Goal { get; } = 1;
 
 
@@ -291,7 +293,7 @@ namespace HellChangSub
 
         public override void GiveRewards()
         {
-            GameManager.Instance.player.Exp += 50;
+            GameManager.Instance.player.Exp += 10;
             GameManager.Instance.player.LevelUp();
             GameManager.Instance.player.Gold += 200;
         }
@@ -302,9 +304,9 @@ namespace HellChangSub
     public class StrongMoreQuest : QuestData
     {
         public override string Title { get; } = "더욱 더 강해지기!";
-        public override string Mission { get; } = "3레벨 달성하기";
-        public override string[] Rewards { get; } = new string[] { "EXP + 80", "1000 Gold" };
-        public override int Goal { get; } = 3;
+        public override string Mission { get; } = "5레벨 달성하기";
+        public override string[] Rewards { get; } = new string[] { "EXP + 30", "1000 Gold" };
+        public override int Goal { get; } = 5;
 
         private int progressed = GameManager.Instance.player.Level;
         public override int Progressed
@@ -340,7 +342,7 @@ namespace HellChangSub
 
         public override void GiveRewards()
         {
-            GameManager.Instance.player.Exp += 80;
+            GameManager.Instance.player.Exp += 30;
             GameManager.Instance.player.LevelUp();
             GameManager.Instance.player.Gold += 1000;
         }
