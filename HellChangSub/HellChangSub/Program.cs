@@ -1,9 +1,10 @@
 ﻿using System.Text.Json;
 using System.Text;
+using System.Media;
+using NAudio.Wave;
 
 namespace HellChangSub
 {
-    public delegate void Delegate();
     internal class Program
     {
         static void Main(string[] args)
@@ -21,6 +22,8 @@ namespace HellChangSub
         public Quest quest;
         public ItemForge itemForge;
         private bool isLoaded = false;
+        static WaveOutEvent outputDevice;//읽은 오디오파일을 출력하는 장치 Init으로 연결후 Play가능
+        static AudioFileReader audioFile;//오디오파일 읽는 장치
 
         private static GameManager _instance; // 1️ 유일한 인스턴스를 저장할 정적 변수
 
@@ -76,7 +79,34 @@ namespace HellChangSub
 ......................*+::;;++;;:,,.*,............
 ..................................................";
 
-
+            string asciiArt2 = @"
+.......................,,,........................
+..................,:;+++;+++,.....................
+................,+*;,,.,:;:,+,....................
+...............,?;,,::;+%,..:+....................
+...............:?;;;;;:::+...*:...................
+................++,,,....::,:+*...................
+................:*,....:;:,++**...................
+.................;%*;,*%*,.;:+*,..................
+..................?+:,::..:;:;:*;.................
+..................:++;:;::,.++.,;+;,..............
+...................,+*++;:;+:.,,,,+*;:............
+............,,┌====================┐,;+...........
+=============== 프로틴 마을의 비밀  ==============
+..........,?:.└====================┘..,?..........
+..........++..,*:,++*+;..,+%:.........;*..........
+..........%,..,,:+,:%*..:?+,........:*?+..........
+..........%:..:?+...??:;%:..........:?*:..........
+..........:?,..,+;,,?:;%;..........,*++...........
+...........:?,...:;+%,:?..........:++*............
+............;?,....,;+%?........,+++*,............
+.............;?,......,+:....,+++:;%+.............
+..............:?:............?+,...:+.............
+...............,**;,.......:?;.....,*.............
+.................:;+*?;..;*+:......;%.............
+....................,;%*++,..,,,,,;?%,............
+......................*+::;;++;;:,,.*,............
+..................................................";
 
             for (int i = 0; i < 2; i++)
             {
@@ -102,12 +132,19 @@ namespace HellChangSub
             }
             Console.ForegroundColor = ConsoleColor.Red;
             Console.Clear();
-            Console.WriteLine(asciiArt);
-            Console.OutputEncoding = originalEncoding;
+            Console.WriteLine(asciiArt2);
+            Console.OutputEncoding = originalEncoding;            
+            Console.WriteLine();
             Console.ResetColor();
-            Console.WriteLine("헬창섭의 저주");
             Utility.PressAnyKey();
+            AskLoadGame();
+
+        }
+
+        public void AskLoadGame()
+        {
             Console.Clear();
+            Console.WriteLine();
             Console.WriteLine("저장된 게임을 불러오시겠습니까?");
             Console.WriteLine("\n1. 예\n2. 아니오");
             int choice = Utility.Select(1, 2);
@@ -121,7 +158,6 @@ namespace HellChangSub
                 isLoaded = false;
             }
             CreateObjects(isLoaded);
-
 
         }
 
@@ -139,10 +175,12 @@ namespace HellChangSub
             }
             else
             {
-                Console.WriteLine("플레이어 이름을 입력해주세요.");
+                Console.Clear();
+                Console.WriteLine("\n플레이어 이름을 입력해주세요.");
                 Console.Write(">>");
                 string playerName = Console.ReadLine();
-                Console.WriteLine("직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
+                Console.Clear();
+                Console.WriteLine("\n직업을 정해주세요.\n\n1. 전사\n2. 도적\n3. 마법사");
                 int playerJob = Utility.Select(1, 3);
                 player = new Player(playerName, playerJob); //
                 itemManager = new ItemManager(player);
@@ -159,7 +197,7 @@ namespace HellChangSub
         {
             
             Console.Clear();
-            Console.WriteLine("프로틴 헬창 마을에 오신 것을 환영합니다.");
+            Console.WriteLine("\n프로틴 헬창 마을에 오신 것을 환영합니다.");
             Console.WriteLine();
             Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 대장간\n6. 퀘스트\n7. 휴식하기 (100 G)\n8. 저장하기");
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
@@ -248,6 +286,7 @@ namespace HellChangSub
             Console.WriteLine();
             Console.WriteLine("──────────────────────────────────────");
             Console.WriteLine();
+            Thread.Sleep(500);
             Console.WriteLine("  세상은 다시 평화를 되찾았다.");
             Thread.Sleep(800);
             Console.WriteLine();
@@ -261,6 +300,8 @@ namespace HellChangSub
             Thread.Sleep(800);
             Console.WriteLine();
             Console.WriteLine("──────────────────────────────────────");
+            Thread.Sleep(500);
+            Console.WriteLine();
             Console.WriteLine("  새로운 시대가 시작되려 하고 있다...");
             Thread.Sleep(800);
             Console.WriteLine();
@@ -269,6 +310,7 @@ namespace HellChangSub
             Console.WriteLine();
             Console.WriteLine("──────────────────────────────────────");
             Console.WriteLine();
+            Thread.Sleep(500);
             Console.WriteLine("  [ 엔딩 크레딧이 시작됩니다... ]");
             Console.WriteLine();
             Utility.PressAnyKey();            
@@ -277,16 +319,19 @@ namespace HellChangSub
 
         public void ShowCredits()
         {
+            string musicPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "bgm.wav");//현재위치.bin폴더의 debug폴더위치+브금파일이름
+            StartMusic(musicPath);
+
             Console.Clear();
             int screenHeight = Console.WindowHeight; // 콘솔 창 높이
             int screenWidth = Console.WindowWidth;   // 콘솔 창 너비
-            Encoding originalEncoding = Console.OutputEncoding;
-            Console.OutputEncoding = Encoding.UTF8;
+            Encoding originalEncoding = Console.OutputEncoding;//기존 코딩스타일 저장
+            Console.OutputEncoding = Encoding.UTF8;//utf8로 변경
 
             List<string> credits = new List<string>
         {
             "──────────────────────────────────────",
-            "            🎬 엔딩 크레딧 🎬",
+            "🎬 엔딩 크레딧 🎬",
             "──────────────────────────────────────",
             "",
             "✨ 기획 및 제작 ✨",
@@ -295,7 +340,7 @@ namespace HellChangSub
             "",
             "❤나재현❤",
             "든든한 팀장, 퀘스트 기능 담당",
-            "",
+            "완성도는 고치는 만큼 비례...",
             "",
             "❤유준영❤",
             "발표 담당, 장비강화, 대장간 구현",
@@ -327,35 +372,61 @@ namespace HellChangSub
             "",
             "──────────────────────────────────────",
             "",
-            "  『 게임을 종료하려면 아무 키나 누르세요 』"
+            "『 게임을 종료하려면 아무 키나 누르세요 』"
         };
 
             int totalLines = credits.Count;  // 크레딧 전체 줄 개수
             int startLine = screenHeight;    // 크레딧이 시작할 위치 (화면 아래쪽에서 시작)
 
             // 크레딧을 화면 아래에서부터 위로 스크롤
-            for (int i = 0; i < totalLines + screenHeight; i++)
+            for (int i = 0; i < totalLines + screenHeight+1; i++)//총 줄수 + 화면높이 만큼 해야 모든줄이 화면위로 올라감 i가 증가할때마다 한줄씩 올라감
             {
-                Console.Clear();
+                Console.Clear();// 한줄 올라갈때마다 콘솔 클리어
 
                 // 크레딧이 화면 위로 올라가는 연출
-                for (int j = 0; j < totalLines; j++)
+                for (int j = 0; j < totalLines; j++)//여기서 한줄 올라갈때마다 필요한만큼의 크레딧 스트링들을 출력
                 {
-                    int currentLine = startLine - i + j; // 현재 출력할 줄 위치 계산
-                    if (currentLine >= 0 && currentLine < screenHeight)
+                    int currentLine = startLine - i + j; // 현재 출력할 줄 위치 계산  크레딧 전체줄수 
+                    if (currentLine >= 0 && currentLine < screenHeight)//출력 범위는 현재 줄 위치가 0이상 스크린 높이 미만 일때만 출력한다
                     {
-                        Console.SetCursorPosition((screenWidth - credits[j].Length) / 2, currentLine);
-                        Console.Write(credits[j]);
+                        Console.SetCursorPosition((screenWidth - Utility.GetWidth(credits[j])) / 2, currentLine);//커서 위치를 x는 (화면너비-스트링의 실제길이)/2 에서 시작하여 출력시 가운데 정렬 y값은 현재 줄 위치
+                        Console.Write(credits[j]);// 현재 줄위치에서 크레딧을 위에서부터 출력
                     }
+                    // 화면 길이가 5줄 크레딧이 15줄이라고 가정했을때 i 0 j 0 일 때 currentLine = 5 이는 currentLine < screenHeight에 해당되지 않으므로 출력x
+                    // i = 1 부터 출력시작 이때는 j = 0에서만 출력 위치 x = 가운데 정렬 y = 4(화면높이가 5일때 4가 제일 아래) 에서 credits[0]을 출력
+                    // i = 2 일때 j = 0,1 출력 credits[0]은 y = 3에서 credits[1]은 y = 4에서 출력 이러한 방식으로 총 줄수 + 화면높이 만큼 반복
                 }
 
-                Thread.Sleep(200); // 크레딧 속도 조절 (더 빠르게 하고 싶으면 숫자를 줄임)
+                Thread.Sleep(240); // 크레딧 속도 조절 (더 빠르게 하고 싶으면 숫자를 줄임)
             }
             Console.OutputEncoding = originalEncoding;
             Console.SetCursorPosition(0, screenHeight - 1);
+            StopMusic();
             Console.Write("  『 게임을 종료하려면 아무 키나 누르세요 』");
             Console.ReadKey(); // 종료 대기
             ShowMainScreen();
+        }
+
+        static void StartMusic(string musicPath)
+        {
+            outputDevice = new WaveOutEvent(); // 오디오 장치 초기화
+            audioFile = new AudioFileReader(musicPath); // 파일 로드
+            outputDevice.Init(audioFile); // 오디오 출력 장치에 파일 연결
+            outputDevice.Play(); // 음악 재생
+        }
+
+        static void StopMusic()
+        {
+            if (outputDevice != null)
+            {
+                outputDevice.Stop(); // 재생 중지
+                outputDevice.Dispose(); // 리소스 해제
+            }
+
+            if (audioFile != null)
+            {
+                audioFile.Dispose(); // 파일 리소스 해제
+            }
         }
     }
 }

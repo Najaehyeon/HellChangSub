@@ -41,9 +41,9 @@ namespace HellChangSub
                     });
             }
 
-            Console.WriteLine("세이브 파일이 없습니다. 새로운 게임이 시작됩니다.");
+            Console.WriteLine("세이브 파일이 없습니다.");
             Utility.PressAnyKey();
-            GameManager.Instance.ShowMainScreen();
+            GameManager.Instance.AskLoadGame();
             return null;
         }
 
@@ -59,9 +59,9 @@ namespace HellChangSub
                     });
             }
 
-            Console.WriteLine("세이브 파일이 없습니다. 새로운 게임이 시작됩니다.");
+            Console.WriteLine("세이브 파일이 없습니다.");
             Utility.PressAnyKey();
-            GameManager.Instance.ShowMainScreen();
+            GameManager.Instance.AskLoadGame();
             return null;
         }
     }

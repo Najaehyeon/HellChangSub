@@ -14,7 +14,7 @@ namespace HellChangSub
         public bool purchased = false;
         public bool goldRequired = false;
         public bool noItem = false;
-        public bool equiptedItem = false;
+        public bool equippedItem = false;
         public ItemManager(SaveData saveData,Player player)
         {
             this.player = player;
@@ -31,12 +31,12 @@ namespace HellChangSub
         //string name, int value, string description, int price, ItemType itemtype
         public List<EquipItem> equipItems = new List<EquipItem>
         {
-            new EquipItem("낣은 검", 5, "쉽게 볼 수 있는 낡은 검 입니다. ", 600, ItemType.Weapon,0),
-            new EquipItem("청동 도끼", 10, "어디선가 사용됐던거 같은 도끼입니다. ", 1500, ItemType.Weapon, 0),
-            new EquipItem("스파르타의 창", 20, "스파르타의 전사들이 사용했다는 전설의 창입니다. ", 2500, ItemType.Weapon, 0),
-            new EquipItem("수련자의 갑옷", 4, "수련에 도움을 주는 갑옷입니다. ", 1000, ItemType.Armor, 0),
-            new EquipItem("무쇠갑옷", 9, "무쇠로 만들어져 튼튼한 갑옷입니다. ", 2000, ItemType.Armor, 0),
-            new EquipItem("스파르타의 갑옷", 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다. ", 3500, ItemType.Armor, 0)
+            new EquipItem("낡은 덤벨", 10, "쉽게 볼 수 있는 낡은 덤벨이다.", 600, ItemType.Weapon,0),
+            new EquipItem("청동 바벨", 30, "어디선가 사용됐던 것 같은 바벨.", 1500, ItemType.Weapon, 0),
+            new EquipItem("스파르탄 케틀벨", 50, "전설의 스파르탄이 사용했던 케틀벨.", 2500, ItemType.Weapon, 0),
+            new EquipItem("수련자의 조끼", 5, "초보 헬창을 위한 조끼.", 1000, ItemType.Armor, 0),
+            new EquipItem("언더아머압박조끼", 10, "근력 운동 중 부상을 막아준다. ", 2000, ItemType.Armor, 0),
+            new EquipItem("스파르탄중량조끼", 20, "전설의 스파르탄이 착용했던 조끼.", 3500, ItemType.Armor, 0)
         };
         public List<EquipItem> equipInventory = new List<EquipItem>();
         //string itemname, int value, string description, int price, ItemType itemType
@@ -44,8 +44,8 @@ namespace HellChangSub
         {
             new UseItem("체력포션", 50, "체력 회복", 50, ItemType.HpPotion,0),
             new UseItem("마나포션", 50, "마나 회복", 50, ItemType.MpPotion, 0),
-            new UseItem("힘포션", 20, "공격력 상승", 50, ItemType.AtkPotion, 0),
-            new UseItem("방어포션", 20, "방어력 상승", 50, ItemType.DefPotion, 0)
+            new UseItem("단백질 쉐이크", 20, "공격력 상승", 50, ItemType.AtkPotion, 0),
+            new UseItem("관절 보호제", 20, "방어력 상승", 50, ItemType.DefPotion, 0)
         };
 
         //인벤토리
@@ -69,9 +69,9 @@ namespace HellChangSub
             {
                 if (useItems[i].Count == 0)
                     continue;
-                Console.WriteLine($"- {Utility.FixWidth(useItems[i].ItemName, 10)}  | {Utility.FixWidth(useItems[i].Count.ToString(), 5)} 개");
+                Console.WriteLine($"- {Utility.FixWidth(useItems[i].ItemName, 15)}  | {Utility.FixWidth(useItems[i].Count.ToString(), 5)} 개");
             }
-
+            Console.WriteLine();
             Console.WriteLine("1. 장착 관리");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -102,7 +102,7 @@ namespace HellChangSub
             {
                 Console.WriteLine($"{Utility.FixWidth($"{i+1}",3)}. {equipInventory[i].EquipInvenStatus()}");
             }
-
+            Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
@@ -220,7 +220,7 @@ namespace HellChangSub
             Console.WriteLine();
 
             itemUtil.CantSell(noItem);
-            itemUtil.EquiptedItem(equiptedItem);
+            itemUtil.EquippedItem(equippedItem);
             Console.WriteLine("원하시는 행동을 입력해주세요.");
             int input = Utility.Select(0, equipInventory.Count);
             switch (input)

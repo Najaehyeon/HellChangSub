@@ -67,8 +67,8 @@ namespace HellChangSub
                     Crit = 10;
                     break;
                 case 1:
-                    Name = "검은 슬라임";
-                    Description = "더강한 슬라임";
+                    Name = "단백질 슬라임";
+                    Description = "뭉쳐진 단백질 덩어리. 프로틴 냄새가 진동한다.";
                     Level = CalculateLevel(3, stageLvl);
                     MaximumHealth = 80 + Level * 10;
                     CurrentHealth = 80 + Level * 10;
@@ -77,8 +77,8 @@ namespace HellChangSub
                     Crit = 10;
                     break;
                 case 2:
-                    Name = "황금 슬라임";
-                    Description = "보물로 이뤄진 슬라임";
+                    Name = "몬스터 쉐이크";
+                    Description = "마시기만 해도 100g의 단백질이 흡수되는 궁극의 슬라임.";
                     Level = CalculateLevel(5, stageLvl,2);
                     MaximumHealth = 100 + Level * 10;
                     CurrentHealth = 100 + Level * 10;
@@ -129,8 +129,8 @@ namespace HellChangSub
                     Crit = 10;
                     break;
                 case 1:
-                    Name = "검은 스켈레톤";
-                    Description = "암흑 마법 스켈레톤";
+                    Name = "근손실 스켈레톤";
+                    Description = "근육을 잃고 뼈만 남은 슬픈 헬창의 유령.";
                     Level = CalculateLevel(6, stageLvl);
                     MaximumHealth = 150 + Level * 20;
                     CurrentHealth = 150 + Level * 20;
@@ -139,8 +139,8 @@ namespace HellChangSub
                     Crit = 10;
                     break;
                 case 2:
-                    Name = "황금 스켈레톤";
-                    Description = "황금 갑옷을 입은 엘리트";
+                    Name = "식단 붕괴 스켈레톤";
+                    Description = "3일 연속 치킨을 먹고 타락한 헬창의 잔재.";
                     Level = CalculateLevel(8, stageLvl,2);
                     MaximumHealth = 180 + Level * 30;
                     CurrentHealth = 180 + Level * 30;
@@ -190,8 +190,8 @@ namespace HellChangSub
                     Crit = 10;
                     break;
                 case 1:
-                    Name = "검은 오우거";
-                    Description = "어둠의 힘을 받은 오우거";
+                    Name = "중량 오우거";
+                    Description = "탄수화물을 흡수할수록 강해지는 초고열량 괴물.";
                     Level = CalculateLevel(9, stageLvl);
                     MaximumHealth = 250 + Level * 20;
                     CurrentHealth = 250 + Level * 20;
@@ -200,8 +200,8 @@ namespace HellChangSub
                     Crit = 10;
                     break;
                 case 2:
-                    Name = "황금 오우거";
-                    Description = "전설 속 오우거";
+                    Name = "벌크업 오우거";
+                    Description = "3대 5000을 돌파한 전설의 오우거. 바벨을 휘두른다.";
                     Level = CalculateLevel(11, stageLvl,3);
                     MaximumHealth = 300 + Level * 30;
                     CurrentHealth = 300 + Level * 30;
@@ -251,8 +251,8 @@ namespace HellChangSub
                     Crit = 10;
                     break;
                 case 1:
-                    Name = "암흑 드래곤";
-                    Description = "어둠의 힘을 지닌 고대 드래곤";
+                    Name = "게이너 드래곤";
+                    Description = "벌크업을 위해 탄수화물과 지방을 끝없이 섭취하는 드래곤.";
                     Level = CalculateLevel(14, stageLvl);
                     MaximumHealth = 600 + Level * 20;
                     CurrentHealth = 600 + Level * 20;
@@ -261,8 +261,8 @@ namespace HellChangSub
                     Crit = 10;
                     break;
                 case 2:
-                    Name = "황금 드래곤";
-                    Description = "전설 속의 빛과 마법을 지닌 드래곤";
+                    Name = "스테로이드 드래곤";
+                    Description = "자연의 법칙을 초월한 몸. 근육이 너무 커서 날개가 퇴화했다.";
                     Level = CalculateLevel(16, stageLvl,3);
                     MaximumHealth = 700 + Level * 30;
                     CurrentHealth = 700 + Level * 30;

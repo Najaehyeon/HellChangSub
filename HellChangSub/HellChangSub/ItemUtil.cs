@@ -43,12 +43,12 @@ namespace HellChangSub
             }
         }
 
-        public void EquiptedItem(bool equiptedItem)
+        public void EquippedItem(bool equippedItem)
         {
-            if (equiptedItem)
+            if (equippedItem)
             {
                 Console.WriteLine("장비 중인 아이템입니다.");
-                ItemManager.equiptedItem = false;
+                ItemManager.equippedItem = false;
             }
         }
         //장비
@@ -101,7 +101,7 @@ namespace HellChangSub
             }
             else if(item.isEquip)
             {
-                ItemManager.equiptedItem = true;
+                ItemManager.equippedItem = true;
             }
             else
             {
