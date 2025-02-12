@@ -35,6 +35,7 @@ namespace HellChangSub
         public void ShowQuest()
         {
             Console.Clear();
+            ShowDialogue();
             Console.WriteLine(Title);
             Console.WriteLine("\n- 미션 -");
             Console.WriteLine(Mission);
@@ -180,6 +181,8 @@ namespace HellChangSub
 
         // 보상 받기를 선택했을 때, 보상 주는 메서드
         public abstract void GiveRewards();
+
+        public abstract void ShowDialogue();
     }
 
 
@@ -240,6 +243,22 @@ namespace HellChangSub
             GameManager.Instance.player.Exp += 20;
             GameManager.Instance.player.LevelUp();
         }
+
+        public override void ShowDialogue()
+        {
+            Console.WriteLine("마을을 지나 서쪽으로 가면 ‘헬스 던전’이 있어.\r\n그곳에는… 기괴한 슬라임들이 우글거리지.\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("평범한 슬라임이 아니라, 근육이 불룩불룩한 괴물들이야!\n맨날 던전 안에서 덤벨을 들고 으르렁거리면서 운동을 한다고.\n처음엔 그냥 신기한 구경거리였는데…\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("문제는 요즘 그놈들이 던전 밖으로 나오기 시작했다는 거야.\n마을 주민들을 붙잡고 “운동했냐?”, “가슴 운동은 했냐?” 같은 말을 해댄다고…\n심지어 지나가는 사람한테 단백질 쉐이크를 억지로 먹이려는 놈들도 있대!\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("이러다간 마을 전체가 근육 슬라임들에게 점령당할지도 몰라…\n부탁이야! 헬스 던전에 들어가서 근육 슬라임 10마리를 처치해줘!\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+        }
     }
 
 
@@ -297,6 +316,22 @@ namespace HellChangSub
             GameManager.Instance.player.LevelUp();
             GameManager.Instance.player.Gold += 200;
         }
+
+        public override void ShowDialogue()
+        {
+            Console.WriteLine("좋아, 모험을 떠난다고? 하지만 지금 너를 보면… 음… 너무 허술하군.\n이러다가 바람만 불어도 쓰러지는 거 아니야?\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("모험가라면 장비를 제대로 갖춰야 해!\n갑옷이든, 검이든, 활이든 네 몸에 맞는 장비를 장착하는 법부터 익혀야 한다고!\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("장비를 착용하면 너의 힘이 한층 더 강해질 거야.\n물론, 장비만 믿고 방심하면 안 된다.\n하지만 최소한… 평범한 슬라임한테 지지는 않겠지?\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("얼른 아무 장비나 착용하고 돌아와!\n네가 진정한 모험가로서 첫걸음을 뗐는지 확인해 보겠어.\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+        }
     }
 
 
@@ -304,9 +339,9 @@ namespace HellChangSub
     public class StrongMoreQuest : QuestData
     {
         public override string Title { get; } = "더욱 더 강해지기!";
-        public override string Mission { get; } = "5레벨 달성하기";
+        public override string Mission { get; } = "7레벨 달성하기";
         public override string[] Rewards { get; } = new string[] { "EXP + 30", "1000 Gold" };
-        public override int Goal { get; } = 5;
+        public override int Goal { get; } = 7;
 
         private int progressed = GameManager.Instance.player.Level;
         public override int Progressed
@@ -345,6 +380,22 @@ namespace HellChangSub
             GameManager.Instance.player.Exp += 30;
             GameManager.Instance.player.LevelUp();
             GameManager.Instance.player.Gold += 1000;
+        }
+
+        public override void ShowDialogue()
+        {
+            Console.WriteLine("좋아, 이제 막 모험을 시작했구나.\n하지만 지금의 너로는… 음, 솔직히 말해서 너무 약해!\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("이 세상은 강한 자만이 살아남는 법.\n적들이 점점 강해질 텐데, 지금처럼 허접한 상태로 싸우려고?\n그럼 그냥 몬스터 밥이 되겠지!\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("강해지고 싶다면 레벨 7까지 올려라.\n전투를 하든, 퀘스트를 수행하든, 뭐든 좋다.\n경험치를 쌓고, 네 몸을 단련하는 거야!\n");
+            Utility.PressAnyKey();
+            Console.Clear();
+            Console.WriteLine("레벨 7에 도달하면 넌 지금과는 전혀 다른 사람이 될 거다.\n힘도 강해지고, 새로운 스킬도 배울 수 있을 거야.\n");
+            Utility.PressAnyKey();
+            Console.Clear();
         }
     }
 
