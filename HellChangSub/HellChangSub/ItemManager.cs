@@ -71,7 +71,7 @@ namespace HellChangSub
                     continue;
                 Console.WriteLine($"- {Utility.FixWidth(useItems[i].ItemName, 10)}  | {Utility.FixWidth(useItems[i].Count.ToString(), 5)} 개");
             }
-
+            Console.WriteLine();
             Console.WriteLine("1. 장착 관리");
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
@@ -102,7 +102,7 @@ namespace HellChangSub
             {
                 Console.WriteLine($"{Utility.FixWidth($"{i+1}",3)}. {equipInventory[i].EquipInvenStatus()}");
             }
-
+            Console.WriteLine();
             Console.WriteLine("0. 나가기");
             Console.WriteLine();
 
