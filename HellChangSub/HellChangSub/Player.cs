@@ -33,7 +33,7 @@ namespace HellChangSub
         public string JobName { get; set; }
         public int Level { get; set; }
         public int Exp { get; set; }
-        public int NeedExp { get; set; } = 5;
+        public int NeedExp { get; set; } = 10;
         public int Gold { get; set; }
         public int CurrentHealth { get; set; }
         public int MaximumHealth { get; set; }
@@ -264,7 +264,7 @@ namespace HellChangSub
         }
         private int CalculateExpRequirement(int level)
         {
-            int baseExp = 5;  // 최초 레벨업 필요 경험치
+            int baseExp = 10;  // 최초 레벨업 필요 경험치
             double growthFactor = 1.5;  // 경험치 증가율  필요 경험치 = 10*레벨^1.5
             return (int)(baseExp * Math.Pow(level, growthFactor));
         }
