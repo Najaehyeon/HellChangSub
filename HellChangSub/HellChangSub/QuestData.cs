@@ -238,6 +238,7 @@ namespace HellChangSub
             GameManager.Instance.itemManager.itemUtil.QuestEquip(item);
             GameManager.Instance.player.Gold += 500;
             GameManager.Instance.player.Exp += 20;
+            GameManager.Instance.player.LevelUp();
         }
     }
 
