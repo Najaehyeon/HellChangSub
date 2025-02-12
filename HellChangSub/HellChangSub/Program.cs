@@ -152,11 +152,11 @@ namespace HellChangSub
             else
             {
                 Console.Clear();
-                Console.WriteLine("플레이어 이름을 입력해주세요.");
+                Console.WriteLine("\n플레이어 이름을 입력해주세요.");
                 Console.Write(">>");
                 string playerName = Console.ReadLine();
                 Console.Clear();
-                Console.WriteLine("직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
+                Console.WriteLine("\n직업을 정해주세요.\n1. 전사\n2. 도적\n3. 마법사");
                 int playerJob = Utility.Select(1, 3);
                 player = new Player(playerName, playerJob); //
                 itemManager = new ItemManager(player);
@@ -173,7 +173,7 @@ namespace HellChangSub
         {
             
             Console.Clear();
-            Console.WriteLine("프로틴 헬창 마을에 오신 것을 환영합니다.");
+            Console.WriteLine("\n프로틴 헬창 마을에 오신 것을 환영합니다.");
             Console.WriteLine();
             Console.WriteLine("1. 상태보기\n2. 스테이지 진입\n3. 인벤토리\n4. 상점\n5. 대장간\n6. 퀘스트\n7. 휴식하기 (100 G)\n8. 저장하기");
             Console.WriteLine("\n원하시는 행동을 입력해주세요.");
