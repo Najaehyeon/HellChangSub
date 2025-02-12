@@ -113,6 +113,12 @@ namespace HellChangSub
             Console.ResetColor();
             Console.WriteLine();
             Utility.PressAnyKey();
+            AskLoadGame();
+
+        }
+
+        public void AskLoadGame()
+        {
             Console.Clear();
             Console.WriteLine();
             Console.WriteLine("저장된 게임을 불러오시겠습니까?");
@@ -128,7 +134,6 @@ namespace HellChangSub
                 isLoaded = false;
             }
             CreateObjects(isLoaded);
-
 
         }
 
