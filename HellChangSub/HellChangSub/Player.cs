@@ -128,7 +128,7 @@ namespace HellChangSub
                     };
                     break;
 
-                case 3:         // 마법사 -  높은 마나, 방어력과 체력이 낮고 회피 불가,  스킬 계수는 높게 잡을것
+                case 3:         // 마법사 - 높은 마나, 방어력과 체력이 낮고 회피 불가,  스킬 계수는 높게 잡을것
                     JobName = "마법사";
                     Atk = 10.0f;
                     Def = 0;
@@ -270,7 +270,7 @@ namespace HellChangSub
         }
         /*public void StatUp2()
         {
-            switch (JobCode)        // 직업별 레벨업시 스탯증가 - 추후 다른방식으로 스탯이 오르게 할지도
+            switch (JobCode)        // 직업별 레벨업시 스탯증가 - 추후 다른방식으로 스탯이 오르게 할지도 - 다른방식으로 구현해서 일단 주석처리
             {
                 case 1:
                     MaximumHealth += 50;
@@ -327,34 +327,7 @@ namespace HellChangSub
 
         }
 
-        private void InitializeSkills()
-        {
-            Skills = new List<Skill>(); // 초기화
-
-            switch (JobCode)
-            {
-                case 1: // 전사
-                    Skills.Add(new Skill("파워 슬래시", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."));
-                    Skills.Add(new Skill("발도", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다."));
-                    break;
-
-                case 2: // 도적
-                    Skills.Add(new Skill("사악한 일격", 2.0f, 10, "단일 대상에게 공격력의 2배의 피해를 입힙니다."));
-                    Skills.Add(new Skill("절개", 3.0f, 15, "단일 대상에게 공격력의 3배의 피해를 입힙니다."));
-                    break;
-
-                case 3: // 마법사
-                    Skills.Add(new Skill("파이어볼", 3.0f, 10, "단일 대상에게 공격력의 3배의 피해를 입힙니다."));
-                    Skills.Add(new Skill("콜드 빔", 4.5f, 15, "단일 대상에게 공격력의 4.5배의 피해를 입힙니다."));
-                    break;
-            }
-
-            // 레벨이 3 이상이면 자동으로 해당 레벨까지 배운 스킬 추가 - 추후 2레벨에 배우는 스킬 추가시 i = 2 로 해줘야됨
-            for (int i = 3; i <= Level; i++)
-            {
-                LearnSkill(i);
-            }
-        }
+        
 
         public void LearnSkill(int level)
         {
