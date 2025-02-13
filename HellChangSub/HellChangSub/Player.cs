@@ -84,10 +84,10 @@ namespace HellChangSub
             JobCode = jobCode;
             Level = 1;
             Exp = 0;
-            Gold = 1000000000;
+            Gold = 1000;
             EquipAtk = 0;
             EquipDef = 0;
-            NeedExp = 5;
+            NeedExp = 10;
             switch (JobCode)
             {
                 case 1:         // 전사 - 방어력 체력이 높음
