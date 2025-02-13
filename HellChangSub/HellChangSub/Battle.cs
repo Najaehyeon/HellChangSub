@@ -440,7 +440,7 @@ namespace HellChangSub
 
                 Console.Write($"Lv.{monster.Level} {monster.Name} 의 공격!");
                 if (player.CurrentHealth < beforeHP)
-                    Console.Write($"[데미지 : {damage}]{(Crit ? "" : " - 치명타 공격!!")}");
+                    Console.Write($"[데미지 : {damage}]{(Crit ? " - 치명타 공격!!" : "")}");
                 Console.WriteLine($"\nLv.{player.Level} {player.Name}");
                 Console.WriteLine(player.CurrentHealth < beforeHP? $"HP {beforeHP} -> {player.CurrentHealth}\n" : $"{player.Name}은(는) 공격을 완벽하게 막아내었다.\n");
             }
