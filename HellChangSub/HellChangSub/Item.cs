@@ -41,7 +41,7 @@ namespace HellChangSub
             isEquip = false;
             ItemType = itemtype;
             EnhanceLvl = enhanceLvl;
-            EnhanceValue = 0;
+            EnhanceValue = enhanceLvl * 5;
             TotalValue = Value + EnhanceValue;
         }  
 
